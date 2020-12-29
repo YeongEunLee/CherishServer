@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       review: {
-        type: DataTypes.TEXT(200),
+        type: DataTypes.STRING,
         allowNull: true,
       },
       goal: {
@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      underscored: false,
       tableName: 'water',
     }
   );

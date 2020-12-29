@@ -2,10 +2,6 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'Plant',
     {
-      image_url: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-      },
       name: {
         type: DataTypes.STRING(45),
         allowNull: false,
@@ -14,10 +10,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(300),
         allowNull: false,
       },
+      image_url: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+      },
     },
     {
       timestamps: true,
-      underscored: false,
+      underscored: true,
       tableName: 'plant',
     }
   );

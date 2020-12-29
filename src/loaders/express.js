@@ -1,13 +1,13 @@
 const express = require('express');
 const api = require('../apis/routes');
 const errorHandler = require('./error');
-// const { sequelize } = require('../models');
+const { sequelize } = require('../models');
 
 module.exports = (app) => {
   /**
    * Database sync
    */
-  // sequelize.sync();
+  sequelize.sync({ force: true });
   /**
    * Health Check endpoints
    * @TODO Explain why they are here
