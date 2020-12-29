@@ -1,0 +1,19 @@
+{
+  "extends": ["eslint:recommended", "prettier"],
+  "env": {
+    "node": true,
+    "browser": true,
+    "jest/globals": true,
+    "es6": true,
+  },
+  "parser": "babel-eslint",
+  "plugins": ["jest", "mocha"],
+  "rules": {
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "no-useless-escape": "off",
+    "no-tabs": "error",
+    "no-trailing-spaces": "error",
+    "space-infix-ops": ["error", {"int32Hint": false}],
+  }
+}
