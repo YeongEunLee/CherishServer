@@ -1,0 +1,40 @@
+{
+  "name": "cherishserver",
+  "version": "1.0.0",
+  "description": "cherish Server",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon",
+    "start:production": "node ./dist/server.js",
+    "api": "apidoc -i src/ -o apidoc",
+    "babel-version": "babel --version",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "yarn lint --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamCherish/CherishServer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TeamCherish/CherishServer/issues"
+  },
+  "homepage": "https://github.com/TeamCherish/CherishServer#readme",
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "log4js": "^6.3.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
+  }
+}
