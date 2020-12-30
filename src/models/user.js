@@ -37,6 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       profile_image_url: {
         type: DataTypes.STRING(200),
       },
+      push_token: {
+        type: DataTypes.STRING(200),
+      },
     },
     {
       timestamps: true,
