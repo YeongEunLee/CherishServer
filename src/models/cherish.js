@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(45),
         allowNull: false,
       },
+      nickname: {
+        type: DataTypes.STRING(45),
+        allowNull: false
+      },
       birth: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -17,6 +21,15 @@ module.exports = (sequelize, DataTypes) => {
       cycle_date: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      water_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      postpone_number: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
       },
       start_date: {
         type: DataTypes.DATE,
