@@ -7,7 +7,7 @@ module.exports = (app) => {
   /**
    * Database sync
    */
-  sequelize.sync({ force: true });
+  sequelize.sync({ force: false });
   /**
    * Health Check endpoints
    * @TODO Explain why they are here
