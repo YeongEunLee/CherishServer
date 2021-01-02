@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       growth: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: 0,
       },
       cycle_date: {
         type: DataTypes.INTEGER,
