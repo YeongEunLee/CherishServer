@@ -19,6 +19,10 @@ db.Keyword = require('./keyword')(sequelize, Sequelize);
 db.User.hasMany(db.Cherish);
 db.Cherish.belongsTo(db.User);
 
+/** 1 : N Plant_status : Plant */
+db.Plant_status.hasMany(db.Plant);
+db.Plant.belongsTo(db.Plant_status);
+
 /** 1 : N Plant : Cherish */
 db.Plant.hasMany(db.Cherish);
 db.Cherish.belongsTo(db.Plant);
