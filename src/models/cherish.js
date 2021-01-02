@@ -18,8 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(45),
         allowNull: false,
       },
+      growth: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       cycle_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       water_date: {
@@ -42,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      underscored: true,
+      underscored: false,
       tableName: 'cherish',
     }
   );
