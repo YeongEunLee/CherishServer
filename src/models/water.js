@@ -10,18 +10,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      goal: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      postpone: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0,
-      },
     },
     {
       timestamps: true,
+      underscored: true,
       tableName: 'water',
     }
   );

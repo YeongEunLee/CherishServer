@@ -1,3 +1,5 @@
+const { Sequelize } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'Cherish',
@@ -18,13 +20,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(45),
         allowNull: false,
       },
+      growth: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
       cycle_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       water_date: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       postpone_number: {
         type: DataTypes.INTEGER,
@@ -34,11 +41,17 @@ module.exports = (sequelize, DataTypes) => {
       start_date: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: Sequelize.fn('NOW')
       },
       notice_time: {
         type: DataTypes.STRING(45),
         allowNull: false,
       },
+      status_code: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue : true,
+      }
     },
     {
       timestamps: true,
