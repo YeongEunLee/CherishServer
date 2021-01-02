@@ -10,6 +10,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      keyword1: {
+        type: DataTypes.STRING(10),
+      },
+      keyword2: {
+        type: DataTypes.STRING(10),
+      },
+      keyword3: {
+        type: DataTypes.STRING(10),
+      },
     },
     {
       timestamps: true,
