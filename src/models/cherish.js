@@ -43,10 +43,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(45),
         allowNull: false,
       },
+      status_code: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue : true,
+      }
     },
     {
       timestamps: true,
-      underscored: false,
+      underscored: true,
       tableName: 'cherish',
     }
   );
