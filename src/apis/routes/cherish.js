@@ -23,4 +23,15 @@ router.get(
   plantController.getWaterPossible
 );
 
+/**
+ * @api {get} /cherish
+ * @apiName getCherishInfo
+ * @apiGroup Cherish
+ */
+router.get(
+  '/',
+  [check('cherish_id', 'cherish_id is required').not().isEmpty()],
+  plantController.getCherishInfo
+);
+
 module.exports = router;
