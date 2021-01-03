@@ -9,4 +9,5 @@ module.exports = {
 
   IMPOSSIBLE_WATER_POSTPONE: '이미 미루기 횟수를 초과하셨습니다.',
   POSSIBLE_WATER_POSTPONE: '미루기가 가능합니다.',
+  READ_ALL_CHERISH_BY_ID_SUCCESS: '체리쉬 상세보기를 성공하였습니다.',
 };
