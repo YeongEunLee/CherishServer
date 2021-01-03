@@ -12,6 +12,8 @@ const router = express.Router();
  * @apiSuccess {String} firstname Firstname of the User.
  * @apiSuccess {String} lastname  Lastname of the User.
  */
+
+router.use('/cherish', require('./cherish'));
 router.get('/user/:id', (req, res) => {
   res.json(req.params.id);
 });
