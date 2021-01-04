@@ -1,24 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'Plant',
+    'Plant_level',
     {
-      name: {
-        type: DataTypes.STRING(45),
+      level: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      modifier: {
+      description: {
         type: DataTypes.STRING(300),
         allowNull: false,
       },
-      explanation: {
-        type: DataTypes.STRING(300),
-        allowNull: false,
-      },
-      flower_meaning: {
-        type: DataTypes.STRING(300),
-        allowNull: false,
-      },
-      thumbnail_image_url: {
+      image_url: {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
@@ -26,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: 'plant',
+      tableName: 'plant_level',
     }
   );
 };

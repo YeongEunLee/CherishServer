@@ -14,6 +14,7 @@ db.Plant = require('./plant')(sequelize, Sequelize);
 db.Water = require('./water')(sequelize, Sequelize);
 db.Plant_status = require('./plant_status')(sequelize, Sequelize);
 db.Keyword = require('./keyword')(sequelize, Sequelize);
+db.Plant_level = require('./plant_level')(sequelize, Sequelize);
 
 /** 1 : N User : Cherish */
 db.User.hasMany(db.Cherish);
@@ -30,5 +31,9 @@ db.Cherish.belongsTo(db.Plant);
 /** 1 : N Cherish : Water */
 db.Cherish.hasMany(db.Water);
 db.Water.belongsTo(db.Cherish);
+
+/** 1 : N Plant : Plant_level */
+db.Plant.hasMany(db.Plant_level);
+db.Plant_level.belongsTo(db.Plant);
 
 module.exports = db;
