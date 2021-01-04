@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'Water', {
+    'Water',
+    {
       water_date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -21,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(10),
         defaultValue: '',
       },
-    }, {
+    },
+    {
       timestamps: true,
       underscored: true,
       tableName: 'water',
