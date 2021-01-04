@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'Water', {
-      total_date: {
+      water_date: {
         type: DataTypes.DATE,
         allowNull: false,
       },
