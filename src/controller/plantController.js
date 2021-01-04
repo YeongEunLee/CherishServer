@@ -43,6 +43,24 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+  /*
+   * cherish 삭제
+   **/
+  deleteCherish: async (req, res) => {
+    const cherish_id = req.params.id;
+    try {
+      const cherish = async () =>
+        await Cherish.destroy({
+          where: {
+            id: cherish_id,
+          },
+        });
+      return res.status(sc.OK).send(ut.success(rm.OK));
+    } catch (err) {
+      console.log(err);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+    }
+  },
 
   getWaterPossible: async (req, res) => {
     const errors = validationResult(req);
