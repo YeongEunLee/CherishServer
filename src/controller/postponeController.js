@@ -13,13 +13,13 @@ module.exports = {
    */
 
   postponeWaterDate: async (req, res) => {
-    const idx = req.params.id;
+    const cherish_id = req.params.id;
     const postpone = req.body.postpone;
 
     try {
       const waterDate = await Cherish.findOne({
         where: {
-          id: idx,
+          id: cherish_id,
         },
         attributes: ['water_date'],
       });
@@ -35,7 +35,7 @@ module.exports = {
         },
         {
           where: {
-            id: idx,
+            id: cherish_id,
           },
         }
       );

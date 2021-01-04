@@ -17,8 +17,8 @@ module.exports = {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-      const PlantId = 1; //식물 추천해주는 알고리즘 넣으면 대체
-      const UserId = 1;
+      const plant_id = 1; //식물 추천해주는 알고리즘 넣으면 대체
+      const user_id = 1;
       const cherish = await Cherish.create({
         name,
         nickname,
@@ -26,16 +26,15 @@ module.exports = {
         phone,
         cycle_date,
         notice_time,
-        PlantId,
-        UserId,
+        plant_id,
+        user_id,
       });
       const plant = await Plant.findOne({
-        id: PlantId,
+        id: plant_id,
         attributes: ['name', 'explanation', 'thumbnail_image_url'],
       });
       return res.status(sc.OK).send(
         ut.success(rm.OK, {
-          nickname,
           plant,
         })
       );
