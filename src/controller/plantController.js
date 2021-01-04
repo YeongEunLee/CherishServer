@@ -33,16 +33,24 @@ module.exports = {
         id: PlantId,
         attributes: ['name', 'explanation', 'thumbnail_image_url'],
       });
-      return res.status(sc.OK).send(ut.success(rm.OK, { nickname, plant }));
+      return res.status(sc.OK).send(
+        ut.success(rm.OK, {
+          nickname,
+          plant,
+        })
+      );
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+
   getWaterPossible: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({
+        errors: errors.array(),
+      });
     }
     const { cherish_id } = req.query;
     const t = await sequelize.transaction();
@@ -59,7 +67,11 @@ module.exports = {
       if (is_limit_postpone_number) {
         return res.status(sc.OK).send(ut.fail(rm.IMPOSSIBLE_WATER_POSTPONE));
       }
-      return res.status(sc.OK).send(ut.success(rm.POSSIBLE_WATER_POSTPONE, { cherish }));
+      return res.status(sc.OK).send(
+        ut.success(rm.POSSIBLE_WATER_POSTPONE, {
+          cherish,
+        })
+      );
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
@@ -69,7 +81,9 @@ module.exports = {
   getCherishInfo: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({
+        errors: errors.array(),
+      });
     }
     const { cherish_id } = req.query;
     try {
