@@ -31,8 +31,8 @@ module.exports = {
                 console.log('필요한 값이 없습니다.');
                 return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
             }
-            const PlantId = 1; //식물 추천해주는 알고리즘 넣으면 대체
-            const UserId = 1;
+            const plant_id = 1; //식물 추천해주는 알고리즘 넣으면 대체
+            const user_id = 1;
             const cherish = await Cherish.create({
                 name,
                 nickname,
@@ -40,17 +40,18 @@ module.exports = {
                 phone,
                 cycle_date,
                 notice_time,
-                PlantId,
-                UserId,
+                plant_id,
+                user_id,
             });
             const plant = await Plant.findOne({
-                id: PlantId,
+                id: plant_id,
                 attributes: ['name', 'explanation', 'thumbnail_image_url'],
             });
-            return res.status(sc.OK).send(ut.success(rm.OK, {
-                nickname,
-                plant
-            }));
+            return res.status(sc.OK).send(
+                ut.success(rm.OK, {
+                    plant,
+                })
+            );
         } catch (err) {
             console.log(err);
             return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
@@ -61,7 +62,7 @@ module.exports = {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
-                errors: errors.array()
+                errors: errors.array(),
             });
         }
         const {
@@ -81,9 +82,11 @@ module.exports = {
             if (is_limit_postpone_number) {
                 return res.status(sc.OK).send(ut.fail(rm.IMPOSSIBLE_WATER_POSTPONE));
             }
-            return res.status(sc.OK).send(ut.success(rm.POSSIBLE_WATER_POSTPONE, {
-                cherish
-            }));
+            return res.status(sc.OK).send(
+                ut.success(rm.POSSIBLE_WATER_POSTPONE, {
+                    cherish,
+                })
+            );
         } catch (err) {
             console.log(err);
             return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
@@ -94,7 +97,7 @@ module.exports = {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
-                errors: errors.array()
+                errors: errors.array(),
             });
         }
         const {
