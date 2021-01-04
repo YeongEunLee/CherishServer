@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'Plant', {
+    'Plant',
+    {
       name: {
         type: DataTypes.STRING(45),
         allowNull: false,
@@ -18,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
-    }, {
+    },
+    {
       timestamps: true,
       underscored: true,
       tableName: 'plant',

@@ -1,9 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const {
-    check
-} = require('express-validator');
+const { check } = require('express-validator');
 
 const plantController = require('../../controller/plantController');
 const postponeController = require('../../controller/postponeController');
@@ -23,9 +21,9 @@ router.post('/', plantController.createPlant);
  * @apiGroup Cherish
  */
 router.get(
-    '/postpone',
-    [check('cherish_id', 'cherish_id is required').not().isEmpty()],
-    plantController.getWaterPossible
+  '/postpone',
+  [check('cherish_id', 'cherish_id is required').not().isEmpty()],
+  plantController.getWaterPossible
 );
 
 /**
@@ -34,9 +32,9 @@ router.get(
  * @apiGroup Cherish
  */
 router.get(
-    '/',
-    [check('cherish_id', 'cherish_id is required').not().isEmpty()],
-    plantController.getCherishInfo
+  '/',
+  [check('cherish_id', 'cherish_id is required').not().isEmpty()],
+  plantController.getCherishInfo
 );
 
 module.exports = router;
