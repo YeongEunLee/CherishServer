@@ -1,19 +1,17 @@
-# :tree: Cherish-Server
+# 🌿 Cherish-Server
 
-<div align="center" style="display:flex;">
-	<img src="./image/tokddak_logo.png" width="250">
-</div>
-<div align="center">
-:sunny: 맞춤형 여행경비 계산/관리 서비스 톡딱 :cloud:  
+![76639891](https://user-images.githubusercontent.com/60417796/103647818-399e4480-4f9f-11eb-997c-47013ce80af6.png)
+
+Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 :💧:  
 <br>
 서버파트 리포지토리
 </div>
 
 ---
 
-# 1. API DOC LINK (WIKI)
+# 1. API DOC LINK (notion)
 
-- [관련 링크](https://github.com/TokDDak/TokDDak-Server/wiki)
+- [관련 링크](https://www.notion.so/Dev-Wiki-e74109446f7e4989b8f6049e939bdf2f)
 
 ---
 
@@ -21,26 +19,13 @@
 
 ```
 "dependencies": {
-    "aws-sdk": "^2.591.0",
-    "cookie-parser": "~1.4.4",
-    "crypto": "^1.0.1",
-    "debug": "~2.6.9",
+    "dayjs": "^1.10.1",
     "dotenv": "^8.2.0",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0",
-    "morgan": "~1.9.1",
-    "multer": "^1.4.2",
-    "multer-s3": "^2.9.0",
-    "mysql2": "^2.0.2",
-    "pbkdf2": "^3.0.17",
-    "rand": "0.0.4",
-    "rand-token": "^0.4.0",
-    "request": "^2.88.0",
-    "sequelize": "^5.21.2",
-    "token": "^0.1.0"
+    "express": "^4.17.1",
+    "express-validator": "^6.9.0",
+    "log4js": "^6.3.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
   }
 ```
 
@@ -66,39 +51,37 @@
 
 ---
 
-# 4. Server Architecture
+# 4. Main Function 
 
-<div align="center" style="display:flex;">
-	<img src="./image/server-architecture2.jpeg">
-</div>
-
----
-
-# 5. Main Function
-
-- 여행 예산짜기
-- 카테고리(숙박, 식사, 간식 및 주류, 쇼핑, 교통, 액티비티)별 항목(숙소 등급, 식당 등급 등) 추가하기
-- 여행별 일정추가 및 경비계산
+- Cherish 등록 / 수정 / 삭제
+- Cherish 물주기 / 미루기
+- Cherish 후기 등록
 - 회원가입 / 로그인
-- 카테고리별 지출내역 작성 및 관리
 
 ---
 
-# 6. Team Role
+# 5. Team Role
 
-#### :beer: 남궁권 ([kkoon9](https://github.com/kkoon9))
+#### 남궁권 ([kkoon9](https://github.com/kkoon9))
 
-- 기능 구현
+- 프로젝트 구축
+- 미루기 횟수 체크 API
+- 메인 뷰 API
+- 마이페이지 API
 
-#### :cocktail: 박승완 ([toneyparky](https://github.com/toneyparky))
+####  이영은 ([YeongEunLee](https://github.com/YeongEunLee))
 
-- TripAdvisor API 활용 및 데이터 수집 [관련 레포지토리](https://github.com/TokDDak/TokDDak-DB-Crawler)
+- 데이터 모델링
+- Cherish 등록 API
+- Cherish 정보 수정 / 삭제 API
+- 물주는 날짜 미루기 API
 
-#### :tropical_drink: 현주희 ([Hyun-juhee](https://github.com/Hyun-juhee))
+####  한수아 ([sssua_0928](https://github.com/sssua_0928))
 
-- 환율 API 활용 및 CRUD 구현
+- 후기 등록 API
+- 로그인 API
 
-#### :wine_glass: 칸반보드 노션링크[(참고)](https://www.notion.so/toneyparky/8fe9b76a98ba45f19e15eed43731b887?v=2d845e1c03b94399baad67c270ac2069)
+####  칸반보드 노션링크[(참고)](https://www.notion.so/Server-6854a0c36b1146f19cfe32dafde87ef5)
 
 ---
 
