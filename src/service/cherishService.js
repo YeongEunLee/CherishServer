@@ -1,7 +1,7 @@
 const { Cherish } = require('../models');
 
 module.exports = {
-  cherishCheck: async (cherish_id) => {
+  cherishCheck: async ({ cherish_id }) => {
     try {
       const alreadyCherish = await Cherish.findOne({
         where: {

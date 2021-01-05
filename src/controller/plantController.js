@@ -55,7 +55,7 @@ module.exports = {
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
-      const alreadyCherish = await cherishService.cherishCheck(cherish_id);
+      const alreadyCherish = await cherishService.cherishCheck({ cherish_id });
       if (!alreadyCherish) {
         console.log('없는 체리쉬 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
