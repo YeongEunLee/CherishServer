@@ -1,4 +1,7 @@
 const express = require('express');
+const {
+  route
+} = require('./water');
 
 const router = express.Router();
 
@@ -17,5 +20,9 @@ router.use('/cherish', require('./cherish'));
 router.get('/user/:id', (req, res) => {
   res.json(req.params.id);
 });
+
+router.use('/water', require('./water'));
+
+router.use('/login', require('./login'));
 
 module.exports = router;
