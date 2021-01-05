@@ -27,7 +27,6 @@ module.exports = {
       keyword1,
       keyword2,
       keyword3,
-      //cherish_id
     } = req.body;
 
 
@@ -40,7 +39,7 @@ module.exports = {
 
       // (삭제예정) Cherish에서 cherish_id를 CherishId로 받아오기 
       const cherish = await Cherish.findOne({
-        CherishId: cherish_id
+        id: cherish_id
       });
 
 
