@@ -16,6 +16,13 @@ router.put('/:id', postponeController.postponeWaterDate);
 router.post('/', plantController.createPlant);
 
 /**
+ * @api {delete} /cherish
+ * @apiName deleteCherish
+ * @apiGroup Cherish
+ */
+router.delete('/:id', plantController.deleteCherish);
+
+/**
  * @api {get} /cherish/postpone
  * @apiName getWaterLimit
  * @apiGroup Cherish
