@@ -9,8 +9,8 @@
     "postpone_number" : 2,
     "start_date" : "2021-01-01",
     "notice_time" : "15:00",
-    "plant_id" : 1,
-    "user_id" : 1
+    "PlantId" : 1,
+    "UserId" : 1
 	},
 	{
     "name" : "안나영",
@@ -22,8 +22,8 @@
     "postpone_number" : 2,
     "start_date" : "2021-01-01",
     "notice_time" : "14:00",
-    "plant_id" : 3,
-    "user_id" : 2
+    "PlantId" : 3,
+    "UserId" : 2
 	},
 	{
     "name" : "권예진",
@@ -35,8 +35,8 @@
     "postpone_number" : 2,
     "start_date" : "2021-01-01",
     "notice_time" : "19:00",
-    "plant_id" : 2,
-    "user_id" : 3
+    "PlantId" : 2,
+    "UserId" : 3
 	},
 	{
     "name" : "황지은",
@@ -48,8 +48,8 @@
     "postpone_number" : 2,
     "start_date" : "2021-01-01",
     "notice_time" : "11:00",
-    "plant_id" : 2,
-    "user_id" : 4
+    "PlantId" : 2,
+    "UserId" : 4
 	},
 	{
     "name" : "이원석",
@@ -61,8 +61,8 @@
     "postpone_number" : 2,
     "start_date" : "2021-01-01",
     "notice_time" : "11:00",
-    "plant_id" : 4,
-    "user_id" : 5
+    "PlantId" : 4,
+    "UserId" : 5
 	},
 	{
     "name" : "장서현",
@@ -74,8 +74,8 @@
     "postpone_number" : 2,
     "start_date" : "2021-01-01",
     "notice_time" : "11:00",
-    "plant_id" : 5,
-    "user_id" : 6
+    "PlantId" : 5,
+    "UserId" : 6
 
 	}
 ]
