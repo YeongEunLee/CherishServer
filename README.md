@@ -2,7 +2,7 @@
 
 ![76639891](https://user-images.githubusercontent.com/60417796/103647818-399e4480-4f9f-11eb-997c-47013ce80af6.png)
 
-Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 :💧:  
+Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 💧
 <br>
 서버파트 리포지토리
 </div>
@@ -45,9 +45,7 @@ Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 :💧:
 
 # 3. ERD Diagram
 
-<div align="center" style="display:flex;">
-	<img src="./image/tokddak_erd.png">
-</div>
+![KakaoTalk_Photo_2021-01-05-21-51-48](https://user-images.githubusercontent.com/60417796/103648445-3e172d00-4fa0-11eb-9958-b8c8bae367e4.png)
 
 ---
 
@@ -85,7 +83,7 @@ Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 :💧:
 
 ---
 
-# 7. Develop Framework & Environment
+# 6. Develop Framework & Environment
 
 - [Node.js](https://nodejs.org/ko/) - Chrome V8 자바스크립트 엔진으로 빌드된 자바스크립트 런타임
 - [Express.js](http://expressjs.com/ko/) - Node.js 웹 애플리케이션 프레임워크
