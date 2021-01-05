@@ -5,6 +5,7 @@ const { Cherish, Plant, Water, sequelize } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
+const { cherishService } = require('../service');
 
 module.exports = {
   /**
@@ -48,7 +49,18 @@ module.exports = {
    **/
   deleteCherish: async (req, res) => {
     const cherish_id = req.params.id;
+
+    if (!cherish_id) {
+      console.log('필요한 값이 없습니다!');
+      return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
+    }
     try {
+      const alreadyCherish = await cherishService.cherishCheck(cherish_id);
+      if (!alreadyCherish) {
+        console.log('없는 체리쉬 입니다.');
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
+      }
+
       const cherish = async () =>
         await Cherish.destroy({
           where: {
