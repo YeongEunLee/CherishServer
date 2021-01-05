@@ -1,37 +1,32 @@
 [
 	{
     "name" : "로즈마리",
-		"plant_status_id": 1,
+		"PlantStatusId": 1,
 		"explanation": "미정",
-		"image_url": "미정",
     "thumbnail_image_url" : "미정"
 	},
 	{
     "name" : "아메리칸블루",
-		"plant_status_id": 2,
+		"PlantStatusId": 2,
 		"explanation": "미정",
-		"image_url": "미정",
     "thumbnail_image_url" : "미정"
 	},
 	{
     "name" : "민들레",
-		"plant_status_id": 3,
+		"PlantStatusId": 3,
 		"explanation": "미정",
-		"image_url": "미정",
     "thumbnail_image_url" : "미정"
  	},
 	{
     "name" : "스투키",
-		"plant_status_id": 4,
+		"PlantStatusId": 4,
 		"explanation": "미정",
-		"image_url": "미정",
     "thumbnail_image_url" : "미정"
  	},
 	{
     "name" : "단모환",
-		"plant_status_id": 5,
+		"PlantStatusId": 5,
 		"explanation": "미정",
-		"image_url": "미정",
     "thumbnail_image_url" : "미정"
 	}
 ]
