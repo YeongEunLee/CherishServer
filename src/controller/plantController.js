@@ -61,12 +61,49 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
-      const cherish = async () =>
-        await Cherish.destroy({
-          where: {
-            id: cherish_id,
-          },
-        });
+      await Cherish.destroy({
+        where: {
+          id: cherish_id,
+        },
+      });
+      return res.status(sc.OK).send(ut.success(rm.OK));
+    } catch (err) {
+      console.log(err);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+    }
+  },
+
+  /*
+   * cherish 정보 수정
+   **/
+  modifyCherish: async (req, res) => {
+    const cherish_id = req.params.id;
+    const { nickname, birth, cycle_date, notice_time, water_notice } = req.body;
+
+    if (!cherish_id) {
+      console.log('필요한 값이 없습니다!');
+      return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
+    }
+    if (!nickname || !birth || !cycle_date || !notice_time || !water_notice) {
+      console.log('필요한 값이 없습니다!');
+      return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
+    }
+    try {
+      const alreadyCherish = await cherishService.cherishCheck({ cherish_id });
+      if (!alreadyCherish) {
+        console.log('없는 체리쉬 입니다.');
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
+      }
+      await Cherish.update(
+        {
+          nickname: nickname,
+          birth: birth,
+          cycle_date: cycle_date,
+          notice_time: notice_time,
+          water_notice: water_notice,
+        },
+        { where: { id: cherish_id } }
+      );
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);

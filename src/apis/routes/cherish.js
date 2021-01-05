@@ -4,9 +4,13 @@ const router = express.Router();
 const { check } = require('express-validator');
 
 const plantController = require('../../controller/plantController');
-const postponeController = require('../../controller/postponeController');
 
-router.put('/:id', postponeController.postponeWaterDate);
+/**
+ * @api {put} /cherish
+ * @apiName modifyCherish
+ * @apiGroup Cherish
+ */
+router.put('/:id', plantController.modifyCherish);
 
 /**
  * @api {post} /cherish
