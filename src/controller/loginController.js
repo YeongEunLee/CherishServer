@@ -21,27 +21,28 @@ module.exports = {
     } = req.body;
     //2. request data 확인하기, email, password data가 없다면 NullValue 반환
     if (!email || !password) {
-      console.log('필요한 값이 없습니다.');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
 
     try {
       //3. 존재하는 아이디인지 확인하기. 존재하지 않는 아이디면 NO USER 반환
-      const alreadyEmail = await userService.emailCheck(email);
+      const alreadyEmail = await userService.emailCheck({
+        email
+      });
       if (!alreadyEmail) {
-        console.log('>>> 없는 이메일 입니다!!.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NO_USER));
       }
       //4. password(=alreadyPassword)와 일치하면 true, 일치하지 않으면 Miss Match password 반환
       if (password !== alreadyEmail.password) {
-        console.log('비밀번호가 일치하지 않습니다');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.MISS_MATCH_PW, password));
       }
-      const user = await userService.signin(email, password);
+      const user = await userService.signin({
+        email,
+        password
+      });
       //5. status: 200 ,message: SIGN_IN_SUCCESS, data: email반환
       return res.status(sc.OK).send(ut.success(rm.SIGN_IN_SUCCESS, user.id));
     } catch (error) {
-      console.error(error);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_IN_FAIL));
     }
   }
