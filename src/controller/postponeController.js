@@ -13,17 +13,23 @@ module.exports = {
    */
 
   postponeWaterDate: async (req, res) => {
-    const CherishId = req.params.id;
-    const postpone = req.body.postpone;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { id, postpone, is_limit_postpone_number } = req.body;
+    const t = await sequelize.transaction();
 
     try {
-      const waterDate = await Cherish.findOne({
+      const cherish = await Cherish.findOne({
         where: {
-          id: CherishId,
+          id: id,
         },
-        attributes: ['water_date'],
+        attributes: ['water_date', 'growth'],
       });
-      const date = waterDate.water_date;
+      const date = cherish.water_date;
       const newDate = dayjs(date).add(postpone, 'day').format('YYYY-MM-DD hh:mm:ss');
 
       await Cherish.update(
@@ -32,16 +38,25 @@ module.exports = {
         },
         {
           where: {
-            id: CherishId,
+            id: id,
           },
-        }
+        },
+        { transaction: t }
       );
+      await Cherish.increment({ postpone_number: 1 }, { where: { id: id } }, { transaction: t });
 
-      return res.status(sc.OK).send(ut.success(rm.OK, newDate));
+      // 성장률이 0이 아니고 is_limit_postpone_number가 true일 때 성장률 -1 감소
+      if (cherish.growth != 0 && is_limit_postpone_number) {
+        await Cherish.increment({ growth: -1 }, { where: { id: id } }, { transaction: t });
+        return res.status(sc.OK).send(ut.success(rm.DOWN_GROWTH));
+      }
+      t.commit();
+      return res.status(sc.OK).send(ut.success(rm.POSTPONE_SUCCESS));
     } catch (err) {
       console.log(err);
+      await t.rollback();
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
-    return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
   },
 
   getPostpone: async (req, res) => {
@@ -61,9 +76,9 @@ module.exports = {
       });
       const is_limit_postpone_number = cherish && cherish.postpone_number >= 3 ? true : false;
 
-      return res.status(sc.OK).send(
-        ut.success(rm.GET_WATER_POSTPONE, {cherish, is_limit_postpone_number})
-      );
+      return res
+        .status(sc.OK)
+        .send(ut.success(rm.GET_WATER_POSTPONE, { cherish, is_limit_postpone_number }));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
