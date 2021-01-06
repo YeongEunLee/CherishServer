@@ -12,4 +12,14 @@ const postponeController = require('../../controller/postponeController');
  */
 router.put('/:id', postponeController.postponeWaterDate);
 
+/**
+ * @api {get} /postpone
+ * @apiName getPostpone
+ * @apiGroup Postpone
+ */
+router.get(
+  '/',
+  [check('CherishId', 'CherishId is required').not().isEmpty()],
+  postponeController.getPostpone
+);
 module.exports = router;
