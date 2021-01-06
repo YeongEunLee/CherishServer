@@ -27,17 +27,6 @@ router.post('/', plantController.createPlant);
 router.delete('/:id', plantController.deleteCherish);
 
 /**
- * @api {get} /cherish/postpone
- * @apiName getWaterLimit
- * @apiGroup Cherish
- */
-router.get(
-  '/postpone',
-  [check('cherish_id', 'cherish_id is required').not().isEmpty()],
-  plantController.getWaterPossible
-);
-
-/**
  * @api {get} /cherish
  * @apiName getCherishInfo
  * @apiGroup Cherish
