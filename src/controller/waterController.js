@@ -23,21 +23,30 @@ module.exports = {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-
-      let scoreList = [review, keyword1, keyword2, keyword3];
+      //..keyword개수대로 증가하는 줄알고 짠코드 미련 못버림..
+      /*
+      let keywordList = [keyword1, keyword2, keyword3];
 
       let score = 0;
-      scoreList.forEach((item) => {
+      keywordList.forEach((item) => {
         score += item === undefined ? 0 : 1;
       });
       console.log('%d점 증가했습니다.', score);
-
-      /*
-      // 둘다 없을경우 -> 코드 필요없을거같앙
-      if (!review && !keyword1) {
-        console.log('리뷰-키워드작성안함, score 증가 없음');
-      }
       */
+      let score = 0;
+      if (keyword1) {
+        score += 1;
+        console.log('키워드 작성, score증가');
+      }
+
+      if (review) {
+        score += 1;
+        console.log('리뷰 작성, score증가');
+      }
+
+      if (!review && !keyword) {
+        console.log('리뷰, 키워드 작성안함, score 증가 없음');
+      }
 
       // models_water에 작성한 내용 생성하기
       const water = await Water.create({

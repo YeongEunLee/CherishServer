@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, sequelize } = require('../models');
+const { Cherish, Plant, Water, Plant_status, sequelize } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -18,22 +18,41 @@ module.exports = {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-      const PlantId = 1; //식물 추천해주는 알고리즘 넣으면 대체
-      const UserId = 1;
-      const cherish = await Cherish.create({
+
+      const UserId = 1; //Token있으면 추가하겠음 ........
+
+      const PlantStatusId = (cycle_date) => {
+        if (cycle_date <= 3) return 1;
+        else if (cycle_date <= 7) return 2;
+        else if (cycle_date <= 15) return 3;
+        else if (cycle_date <= 30) return 4;
+        else return 5;
+      };
+
+      const plant = await Plant.findOne({
+        attributes: [
+          'id',
+          'name',
+          'explanation',
+          'modifier',
+          'flower_meaning',
+          'thumbnail_image_url',
+          'PlantStatusId',
+        ],
+        where: { PlantStatusId: PlantStatusId(cycle_date) },
+      });
+
+      await Cherish.create({
         name,
         nickname,
         birth,
         phone,
         cycle_date,
         notice_time,
-        PlantId,
+        PlantId: plant.dataValues.PlantId,
         UserId,
       });
-      const plant = await Plant.findOne({
-        id: PlantId,
-        attributes: ['name', 'explanation', 'thumbnail_image_url'],
-      });
+
       return res.status(sc.OK).send(
         ut.success(rm.OK, {
           plant,
