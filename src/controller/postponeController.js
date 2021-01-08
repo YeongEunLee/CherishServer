@@ -1,5 +1,5 @@
 const dayjs = require('dayjs');
-const { Cherish, Plant, Water, sequelize } = require('../models');
+const { Cherish, Plant, Water, sequelize, User } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -44,6 +44,19 @@ module.exports = {
         { transaction: t }
       );
       await Cherish.increment({ postpone_number: 1 }, { where: { id: id } }, { transaction: t });
+
+      const user = await Cherish.findOne({
+        where: {
+          id: id,
+        },
+        attributes: ['UserId'],
+      });
+
+      await User.increment(
+        { postpone_count: 1 },
+        { where: { id: user.dataValues.UserId } },
+        { transaction: t }
+      );
 
       // 성장률이 0이 아니고 is_limit_postpone_number가 true일 때 성장률 -1 감소
       if (cherish.growth != 0 && is_limit_postpone_number) {
