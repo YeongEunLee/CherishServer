@@ -52,6 +52,12 @@ module.exports = {
 
       plant.dataValues.image_url = plantImageURL.dataValues.image_url;
 
+      //현재 날짜에 cycle_date 더해서 water_date 구하기
+      const now_date = dayjs().format('YYYY-MM-DD hh:mm:ss');
+      const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD hh:mm:ss');
+      console.log(now_date);
+      console.log(water_date);
+
       await Cherish.create({
         name,
         nickname,
@@ -59,6 +65,7 @@ module.exports = {
         phone,
         cycle_date,
         notice_time,
+        water_date,
         PlantId: plant.dataValues.PlantId,
         UserId,
       });
