@@ -1,9 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const {
-  check
-} = require('express-validator');
+const { check } = require('express-validator');
 
 const waterController = require('../../controller/waterController');
 
@@ -12,7 +10,7 @@ const waterController = require('../../controller/waterController');
  * @apiName postWater
  * @apiGroup Water
  */
-router.post('/:id', waterController.postWater);
+router.post('/', waterController.postWater);
 
 /**
  * @api {get} /water/:id
