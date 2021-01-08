@@ -61,6 +61,17 @@ module.exports = {
         cherishGrowth.growth += score;
       }
 
+      await Cherish.update(
+        {
+          postpone_number: 0,
+        },
+        {
+          where: {
+            id: CherishId,
+          },
+        }
+      );
+
       return res.status(sc.OK).send(ut.success(rm.OK, water));
     } catch (err) {
       console.log(err);
