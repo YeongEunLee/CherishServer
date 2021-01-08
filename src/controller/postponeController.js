@@ -57,7 +57,6 @@ module.exports = {
         { where: { id: user.dataValues.UserId } },
         { transaction: t }
       );
-      user.dataValues.UserId;
 
       // 성장률이 0이 아니고 is_limit_postpone_number가 true일 때 성장률 -1 감소
       if (cherish.growth != 0 && is_limit_postpone_number) {
