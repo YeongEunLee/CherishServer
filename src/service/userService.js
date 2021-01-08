@@ -29,5 +29,21 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+
+  signup: async (email, password, sex, birth, nickname) => {
+    try {
+      const user = await User.create({
+        email,
+        password,
+        sex,
+        birth,
+        nickname,
+        salt,
+      });
+      return user;
+    } catch (err) {
+      throw err;
+    }
   }
 }

@@ -15,32 +15,26 @@ const rm = require('../modules/responseMessage');
 
 module.exports = {
   /**
-   * body: water_date, review, keyword1, keyword2, keyword3, cherish_id
+   * body: water_date, review, keyword1, keyword2, keyword3, user_id
    */
   postWater: async (req, res) => {
-    // 파라미터로 cherish_id 가져오기
-    const cherish_id = req.params.id;
-
+    // 파라미터로 CherishId 가져오기
     const {
       water_date,
       review,
       keyword1,
       keyword2,
       keyword3,
+      CherishId
     } = req.body;
 
-
     try {
-      // water_date 나 cherish_id 가 없으면? 나빠요..
-      if (!water_date) {
+
+      // water_date 나 CherishId 가 없으면? 나빠요..
+      if (!water_date || !CherishId) {
         console.log('필요한 값이 없습니다.')
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE))
       }
-
-      // (삭제예정) Cherish에서 cherish_id를 CherishId로 받아오기 
-      const cherish = await Cherish.findOne({
-        id: cherish_id
-      });
 
 
       // 점수 구하는 로직
@@ -61,15 +55,15 @@ module.exports = {
       }
 
 
-
       // models_water에 작성한 내용 생성하기
       const water = await Water.create({
+        CherishId,
         water_date,
         review,
         keyword1,
         keyword2,
         keyword3,
-        cherish_id
+
       });
 
       //await cherish.addPost(water);
@@ -78,13 +72,13 @@ module.exports = {
       const gg = await Cherish.findOne({
         attributes: ['growth'],
         where: {
-          id: cherish_id,
+          id: CherishId,
         },
       });
 
       // cherish table growth 에 score 더해줌
       if (score) {
-        gg.growth += score;
+        //gg.growth += score;
         console.log('>>> 애정도에 score 추가');
       }
 
@@ -98,11 +92,6 @@ module.exports = {
     }
   },
 
-
-
-
-
-
   // CherishId 별 리뷰내용 보기
   getWater: async (req, res) => {
     const errors = validationResult(req);
@@ -113,7 +102,7 @@ module.exports = {
     }
 
     const {
-      cherish_id
+      CherishId
     } = req.query;
 
     try {
@@ -121,7 +110,7 @@ module.exports = {
       const water = await Water.findAll({
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
-          cherish_id: cherish_id,
+          CherishId: CherishId,
         },
       });
 

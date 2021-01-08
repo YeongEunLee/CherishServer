@@ -8,11 +8,11 @@ const {
 const waterController = require('../../controller/waterController');
 
 /**
- * @api {post} /water/:id
+ * @api {post} /water
  * @apiName postWater
  * @apiGroup Water
  */
-router.post('/:id', waterController.postWater);
+router.post('/', waterController.postWater);
 
 /**
  * @api {get} /water/:id

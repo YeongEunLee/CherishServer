@@ -1,7 +1,12 @@
-const { validationResult } = require('express-validator');
+const {
+  validationResult
+} = require('express-validator');
 const dayjs = require('dayjs');
 
-const { User, sequelize } = require('../models');
+const {
+  User,
+  sequelize
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -10,7 +15,10 @@ const userService = require('../service/userService');
 module.exports = {
   signin: async (req, res) => {
     // 1. req.body에서 데이터 가져오기
-    const { email, password } = req.body;
+    const {
+      email,
+      password
+    } = req.body;
     //2. request data 확인하기, email, password data가 없다면 NullValue 반환
     if (!email || !password) {
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
@@ -36,6 +44,40 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.SIGN_IN_SUCCESS, user.id));
     } catch (error) {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_IN_FAIL));
+    }
+  },
+
+  signup: async (req, res) => {
+    const {
+      email,
+      password,
+      sex,
+      birth,
+      nickname
+    } = req.body;
+
+    if (!email || !password || !sex || !birth || !nickname) {
+      console.log('필요한 값이 없습니다!');
+      return res.status(sc.BAD_REQUEST).send(ut.fail(statusCode.BAD_REQUEST, rm.NULL_VALUE));
+    }
+    try {
+      const alreadyEmail = await userService.emailCheck({
+        email
+      });
+      if (alreadyEmail) {
+        console.log('이미 존재하는 이메일 입니다.');
+        return res.status(sc.BAD_REQUEST).send(ut.fail(sc.BAD_REQUEST, rm.ALREADY_EMAIL));
+      }
+      const user = await userService.signup(email, password, sex, birth, nickname);
+
+      return res.status(sc.OK).send(ut.success(rm.SIGN_UP_SUCCESS, {
+        email: user.email,
+        password: user.password,
+        nickname: user.nickname,
+      }));
+    } catch (error) {
+      console.error(error);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(statusCode.INTERNAL_SERVER_ERROR, rm.SIGN_UP_FAIL));
     }
   },
 };
