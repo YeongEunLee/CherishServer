@@ -33,16 +33,10 @@ module.exports = {
       let score = 0;
       if (keyword1) {
         score += 1;
-        console.log('키워드 작성, score증가');
       }
 
       if (review) {
         score += 1;
-        console.log('리뷰 작성, score증가');
-      }
-
-      if (!review && !keyword) {
-        console.log('리뷰, 키워드 작성안함, score 증가 없음');
       }
 
       // models_water에 작성한 내용 생성하기
@@ -65,7 +59,6 @@ module.exports = {
 
       if (score != 0) {
         cherishGrowth.growth += score;
-        console.log('애정도가 %d점 추가되었습니다.', score);
       }
 
       return res.status(sc.OK).send(ut.success(rm.OK, water));
