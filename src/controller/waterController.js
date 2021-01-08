@@ -13,10 +13,7 @@ module.exports = {
    * body: water_date, review, keyword1, keyword2, keyword3, CherishId
    */
   postWater: async (req, res) => {
-    // 파라미터로 CherishId 가져오기
-    const CherishId = req.params.id;
-
-    const { water_date, review, keyword1, keyword2, keyword3 } = req.body;
+    const { water_date, review, keyword1, keyword2, keyword3, CherishId } = req.body;
 
     try {
       if (!water_date) {
@@ -94,7 +91,7 @@ module.exports = {
       const water = await Water.findAll({
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
-          CherishId: CherishId,
+          id: CherishId,
         },
       });
     } catch (err) {
