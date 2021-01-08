@@ -1,20 +1,6 @@
 const { Plant_level } = require('../models');
 
 module.exports = {
-  getPlantImage: async ({ PlantId, level }) => {
-    try {
-      const plant = await Plant_level.findOne({
-        attributes: ['image_url'],
-        where: {
-          PlantId,
-          level,
-        },
-      });
-      return plant.image_url;
-    } catch (err) {
-      throw err;
-    }
-  },
   getPlantLevel: ({ growth }) => {
     try {
       let level;

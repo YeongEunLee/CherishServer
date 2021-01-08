@@ -156,7 +156,6 @@ module.exports = {
           id: cherish.dataValues.PlantId,
         },
       });
-      console.log(plant);
       result.plant_name = plant.name;
       result.plant_thumbnail_image_url = plant.thumbnail_image_url;
 
