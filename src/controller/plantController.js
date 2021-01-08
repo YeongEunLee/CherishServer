@@ -46,7 +46,7 @@ module.exports = {
         attributes: ['image_url'],
         where: {
           PlantId: plant.dataValues.id,
-          level: 1,
+          level: 3,
         },
       });
 
