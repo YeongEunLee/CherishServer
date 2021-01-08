@@ -58,7 +58,7 @@ module.exports = {
 
     if (!email || !password || !sex || !birth || !nickname) {
       console.log('필요한 값이 없습니다!');
-      return res.status(sc.BAD_REQUEST).send(ut.fail(statusCode.BAD_REQUEST, rm.NULL_VALUE));
+      return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
       const alreadyEmail = await userService.emailCheck({
@@ -66,18 +66,16 @@ module.exports = {
       });
       if (alreadyEmail) {
         console.log('이미 존재하는 이메일 입니다.');
-        return res.status(sc.BAD_REQUEST).send(ut.fail(sc.BAD_REQUEST, rm.ALREADY_EMAIL));
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.ALREADY_EMAIL));
       }
       const user = await userService.signup(email, password, sex, birth, nickname);
 
       return res.status(sc.OK).send(ut.success(rm.SIGN_UP_SUCCESS, {
-        email: user.email,
-        password: user.password,
         nickname: user.nickname,
       }));
     } catch (error) {
       console.error(error);
-      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(statusCode.INTERNAL_SERVER_ERROR, rm.SIGN_UP_FAIL));
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_UP_FAIL));
     }
   },
 };

@@ -1,9 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const {
-  check
-} = require('express-validator');
+const { check } = require('express-validator');
 
 const waterController = require('../../controller/waterController');
 
