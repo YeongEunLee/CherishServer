@@ -5,7 +5,7 @@ const { Cherish, Plant, Water, Plant_status, sequelize, Plant_level } = require(
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { cherishService } = require('../service');
+const { cherishService, plantService } = require('../service');
 
 module.exports = {
   /**
@@ -206,6 +206,58 @@ module.exports = {
         result.reviews = water;
       }
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
+    } catch (err) {
+      console.log(err);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+    }
+  },
+  getCherishList: async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const id = req.params.id;
+    try {
+      const cherishes = await Cherish.findAll({
+        include: [
+          {
+            model: Plant,
+          },
+        ],
+        where: {
+          UserId: id,
+        },
+      });
+      const plant_level = await Plant_level.findAll({});
+      const plant_map = new Map();
+      plant_level.map(async (plant_info) => {
+        const PlantId = plant_info.PlantId;
+        const level = plant_info.level;
+        plant_map.set(`${PlantId},${level}`, plant_info.image_url);
+      });
+      const result = [];
+      await cherishes.map(async (cherish) => {
+        const obj = {};
+        const level = await plantService.getPlantLevel({ growth: cherish.growth });
+        const PlantId = cherish.PlantId;
+        obj.id = cherish.id;
+        const water_date = dayjs(cherish.water_date);
+        obj.dDay = water_date.diff(dayjs(), 'day');
+        obj.nickname = cherish.nickname;
+        obj.growth = cherish.growth / 12;
+        obj.plant_name = cherish.Plant.name;
+        obj.image_url = plant_map.get(`${PlantId},${level}`);
+        obj.thumbnail_image_url = cherish.Plant.thumbnail_image_url;
+        result.push(obj);
+      });
+      result.sort((a, b) => {
+        return a.dDay - b.dDay;
+      });
+      return res
+        .status(sc.OK)
+        .send(ut.success(rm.READ_ALL_CHERISH_SUCCESS, { result, totalCherish: result.length }));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));

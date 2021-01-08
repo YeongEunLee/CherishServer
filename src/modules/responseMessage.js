@@ -11,6 +11,7 @@ module.exports = {
   DOWN_GROWTH: '식물 애정도가 차감되었습니다..',
   GET_WATER_POSTPONE: '미루기 횟수입니다.',
   READ_ALL_CHERISH_BY_ID_SUCCESS: '체리쉬 상세보기를 성공하였습니다.',
+  READ_ALL_CHERISH_SUCCESS: '유저의 체리쉬 리스트 조회를 성공하였습니다.',
 
   /* 로그인 */
   SIGN_IN_SUCCESS: '로그인 성공 ^o^',

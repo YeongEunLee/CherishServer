@@ -33,8 +33,14 @@ router.delete('/:id', plantController.deleteCherish);
  */
 router.get(
   '/',
-  [check('cherish_id', 'cherish_id is required').not().isEmpty()],
+  [check('CherishId', 'CherishId is required').not().isEmpty()],
   plantController.getCherishInfo
 );
 
+/**
+ * @api {get} /cherish/:id
+ * @apiName getCherishList
+ * @apiGroup Cherish
+ */
+router.get('/:id', [check('id', 'id is required').not().isEmpty()], plantController.getCherishList);
 module.exports = router;
