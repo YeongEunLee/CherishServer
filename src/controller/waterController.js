@@ -10,6 +10,27 @@ const { NULL_VALUE } = require('../modules/responseMessage');
 
 module.exports = {
   /**
+<<<<<<< HEAD
+   * body: water_date, review, keyword1, keyword2, keyword3, user_id
+   */
+  postWater: async (req, res) => {
+    // 파라미터로 CherishId 가져오기
+    const {
+      water_date,
+      review,
+      keyword1,
+      keyword2,
+      keyword3,
+      CherishId
+    } = req.body;
+
+    try {
+
+      // water_date 나 CherishId 가 없으면? 나빠요..
+      if (!water_date || !CherishId) {
+        console.log('필요한 값이 없습니다.')
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE))
+=======
    * body: water_date, review, keyword1, keyword2, keyword3, CherishId
    */
   postWater: async (req, res) => {
@@ -19,34 +40,48 @@ module.exports = {
       if (!water_date) {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
+>>>>>>> upstream/develop
       }
       //..keyword개수대로 증가하는 줄알고 짠코드 미련 못버림..
       /*
       let keywordList = [keyword1, keyword2, keyword3];
 
+<<<<<<< HEAD
+
+      // 점수 구하는 로직
+=======
       let score = 0;
       keywordList.forEach((item) => {
         score += item === undefined ? 0 : 1;
       });
       console.log('%d점 증가했습니다.', score);
       */
+>>>>>>> upstream/develop
       let score = 0;
       if (keyword1) {
         score += 1;
       }
 
+<<<<<<< HEAD
+=======
       if (review) {
         score += 1;
       }
+>>>>>>> upstream/develop
 
       // models_water에 작성한 내용 생성하기
       const water = await Water.create({
+        CherishId,
         water_date,
         review,
         keyword1,
         keyword2,
         keyword3,
+<<<<<<< HEAD
+
+=======
         CherishId,
+>>>>>>> upstream/develop
       });
 
       // Cherish에서 growth 받아오기
@@ -57,8 +92,15 @@ module.exports = {
         },
       });
 
+<<<<<<< HEAD
+      // cherish table growth 에 score 더해줌
+      if (score) {
+        //gg.growth += score;
+        console.log('>>> 애정도에 score 추가');
+=======
       if (score != 0) {
         cherishGrowth.growth += score;
+>>>>>>> upstream/develop
       }
 
       await Cherish.update(
@@ -88,14 +130,24 @@ module.exports = {
       });
     }
 
+<<<<<<< HEAD
+    const {
+      CherishId
+    } = req.query;
+=======
     const { CherishId } = req.query;
+>>>>>>> upstream/develop
 
     try {
       // Water 리뷰 가져오기
       const water = await Water.findAll({
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
+<<<<<<< HEAD
+          CherishId: CherishId,
+=======
           id: CherishId,
+>>>>>>> upstream/develop
         },
       });
     } catch (err) {

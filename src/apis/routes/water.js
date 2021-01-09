@@ -6,7 +6,7 @@ const { check } = require('express-validator');
 const waterController = require('../../controller/waterController');
 
 /**
- * @api {post} /water/:id
+ * @api {post} /water
  * @apiName postWater
  * @apiGroup Water
  */

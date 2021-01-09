@@ -13,5 +13,7 @@ const loginController = require('../../controller/loginController');
  * @apiGroup User
  */
 router.post('/signin', loginController.signin);
+router.post('/signup', loginController.signup);
+
 
 module.exports = router;
