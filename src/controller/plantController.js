@@ -245,15 +245,15 @@ module.exports = {
         plant_map.set(`${PlantId},${level}`, plant_info.image_url);
       });
       const result = [];
-      await cherishes.map(async (cherish) => {
+      cherishes.map(async (cherish) => {
         const obj = {};
-        const level = await plantService.getPlantLevel({ growth: cherish.growth });
+        const level = plantService.getPlantLevel({ growth: cherish.growth });
         const PlantId = cherish.PlantId;
         obj.id = cherish.id;
         const water_date = dayjs(cherish.water_date);
         obj.dDay = water_date.diff(dayjs(), 'day');
         obj.nickname = cherish.nickname;
-        obj.growth = cherish.growth / 12;
+        obj.growth = parseInt((parseFloat(cherish.growth) / 12.0) * 100);
         obj.plant_name = cherish.Plant.name;
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url = cherish.Plant.thumbnail_image_url;
