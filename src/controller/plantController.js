@@ -12,14 +12,12 @@ module.exports = {
    * body: name, nickname, birth, phone, cycle_date, notice_time
    */
   createPlant: async (req, res) => {
-    const { name, nickname, birth, phone, cycle_date, notice_time } = req.body;
+    const { name, nickname, birth, phone, cycle_date, notice_time, UserId } = req.body;
     try {
-      if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time) {
+      if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time || !UserId) {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-
-      const UserId = 1; //Token있으면 추가하겠음 ........
 
       const PlantStatusId = (cycle_date) => {
         if (cycle_date <= 3) return 1;
@@ -55,8 +53,6 @@ module.exports = {
       //현재 날짜에 cycle_date 더해서 water_date 구하기
       const now_date = dayjs().format('YYYY-MM-DD hh:mm:ss');
       const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD hh:mm:ss');
-      console.log(now_date);
-      console.log(water_date);
 
       await Cherish.create({
         name,
