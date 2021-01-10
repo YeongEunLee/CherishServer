@@ -83,13 +83,11 @@ module.exports = {
     const CherishId = req.params.id;
 
     if (!CherishId) {
-      console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
       const alreadyCherish = await cherishService.cherishCheck({ CherishId });
       if (!alreadyCherish) {
-        console.log('없는 체리쉬 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
