@@ -10,7 +10,7 @@ const plantController = require('../../controller/plantController');
  * @apiName modifyCherish
  * @apiGroup Cherish
  */
-router.put('/:id', plantController.modifyCherish);
+router.put('/', plantController.modifyCherish);
 
 /**
  * @api {post} /cherish

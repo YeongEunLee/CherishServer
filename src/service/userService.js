@@ -1,37 +1,32 @@
-const {
-  User
-} = require('../models');
+const { User } = require('../models');
 
 module.exports = {
-  emailCheck: async ({
-    email
-  }) => {
+  emailCheck: async ({ email }) => {
     try {
       const alreadyEmail = await User.findOne({
         where: {
           email,
-        }
+        },
       });
       return alreadyEmail;
     } catch (err) {
+      console.log(err);
       throw err;
     }
   },
 
-  signin: async ({
-    email,
-    password
-  }) => {
+  signin: async ({ email, password }) => {
     try {
       const user = await User.findOne({
         where: {
           email,
-          password
-        }
+          password,
+        },
       });
       console.log(user);
       return user;
     } catch (err) {
+      console.log(err);
       throw err;
     }
   },
@@ -44,14 +39,14 @@ module.exports = {
         sex,
         birth,
         nickname,
-        salt: "4321234",
-        phone: "010-0000-0000",
-        name: "한두두"
+        salt: '4321234',
+        phone: '010-0000-0000',
+        name: '한두두',
       });
       return user;
     } catch (err) {
       console.log(err);
       throw err;
     }
-  }
-}
+  },
+};

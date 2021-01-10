@@ -12,14 +12,12 @@ module.exports = {
    * body: name, nickname, birth, phone, cycle_date, notice_time
    */
   createPlant: async (req, res) => {
-    const { name, nickname, birth, phone, cycle_date, notice_time } = req.body;
+    const { name, nickname, birth, phone, cycle_date, notice_time, UserId } = req.body;
     try {
-      if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time) {
+      if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time || !UserId) {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-
-      const UserId = 1; //Token있으면 추가하겠음 ........
 
       const PlantStatusId = (cycle_date) => {
         if (cycle_date <= 3) return 1;
@@ -55,8 +53,6 @@ module.exports = {
       //현재 날짜에 cycle_date 더해서 water_date 구하기
       const now_date = dayjs().format('YYYY-MM-DD hh:mm:ss');
       const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD hh:mm:ss');
-      console.log(now_date);
-      console.log(water_date);
 
       await Cherish.create({
         name,
@@ -87,13 +83,11 @@ module.exports = {
     const CherishId = req.params.id;
 
     if (!CherishId) {
-      console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
       const alreadyCherish = await cherishService.cherishCheck({ CherishId });
       if (!alreadyCherish) {
-        console.log('없는 체리쉬 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
@@ -113,21 +107,18 @@ module.exports = {
    * cherish 정보 수정
    **/
   modifyCherish: async (req, res) => {
-    const CherishId = req.params.id;
+    const CherishId = req.body.id;
     const { nickname, birth, cycle_date, notice_time, water_notice } = req.body;
 
     if (!CherishId) {
-      console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     if (!nickname || !birth || !cycle_date || !notice_time || !water_notice) {
-      console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
       const alreadyCherish = await cherishService.cherishCheck({ CherishId });
       if (!alreadyCherish) {
-        console.log('없는 체리쉬 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
       await Cherish.update(
@@ -254,8 +245,6 @@ module.exports = {
         obj.dDay = water_date.diff(dayjs(), 'day');
         obj.nickname = cherish.nickname;
         obj.growth = parseInt((parseFloat(cherish.growth) / 12.0) * 100);
-        obj.plant_name =
-          cherish && cherish.Plant && cherish.Plant.name ? cherish.Plant.name : '이름없음';
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url =
           cherish && cherish.Plant && cherish.Plant.thumbnail_image_url
