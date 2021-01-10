@@ -10,6 +10,8 @@ router.use('/login', require('./login'));
 
 router.use('/postpone', require('./postpone'));
 
+router.use('/calendar', require('./calendar'));
+
 router.use('/user', require('./user'));
 
 module.exports = router;

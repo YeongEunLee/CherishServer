@@ -25,4 +25,7 @@ module.exports = {
   NULL_VALUE: '필요한 값이 존재하지 않습니다',
   SIGN_UP_SUCCESS: '회원가입에 성공했슴다^0^',
   SIGN_UP_FAIL: '회원가입에 실패했슴다＞︿＜',
+  /*Calendar*/
+  CALENDAR_READ_SUCCESS: '캘린더 조회 성공했습니다.',
+  CALENDAR_READ_FAIL: '캘린더 조회 실패했습니다.',
 };

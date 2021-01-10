@@ -22,16 +22,7 @@ module.exports = {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-      //..keyword개수대로 증가하는 줄알고 짠코드 미련 못버림..
-      /*
-      let keywordList = [keyword1, keyword2, keyword3];
 
-      let score = 0;
-      keywordList.forEach((item) => {
-        score += item === undefined ? 0 : 1;
-      });
-      console.log('%d점 증가했습니다.', score);
-      */
       let score = 0;
       if (keyword1) {
         score += 1;
@@ -98,7 +89,7 @@ module.exports = {
       const water = await Water.findAll({
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
-          id: CherishId,
+          CherishId: CherishId,
         },
       });
     } catch (err) {
