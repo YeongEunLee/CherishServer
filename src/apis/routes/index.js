@@ -25,4 +25,6 @@ router.use('/login', require('./login'));
 
 router.use('/postpone', require('./postpone'));
 
+router.use('/calendar', require('./calendar'));
+
 module.exports = router;
