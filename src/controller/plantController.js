@@ -254,8 +254,6 @@ module.exports = {
         obj.dDay = water_date.diff(dayjs(), 'day');
         obj.nickname = cherish.nickname;
         obj.growth = parseInt((parseFloat(cherish.growth) / 12.0) * 100);
-        obj.plant_name =
-          cherish && cherish.Plant && cherish.Plant.name ? cherish.Plant.name : '이름없음';
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url =
           cherish && cherish.Plant && cherish.Plant.thumbnail_image_url
