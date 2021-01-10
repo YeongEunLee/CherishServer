@@ -23,9 +23,12 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
 
-      // 점수 구하는 로직
       let score = 0;
       if (keyword1) {
+        score += 1;
+      }
+
+      if (review) {
         score += 1;
       }
 
@@ -37,6 +40,7 @@ module.exports = {
         keyword1,
         keyword2,
         keyword3,
+        CherishId,
       });
 
       // Cherish에서 growth 받아오기
@@ -47,10 +51,8 @@ module.exports = {
         },
       });
 
-      // cherish table growth 에 score 더해줌
-      if (score) {
-        //gg.growth += score;
-        console.log('>>> 애정도에 score 추가');
+      if (score != 0) {
+        cherishGrowth.growth += score;
       }
 
       await Cherish.update(

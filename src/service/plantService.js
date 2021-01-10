@@ -8,7 +8,7 @@ module.exports = {
         level = 0;
       } else if (growth < 7) {
         level = 1;
-      } else if (gorwth < 12) {
+      } else if (growth < 12) {
         level = 2;
       } else {
         level = 3;
