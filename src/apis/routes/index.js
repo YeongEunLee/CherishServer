@@ -14,4 +14,6 @@ router.use('/calendar', require('./calendar'));
 
 router.use('/user', require('./user'));
 
+router.use('/plantDetail', require('./plantDetail'));
+
 module.exports = router;
