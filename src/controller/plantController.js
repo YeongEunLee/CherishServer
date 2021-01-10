@@ -91,11 +91,13 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
-      await Cherish.destroy({
-        where: {
-          id: CherishId,
+      await Cherish.update(
+        {
+          status_code: false,
         },
-      });
+        { where: { id: CherishId } }
+      );
+
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
