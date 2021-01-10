@@ -40,7 +40,6 @@ module.exports = {
         keyword1,
         keyword2,
         keyword3,
-        CherishId,
       });
 
       // Cherish에서 growth 받아오기
