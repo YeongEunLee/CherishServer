@@ -19,7 +19,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const user = await User.findOne({
-        attirbutes: ['name', 'nicknmae', 'postpone_count'], // postpone_count
+        attributes: ['name', 'nickname', 'postpone_count'], // postpone_count
         where: {
           id: id,
         },
