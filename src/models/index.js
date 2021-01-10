@@ -9,15 +9,24 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.User = require('./user')(sequelize, Sequelize);
-db.Cherish = require('./cherish')(sequelize, Sequelize);
-db.Plant = require('./plant')(sequelize, Sequelize);
-db.Water = require('./water')(sequelize, Sequelize);
 db.Plant_status = require('./plant_status')(sequelize, Sequelize);
+db.Plant = require('./plant')(sequelize, Sequelize);
+db.Plant_level = require('./plant_level')(sequelize, Sequelize);
+db.Cherish = require('./cherish')(sequelize, Sequelize);
+db.Water = require('./water')(sequelize, Sequelize);
 db.Keyword = require('./keyword')(sequelize, Sequelize);
 
 /** 1 : N User : Cherish */
 db.User.hasMany(db.Cherish);
 db.Cherish.belongsTo(db.User);
+
+/** 1 : N Plant_status : Plant */
+db.Plant_status.hasMany(db.Plant);
+db.Plant.belongsTo(db.Plant_status);
+
+/** 1 : N Plant : Plant_level */
+db.Plant.hasMany(db.Plant_level);
+db.Plant_level.belongsTo(db.Plant);
 
 /** 1 : N Plant : Cherish */
 db.Plant.hasMany(db.Cherish);

@@ -6,12 +6,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(45),
         allowNull: false,
       },
+      modifier: {
+        type: DataTypes.STRING(300),
+        allowNull: false,
+      },
       explanation: {
         type: DataTypes.STRING(300),
         allowNull: false,
       },
-      image_url: {
-        type: DataTypes.STRING(200),
+      flower_meaning: {
+        type: DataTypes.STRING(300),
         allowNull: false,
       },
       thumbnail_image_url: {
@@ -21,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      underscored: true,
       tableName: 'plant',
     }
   );

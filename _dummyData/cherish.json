@@ -1,0 +1,81 @@
+[
+	{
+    "name" : "송훈기",
+		"nickname": "훈케이",
+		"growth": 1,
+    "phone" : "010-1111-1111",
+    "birth" : "19960212",
+    "water_date" : "2021-02-01",
+    "postpone_number" : 2,
+    "start_date" : "2021-01-01",
+    "notice_time" : "15:00",
+    "PlantId" : 1,
+    "UserId" : 1
+	},
+	{
+    "name" : "안나영",
+		"nickname": "나영아빠",
+		"growth": 2,
+    "phone" : "010-1111-1111",
+    "birth" : "19960212",
+    "water_date" : "2021-02-01",
+    "postpone_number" : 2,
+    "start_date" : "2021-01-01",
+    "notice_time" : "14:00",
+    "PlantId" : 3,
+    "UserId" : 2
+	},
+	{
+    "name" : "권예진",
+		"nickname": "예진할머니",
+		"growth": 3,
+    "phone" : "010-1111-1111",
+    "birth" : "19960212",
+    "water_date" : "2021-02-01",
+    "postpone_number" : 2,
+    "start_date" : "2021-01-01",
+    "notice_time" : "19:00",
+    "PlantId" : 2,
+    "UserId" : 3
+	},
+	{
+    "name" : "황지은",
+		"nickname": "지은남친",
+		"growth": 4,
+    "phone" : "010-1111-1111",
+    "birth" : "19960212",
+    "water_date" : "2021-02-01",
+    "postpone_number" : 2,
+    "start_date" : "2021-01-01",
+    "notice_time" : "11:00",
+    "PlantId" : 2,
+    "UserId" : 4
+	},
+	{
+    "name" : "이원석",
+		"nickname": "원석형",
+		"growth": 5,
+    "phone" : "010-1111-1111",
+    "birth" : "19960212",
+    "water_date" : "2021-02-01",
+    "postpone_number" : 2,
+    "start_date" : "2021-01-01",
+    "notice_time" : "11:00",
+    "PlantId" : 4,
+    "UserId" : 5
+	},
+	{
+    "name" : "장서현",
+		"nickname": "서현동생",
+		"growth": 11,
+    "phone" : "010-1111-1111",
+    "birth" : "19960212",
+    "water_date" : "2021-02-01",
+    "postpone_number" : 2,
+    "start_date" : "2021-01-01",
+    "notice_time" : "11:00",
+    "PlantId" : 5,
+    "UserId" : 6
+
+	}
+]

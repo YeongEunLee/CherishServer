@@ -37,13 +37,16 @@ module.exports = (sequelize, DataTypes) => {
       profile_image_url: {
         type: DataTypes.STRING(200),
       },
+      postpone_count: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
       fcm_token: {
         type: DataTypes.STRING(200),
       },
     },
     {
       timestamps: true,
-      underscored: true,
       tableName: 'user',
     }
   );
