@@ -1,7 +1,15 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, Plant_status, sequelize, Plant_level } = require('../models');
+const {
+  Cherish,
+  Plant,
+  Water,
+  Plant_status,
+  sequelize,
+  Plant_level,
+  Status_message,
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -177,6 +185,7 @@ module.exports = {
        */
       const water_date = dayjs(cherish.water_date);
       result.dDay = water_date.diff(now_date, 'day');
+      const dDay = water_date.diff(now_date, 'day');
 
       // 식물 이름(plant_name), 식물 썸네일 사진(plant_thumbnail_image_url)
       const plant = await Plant.findOne({
@@ -187,6 +196,21 @@ module.exports = {
       });
       result.plant_name = plant.name;
       result.plant_thumbnail_image_url = plant.thumbnail_image_url;
+
+      //상세뷰 상태 가져오기
+      const message_id = (dDay) => {
+        if (dDay <= 0) return 1;
+        else if (dDay <= 1) return 2;
+        else if (dDay <= 2) return 3;
+        else return 4;
+      };
+
+      const message = await Status_message.findOne({
+        attributes: ['message'],
+        where: { id: message_id(dDay) },
+      });
+
+      result.status_message = message;
 
       // 메모(water) 가져오기
       const water = await Water.findAll({
