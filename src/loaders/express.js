@@ -1,16 +1,14 @@
 const express = require('express');
 const api = require('../apis/routes');
 const errorHandler = require('./error');
-const {
-  sequelize
-} = require('../models');
+const { sequelize } = require('../models');
 
 module.exports = (app) => {
   /**
    * Database sync
    */
   sequelize.sync({
-    force: false
+    force: false,
   });
   /**
    * Health Check endpoints
@@ -22,9 +20,11 @@ module.exports = (app) => {
   app.head('/health', (req, res) => {
     res.status(200).end();
   });
-  app.use(express.urlencoded({
-    extended: false
-  }));
+  app.use(
+    express.urlencoded({
+      extended: false,
+    })
+  );
   app.use(express.json());
   app.use('/', api);
   app.use(errorHandler);
