@@ -15,6 +15,7 @@ db.Plant_level = require('./plant_level')(sequelize, Sequelize);
 db.Cherish = require('./cherish')(sequelize, Sequelize);
 db.Water = require('./water')(sequelize, Sequelize);
 db.Keyword = require('./keyword')(sequelize, Sequelize);
+db.Status_message = require('./status_message')(sequelize, Sequelize);
 
 /** 1 : N User : Cherish */
 db.User.hasMany(db.Cherish);
