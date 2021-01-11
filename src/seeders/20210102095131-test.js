@@ -23,13 +23,17 @@ module.exports = {
     const status_message = JSON.parse(
       fs.readFileSync(`${path.resolve()}/_dummyData/status_message.json`, 'utf-8')
     );
+    const modifier = JSON.parse(
+      fs.readFileSync(`${path.resolve()}/_dummyData/modifier.json`, 'utf-8')
+    );
     // await queryInterface.bulkInsert('user', users, {});
     // await queryInterface.bulkInsert('plant_status', plant_status, {});
     // await queryInterface.bulkInsert('plant', plant, {});
     // await queryInterface.bulkInsert('cherish', cherish, {});
     // await queryInterface.bulkInsert('water', water, {});
     // await queryInterface.bulkInsert('plant_level', plant_level, {});
-    await queryInterface.bulkInsert('status_message', status_message, {});
+    //await queryInterface.bulkInsert('status_message', status_message, {});
+    await queryInterface.bulkInsert('modifier', modifier, {});
   },
 
   down: async (queryInterface, Sequelize) => {
