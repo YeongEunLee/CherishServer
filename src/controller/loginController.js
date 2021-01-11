@@ -1,7 +1,12 @@
-const { validationResult } = require('express-validator');
+const {
+  validationResult
+} = require('express-validator');
 const dayjs = require('dayjs');
 
-const { User, sequelize } = require('../models');
+const {
+  User,
+  sequelize
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -16,7 +21,10 @@ module.exports = {
       });
     }
     // 1. req.body에서 데이터 가져오기
-    const { email, password } = req.body;
+    const {
+      email,
+      password
+    } = req.body;
 
     try {
       //2. 존재하는 아이디인지 확인하기. 존재하지 않는 아이디면 NO USER 반환
@@ -36,14 +44,22 @@ module.exports = {
       });
       const UserId = user.id;
       //4. status: 200 ,message: SIGN_IN_SUCCESS, data: email반환
-      return res.status(sc.OK).send(ut.success(rm.SIGN_IN_SUCCESS, { UserId }));
+      return res.status(sc.OK).send(ut.success(rm.SIGN_IN_SUCCESS, {
+        UserId
+      }));
     } catch (error) {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_IN_FAIL));
     }
   },
 
   signup: async (req, res) => {
-    const { email, password, sex, birth, nickname } = req.body;
+    const {
+      email,
+      password,
+      sex,
+      birth,
+      nickname
+    } = req.body;
 
     if (!email || !password || !sex || !birth || !nickname) {
       console.log('필요한 값이 없습니다!');

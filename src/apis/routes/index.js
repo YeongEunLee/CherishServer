@@ -16,4 +16,6 @@ router.use('/user', require('./user'));
 
 router.use('/plantDetail', require('./plantDetail'));
 
+router.use('/search', require('./search'));
+
 module.exports = router;
