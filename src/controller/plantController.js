@@ -5,21 +5,19 @@ const { Cherish, Plant, Water, Plant_status, sequelize, Plant_level } = require(
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { cherishService } = require('../service');
+const { cherishService, plantService } = require('../service');
 
 module.exports = {
   /**
    * body: name, nickname, birth, phone, cycle_date, notice_time
    */
   createPlant: async (req, res) => {
-    const { name, nickname, birth, phone, cycle_date, notice_time } = req.body;
+    const { name, nickname, birth, phone, cycle_date, notice_time, UserId } = req.body;
     try {
-      if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time) {
+      if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time || !UserId) {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-
-      const UserId = 1; //Token있으면 추가하겠음 ........
 
       const PlantStatusId = (cycle_date) => {
         if (cycle_date <= 3) return 1;
@@ -52,6 +50,10 @@ module.exports = {
 
       plant.dataValues.image_url = plantImageURL.dataValues.image_url;
 
+      //현재 날짜에 cycle_date 더해서 water_date 구하기
+      const now_date = dayjs().format('YYYY-MM-DD hh:mm:ss');
+      const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD hh:mm:ss');
+
       await Cherish.create({
         name,
         nickname,
@@ -59,6 +61,7 @@ module.exports = {
         phone,
         cycle_date,
         notice_time,
+        water_date,
         PlantId: plant.dataValues.PlantId,
         UserId,
       });
@@ -80,21 +83,21 @@ module.exports = {
     const CherishId = req.params.id;
 
     if (!CherishId) {
-      console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
       const alreadyCherish = await cherishService.cherishCheck({ CherishId });
       if (!alreadyCherish) {
-        console.log('없는 체리쉬 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
-      await Cherish.destroy({
-        where: {
-          id: CherishId,
+      await Cherish.update(
+        {
+          status_code: false,
         },
-      });
+        { where: { id: CherishId } }
+      );
+
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
@@ -106,21 +109,18 @@ module.exports = {
    * cherish 정보 수정
    **/
   modifyCherish: async (req, res) => {
-    const CherishId = req.params.id;
+    const CherishId = req.body.id;
     const { nickname, birth, cycle_date, notice_time, water_notice } = req.body;
 
     if (!CherishId) {
-      console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     if (!nickname || !birth || !cycle_date || !notice_time || !water_notice) {
-      console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
       const alreadyCherish = await cherishService.cherishCheck({ CherishId });
       if (!alreadyCherish) {
-        console.log('없는 체리쉬 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
       await Cherish.update(
@@ -206,6 +206,60 @@ module.exports = {
         result.reviews = water;
       }
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
+    } catch (err) {
+      console.log(err);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+    }
+  },
+  getCherishList: async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const id = req.params.id;
+    try {
+      const cherishes = await Cherish.findAll({
+        include: [
+          {
+            model: Plant,
+          },
+        ],
+        where: {
+          UserId: id,
+        },
+      });
+      const plant_level = await Plant_level.findAll({});
+      const plant_map = new Map();
+      plant_level.map(async (plant_info) => {
+        const PlantId = plant_info.PlantId;
+        const level = plant_info.level;
+        plant_map.set(`${PlantId},${level}`, plant_info.image_url);
+      });
+      const result = [];
+      cherishes.map(async (cherish) => {
+        const obj = {};
+        const level = plantService.getPlantLevel({ growth: cherish.growth });
+        const PlantId = cherish.PlantId;
+        obj.id = cherish.id;
+        const water_date = dayjs(cherish.water_date);
+        obj.dDay = water_date.diff(dayjs(), 'day');
+        obj.nickname = cherish.nickname;
+        obj.growth = parseInt((parseFloat(cherish.growth) / 12.0) * 100);
+        obj.image_url = plant_map.get(`${PlantId},${level}`);
+        obj.thumbnail_image_url =
+          cherish && cherish.Plant && cherish.Plant.thumbnail_image_url
+            ? cherish.Plant.thumbnail_image_url
+            : '썸네일없음';
+        result.push(obj);
+      });
+      result.sort((a, b) => {
+        return a.dDay - b.dDay;
+      });
+      return res
+        .status(sc.OK)
+        .send(ut.success(rm.READ_ALL_CHERISH_SUCCESS, { result, totalCherish: result.length }));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));

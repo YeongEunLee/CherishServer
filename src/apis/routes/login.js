@@ -1,9 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const {
-  check
-} = require('express-validator');
+const { check } = require('express-validator');
 
 const loginController = require('../../controller/loginController');
 
@@ -12,8 +10,14 @@ const loginController = require('../../controller/loginController');
  * @apiName signin
  * @apiGroup User
  */
-router.post('/signin', loginController.signin);
+router.post(
+  '/signin',
+  [
+    check('email', 'email is required').not().isEmpty(),
+    check('password', 'password is required').not().isEmpty(),
+  ],
+  loginController.signin
+);
 router.post('/signup', loginController.signup);
-
 
 module.exports = router;

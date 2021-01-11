@@ -18,9 +18,10 @@ const {
 
 module.exports = {
   /**
-   * body: water_date, review, keyword1, keyword2, keyword3, CherishId
+   * body: water_date, review, keyword1, keyword2, keyword3, user_id
    */
   postWater: async (req, res) => {
+    // 파라미터로 CherishId 가져오기
     const {
       water_date,
       review,
@@ -31,20 +32,12 @@ module.exports = {
     } = req.body;
 
     try {
-      if (!water_date) {
+      // water_date 나 CherishId 가 없으면? 나빠요..
+      if (!water_date || !CherishId) {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
-      //..keyword개수대로 증가하는 줄알고 짠코드 미련 못버림..
-      /*
-      let keywordList = [keyword1, keyword2, keyword3];
 
-      let score = 0;
-      keywordList.forEach((item) => {
-        score += item === undefined ? 0 : 1;
-      });
-      console.log('%d점 증가했습니다.', score);
-      */
       let score = 0;
       if (keyword1) {
         score += 1;
@@ -62,7 +55,6 @@ module.exports = {
         keyword1,
         keyword2,
         keyword3,
-        CherishId,
       });
 
       // Cherish에서 growth 받아오기
@@ -110,7 +102,7 @@ module.exports = {
       const water = await Water.findAll({
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
-          id: CherishId,
+          CherishId: CherishId,
         },
       });
     } catch (err) {

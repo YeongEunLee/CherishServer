@@ -6,7 +6,7 @@ const { check } = require('express-validator');
 const postponeController = require('../../controller/postponeController');
 
 /**
- * @api {put}/postpone/:id
+ * @api {put}/postpone
  * @apiName postponeWaterDate
  * @apiGroup postpone
  */

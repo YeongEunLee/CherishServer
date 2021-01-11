@@ -1,4 +1,11 @@
-[{
+[
+	{
+		"level": 0,
+		"description": "로즈마리 0단계 설명",
+		"image_url": "로즈마리 0단계 사진",
+		"PlantId": 1
+	},
+	{
 		"level": 1,
 		"description": "로즈마리 1단계 설명",
 		"image_url": "로즈마리 1단계 사진",
@@ -15,6 +22,12 @@
 		"description": "로즈마리 3단계 설명",
 		"image_url": "로즈마리 3단계 사진",
 		"PlantId": 1
+	},
+	{
+		"level": 0,
+		"description": "아메리칸블루 0단계 설명",
+		"image_url": "아메리칸블루 0단계 사진",
+		"PlantId": 2
 	},
 	{
 		"level": 1,
@@ -35,6 +48,12 @@
 		"PlantId": 2
 	},
 	{
+		"level": 0,
+		"description": "민들레 0단계 설명",
+		"image_url": "민들레 0단계 사진",
+		"PlantId": 3
+	},
+	{
 		"level": 1,
 		"description": "민들레 1단계 설명",
 		"image_url": "민들레 1단계 사진",
@@ -53,6 +72,12 @@
 		"PlantId": 3
 	},
 	{
+		"level": 0,
+		"description": "스투키 0단계 설명",
+		"image_url": "스투키 0단계 사진",
+		"PlantId": 4
+	},
+	{
 		"level": 1,
 		"description": "스투키 1단계 설명",
 		"image_url": "스투키 1단계 사진",
@@ -69,6 +94,12 @@
 		"description": "스투키 3단계 설명",
 		"image_url": "스투키 3단계 사진",
 		"PlantId": 4
+	},
+	{
+		"level": 0,
+		"description": "월하미인 0단계 설명",
+		"image_url": "월하미인 0단계 사진",
+		"PlantId": 5
 	},
 	{
 		"level": 1,

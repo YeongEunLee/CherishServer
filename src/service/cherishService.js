@@ -10,6 +10,7 @@ module.exports = {
       });
       return alreadyCherish;
     } catch (err) {
+      console.log(err);
       throw err;
     }
   },

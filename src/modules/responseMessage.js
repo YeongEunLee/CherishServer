@@ -11,6 +11,8 @@ module.exports = {
   DOWN_GROWTH: '식물 애정도가 차감되었습니다..',
   GET_WATER_POSTPONE: '미루기 횟수입니다.',
   READ_ALL_CHERISH_BY_ID_SUCCESS: '체리쉬 상세보기를 성공하였습니다.',
+  READ_ALL_CHERISH_MY_PAGE_SUCCESS: '체리쉬 마이 페이지 조회를 성공하였습니다.',
+  READ_ALL_CHERISH_SUCCESS: '유저의 체리쉬 리스트 조회를 성공하였습니다.',
 
   /* 로그인 */
   SIGN_IN_SUCCESS: '로그인 성공 ^o^',
@@ -26,5 +28,8 @@ module.exports = {
 
   /* 물 줄 날짜 조회*/
   SEARCH_SUCCESS: '물줄날짜 조회 성공 ^o^',
-  SEARCH_FAIL: '물줄날짜 조회 실패 ＞︿＜'
+  SEARCH_FAIL: '물줄날짜 조회 실패 ＞︿＜',
+  /*Calendar*/
+  CALENDAR_READ_SUCCESS: '캘린더 조회 성공했습니다.',
+  CALENDAR_READ_FAIL: '캘린더 조회 실패했습니다.',
 };
