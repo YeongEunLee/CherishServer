@@ -1,7 +1,11 @@
-const { User } = require('../models');
+const {
+  User
+} = require('../models');
 
 module.exports = {
-  emailCheck: async ({ email }) => {
+  emailCheck: async ({
+    email
+  }) => {
     try {
       const alreadyEmail = await User.findOne({
         where: {
@@ -15,7 +19,10 @@ module.exports = {
     }
   },
 
-  signin: async ({ email, password }) => {
+  signin: async ({
+    email,
+    password
+  }) => {
     try {
       const user = await User.findOne({
         where: {
@@ -33,6 +40,8 @@ module.exports = {
 
   signup: async (email, password, sex, birth, nickname) => {
     try {
+      //const salt = crypto.randomBytes(64).toString('base64');
+      //const saltPassword = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('base64');
       const user = await User.create({
         email,
         password,
