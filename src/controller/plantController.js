@@ -207,7 +207,7 @@ module.exports = {
 
       const message = await Status_message.findOne({
         attributes: ['message'],
-        where: { id: message_id(dDay) },
+        where: { id: message_id(result.dDay) },
       });
 
       result.status_message = message;
