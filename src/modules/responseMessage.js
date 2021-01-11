@@ -22,5 +22,9 @@ module.exports = {
   MISS_MATCH_PW: '비밀번호가 일치하지 않습니다',
   NULL_VALUE: '필요한 값이 존재하지 않습니다',
   SIGN_UP_SUCCESS: '회원가입에 성공했슴다^0^',
-  SIGN_UP_FAIL: '회원가입에 실패했슴다＞︿＜'
+  SIGN_UP_FAIL: '회원가입에 실패했슴다＞︿＜',
+
+  /* 물 줄 날짜 조회*/
+  SEARCH_SUCCESS: '물줄날짜 조회 성공 ^o^',
+  SEARCH_FAIL: '물줄날짜 조회 실패 ＞︿＜'
 };

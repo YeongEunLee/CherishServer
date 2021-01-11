@@ -25,4 +25,6 @@ router.use('/login', require('./login'));
 
 router.use('/postpone', require('./postpone'));
 
+router.use('/search', require('./search'));
+
 module.exports = router;
