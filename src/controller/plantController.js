@@ -20,7 +20,16 @@ module.exports = {
    * body: name, nickname, birth, phone, cycle_date, notice_time
    */
   createPlant: async (req, res) => {
-    const { name, nickname, birth, phone, cycle_date, notice_time, UserId } = req.body;
+    const {
+      name,
+      nickname,
+      birth,
+      phone,
+      cycle_date,
+      notice_time,
+      UserId,
+      water_notice,
+    } = req.body;
     try {
       if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time || !UserId) {
         console.log('필요한 값이 없습니다.');
@@ -72,6 +81,7 @@ module.exports = {
         water_date,
         PlantId: plant.dataValues.PlantId,
         UserId,
+        water_notice,
       });
 
       return res.status(sc.OK).send(
