@@ -1,20 +1,12 @@
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const {
-  Cherish,
-  Water,
-  sequelize
-} = require('../models');
+const { Cherish, Water, sequelize } = require('../models');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const {
-  NULL_VALUE
-} = require('../modules/responseMessage');
+const { NULL_VALUE } = require('../modules/responseMessage');
 
 module.exports = {
   /**
@@ -22,14 +14,7 @@ module.exports = {
    */
   postWater: async (req, res) => {
     // 파라미터로 CherishId 가져오기
-    const {
-      water_date,
-      review,
-      keyword1,
-      keyword2,
-      keyword3,
-      CherishId
-    } = req.body;
+    const { water_date, review, keyword1, keyword2, keyword3, CherishId } = req.body;
 
     try {
       // water_date 나 CherishId 가 없으면? 나빠요..
@@ -69,15 +54,18 @@ module.exports = {
         cherishGrowth.growth += score;
       }
 
-      await Cherish.update({
-        postpone_number: 0,
-      }, {
-        where: {
-          id: CherishId,
+      await Cherish.update(
+        {
+          postpone_number: 0,
         },
-      });
+        {
+          where: {
+            id: CherishId,
+          },
+        }
+      );
 
-      return res.status(sc.OK).send(ut.success(rm.OK, water));
+      return res.status(sc.OK).send(ut.success(rm.OK, score));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
@@ -93,9 +81,7 @@ module.exports = {
       });
     }
 
-    const {
-      CherishId
-    } = req.query;
+    const { CherishId } = req.query;
 
     try {
       // Water 리뷰 가져오기
