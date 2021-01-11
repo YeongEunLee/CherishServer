@@ -25,7 +25,12 @@ module.exports = {
         },
       });
 
-      const future_water_date = cherish_water_date.water_date;
+      const future_water_date = dayjs(cherish_water_date.water_date).format('YY-MM-DD');
+      water.map((item) => {
+        let waterDate = item.dataValues.water_date;
+        item.dataValues.water_date = dayjs(waterDate).format('YY-MM-DD');
+      });
+
       return res
         .status(sc.OK)
         .send(ut.success(rm.CALENDAR_READ_SUCCESS, { water, future_water_date }));
