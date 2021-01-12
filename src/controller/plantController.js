@@ -234,21 +234,23 @@ module.exports = {
         },
         order: [['id', 'DESC']],
       });
-      result.review = [];
+      result.reviews = [];
+
       if (water && water.length >= 1) {
         result.keyword1 = water[0].keyword1;
+        result.keyword2 = water[0].keyword2;
+        result.keyword3 = water[0].keyword3;
         water.map((w, i) => {
           const water_date = dayjs(w.water_date).format('MM/DD');
           const review = water && water[i].review ? water[i].review : '';
-          result.review[i] = { water_date, review };
+          result.reviews[i] = { water_date, review };
         });
+      } else if (water.length == 0) {
+        result.keyword1 = '';
+        result.keyword2 = '';
+        result.keyword3 = '';
       }
-      if (water && water.length >= 2) {
-        result.keyword2 = water[0].keyword2;
-      }
-      if (water && water.length >= 3) {
-        result.keyword3 = water[0].keyword3;
-      }
+
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
     } catch (err) {
       console.log(err);
