@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      level_name: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
       description: {
         type: DataTypes.STRING(300),
         allowNull: false,

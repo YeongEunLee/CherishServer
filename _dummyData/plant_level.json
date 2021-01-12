@@ -1,122 +1,106 @@
-[
-	{
+[{
 		"level": 0,
-		"description": "로즈마리 0단계 설명",
-		"image_url": "로즈마리 0단계 사진",
+		"level_name": "새싹",
+		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+		"image_url": "로즈마리 새싹 사진",
 		"PlantId": 1
 	},
 	{
 		"level": 1,
-		"description": "로즈마리 1단계 설명",
-		"image_url": "로즈마리 1단계 사진",
+		"level_name": "꽃망울",
+		"description": "꽃망울이 방울방울 맺혔어요!",
+		"image_url": "로즈마리 꽃망울 사진",
 		"PlantId": 1
 	},
 	{
 		"level": 2,
-		"description": "로즈마리 2단계 설명",
-		"image_url": "로즈마리 2단계 사진",
-		"PlantId": 1
-	},
-	{
-		"level": 3,
-		"description": "로즈마리 3단계 설명",
-		"image_url": "로즈마리 3단계 사진",
+		"level_name": "개화",
+		"description": "예쁜 꽃이 활짝 피어났어요!",
+		"image_url": "로즈마리 개화 사진",
 		"PlantId": 1
 	},
 	{
 		"level": 0,
-		"description": "아메리칸블루 0단계 설명",
-		"image_url": "아메리칸블루 0단계 사진",
+		"level_name": "새싹",
+		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+		"image_url": "아메리칸블루 새싹 사진",
 		"PlantId": 2
 	},
 	{
 		"level": 1,
-		"description": "아메리칸블루 1단계 설명",
-		"image_url": "아메리칸블루 1단계 사진",
+		"level_name": "꽃망울",
+		"description": "꽃망울이 방울방울 맺혔어요!",
+		"image_url": "아메리칸블루 꽃망울 사진",
 		"PlantId": 2
 	},
 	{
 		"level": 2,
-		"description": "아메리칸블루 2단계 설명",
-		"image_url": "아메리칸블루 2단계 사진",
-		"PlantId": 2
-	},
-	{
-		"level": 3,
-		"description": "아메리칸블루 3단계 설명",
-		"image_url": "아메리칸블루 3단계 사진",
+		"level_name": "개화",
+		"description": "예쁜 꽃이 활짝 피어났어요!",
+		"image_url": "아메리칸블루 개화 사진",
 		"PlantId": 2
 	},
 	{
 		"level": 0,
-		"description": "민들레 0단계 설명",
-		"image_url": "민들레 0단계 사진",
+		"level_name": "새싹",
+		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+		"image_url": "민들레 새싹 사진",
 		"PlantId": 3
 	},
 	{
 		"level": 1,
-		"description": "민들레 1단계 설명",
-		"image_url": "민들레 1단계 사진",
+		"level_name": "꽃망울",
+		"description": "꽃망울이 방울방울 맺혔어요!",
+		"image_url": "민들레 꽃망울 사진",
 		"PlantId": 3
 	},
 	{
 		"level": 2,
-		"description": "민들레 2단계 설명",
-		"image_url": "민들레 2단계 사진",
-		"PlantId": 3
-	},
-	{
-		"level": 3,
-		"description": "민들레 3단계 설명",
-		"image_url": "민들레 3단계 사진",
+		"level_name": "개화",
+		"description": "예쁜 꽃이 활짝 피어났어요!",
+		"image_url": "민들레 개화 사진",
 		"PlantId": 3
 	},
 	{
 		"level": 0,
-		"description": "스투키 0단계 설명",
-		"image_url": "스투키 0단계 사진",
+		"level_name": "새싹",
+		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+		"image_url": "스투키 새싹 사진",
 		"PlantId": 4
 	},
 	{
 		"level": 1,
-		"description": "스투키 1단계 설명",
-		"image_url": "스투키 1단계 사진",
+		"level_name": "꽃망울",
+		"description": "꽃망울이 방울방울 맺혔어요!",
+		"image_url": "스투키 꽃망울 사진",
 		"PlantId": 4
 	},
 	{
 		"level": 2,
-		"description": "스투키 2단계 설명",
-		"image_url": "스투키 2단계 사진",
-		"PlantId": 4
-	},
-	{
-		"level": 3,
-		"description": "스투키 3단계 설명",
-		"image_url": "스투키 3단계 사진",
+		"level_name": "개화",
+		"description": "예쁜 꽃이 활짝 피어났어요!",
+		"image_url": "스투키 개화 사진",
 		"PlantId": 4
 	},
 	{
 		"level": 0,
-		"description": "월하미인 0단계 설명",
-		"image_url": "월하미인 0단계 사진",
+		"level_name": "새싹",
+		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+		"image_url": "단모환 새싹 사진",
 		"PlantId": 5
 	},
 	{
 		"level": 1,
-		"description": "월하미인 1단계 설명",
-		"image_url": "월하미인 1단계 사진",
+		"level_name": "꽃망울",
+		"description": "꽃망울이 방울방울 맺혔어요!",
+		"image_url": "단모환 꽃망울 사진",
 		"PlantId": 5
 	},
 	{
 		"level": 2,
-		"description": "월하미인 2단계 설명",
-		"image_url": "월하미인 2단계 사진",
-		"PlantId": 5
-	},
-	{
-		"level": 3,
-		"description": "월하미인 3단계 설명",
-		"image_url": "월하미인 3단계 사진",
+		"level_name": "개화",
+		"description": "예쁜 꽃이 활짝 피어났어요!",
+		"image_url": "단모환 개화 사진",
 		"PlantId": 5
 	}
 ]

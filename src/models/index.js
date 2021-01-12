@@ -17,6 +17,7 @@ db.Water = require('./water')(sequelize, Sequelize);
 db.Keyword = require('./keyword')(sequelize, Sequelize);
 db.Status_message = require('./status_message')(sequelize, Sequelize);
 db.Modifier = require('./modifier')(sequelize, Sequelize);
+db.App_push_user = require('./app_push_user')(sequelize, Sequelize);
 
 /** 1 : N User : Cherish */
 db.User.hasMany(db.Cherish);
