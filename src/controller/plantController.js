@@ -9,11 +9,14 @@ const {
   sequelize,
   Plant_level,
   Status_message,
+  Modifier,
 } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { cherishService, plantService } = require('../service');
+const { getPlantModifier } = require('../service/plantService');
+const cherish = require('../models/cherish');
 
 module.exports = {
   /**
@@ -79,7 +82,7 @@ module.exports = {
         cycle_date,
         notice_time,
         water_date,
-        PlantId: plant.dataValues.PlantId,
+        PlantId: plant.dataValues.id,
         UserId,
         water_notice,
       });
@@ -195,7 +198,7 @@ module.exports = {
        */
       const water_date = dayjs(cherish.water_date);
       result.dDay = water_date.diff(now_date, 'day');
-      const dDay = water_date.diff(now_date, 'day');
+      //const dDay = water_date.diff(now_date, 'day');
 
       // 식물 이름(plant_name), 식물 썸네일 사진(plant_thumbnail_image_url)
       const plant = await Plant.findOne({
@@ -216,11 +219,12 @@ module.exports = {
       };
 
       const message = await Status_message.findOne({
-        attributes: ['message'],
+        attributes: ['message', 'gage'],
         where: { id: message_id(result.dDay) },
       });
 
-      result.status_message = message;
+      result.status_message = message.dataValues.message;
+      result.gage = message.dataValues.gage;
 
       // 메모(water) 가져오기
       const water = await Water.findAll({
@@ -228,16 +232,22 @@ module.exports = {
         where: {
           CherishId: CherishId,
         },
-        // order: [['id', 'DESC']],
+        order: [['id', 'DESC']],
       });
-      if (water) {
+      result.review = [];
+      if (water && water.length >= 1) {
         result.keyword1 = water[0].keyword1;
-        result.keyword2 = water[0].keyword2;
-        result.keyword3 = water[0].keyword3;
         water.map((w, i) => {
-          water[i].dataValues.water_date = dayjs(w.water_date).format('MM/DD');
+          const water_date = dayjs(w.water_date).format('MM/DD');
+          const review = water && water[i].review ? water[i].review : '';
+          result.review[i] = { water_date, review };
         });
-        result.reviews = water;
+      }
+      if (water && water.length >= 2) {
+        result.keyword2 = water[0].keyword2;
+      }
+      if (water && water.length >= 3) {
+        result.keyword3 = water[0].keyword3;
       }
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
     } catch (err) {
@@ -245,6 +255,7 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+
   getCherishList: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -252,7 +263,7 @@ module.exports = {
         errors: errors.array(),
       });
     }
-    const id = req.params.id;
+    const id = req.params.id; //userId
     try {
       const cherishes = await Cherish.findAll({
         include: [
@@ -271,23 +282,32 @@ module.exports = {
         const level = plant_info.level;
         plant_map.set(`${PlantId},${level}`, plant_info.image_url);
       });
+
       const result = [];
-      cherishes.map(async (cherish) => {
+      for (item of cherishes) {
         const obj = {};
-        const level = plantService.getPlantLevel({ growth: cherish.growth });
-        const PlantId = cherish.PlantId;
-        obj.id = cherish.id;
-        const water_date = dayjs(cherish.water_date);
+        const level = plantService.getPlantLevel({ growth: item.growth });
+        const PlantId = item.PlantId;
+        obj.id = item.id;
+        const water_date = dayjs(item.water_date);
         obj.dDay = water_date.diff(dayjs(), 'day');
-        obj.nickname = cherish.nickname;
-        obj.growth = parseInt((parseFloat(cherish.growth) / 12.0) * 100);
+        obj.nickname = item.nickname;
+        obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url =
-          cherish && cherish.Plant && cherish.Plant.thumbnail_image_url
-            ? cherish.Plant.thumbnail_image_url
+          item && item.Plant && item.Plant.thumbnail_image_url
+            ? item.Plant.thumbnail_image_url
             : '썸네일없음';
+        //식물 수식어 랜덤 가져오기
+        const waterCount = await plantService.getWaterCount({ CherishId: item.id });
+        const standard = plantService.getPlantStandard({
+          dDay: water_date.diff(dayjs(), 'day'),
+          waterCount: waterCount,
+        });
+        const modifier = await plantService.getPlantModifier({ standard: standard });
+        obj.modifier = modifier.dataValues.sentence;
         result.push(obj);
-      });
+      }
       result.sort((a, b) => {
         return a.dDay - b.dDay;
       });

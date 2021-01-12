@@ -25,10 +25,10 @@ module.exports = {
         },
       });
 
-      const future_water_date = dayjs(cherish_water_date.water_date).format('YY-MM-DD');
+      const future_water_date = dayjs(cherish_water_date.water_date).format('YYYY-MM-DD');
       water.map((item) => {
         let waterDate = item.dataValues.water_date;
-        item.dataValues.water_date = dayjs(waterDate).format('YY-MM-DD');
+        item.dataValues.water_date = dayjs(waterDate).format('YYYY-MM-DD');
       });
 
       return res

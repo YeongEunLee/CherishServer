@@ -1,23 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'Status_message',
+    'Modifier',
     {
-      day: {
+      standard: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      message: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      gage: {
-        type: DataTypes.FLOAT,
+      sentence: {
+        type: DataTypes.STRING(20),
         allowNull: false,
       },
     },
     {
       timestamps: true,
-      tableName: 'status_message',
+      tableName: 'modifier',
     }
   );
 };
