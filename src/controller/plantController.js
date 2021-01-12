@@ -9,11 +9,14 @@ const {
   sequelize,
   Plant_level,
   Status_message,
+  Modifier,
 } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { cherishService, plantService } = require('../service');
+const { getPlantModifier } = require('../service/plantService');
+const cherish = require('../models/cherish');
 
 module.exports = {
   /**
@@ -245,6 +248,7 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+
   getCherishList: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -252,7 +256,7 @@ module.exports = {
         errors: errors.array(),
       });
     }
-    const id = req.params.id;
+    const id = req.params.id; //userId
     try {
       const cherishes = await Cherish.findAll({
         include: [
@@ -271,23 +275,32 @@ module.exports = {
         const level = plant_info.level;
         plant_map.set(`${PlantId},${level}`, plant_info.image_url);
       });
+
       const result = [];
-      cherishes.map(async (cherish) => {
+      for (item of cherishes) {
         const obj = {};
-        const level = plantService.getPlantLevel({ growth: cherish.growth });
-        const PlantId = cherish.PlantId;
-        obj.id = cherish.id;
-        const water_date = dayjs(cherish.water_date);
+        const level = plantService.getPlantLevel({ growth: item.growth });
+        const PlantId = item.PlantId;
+        obj.id = item.id;
+        const water_date = dayjs(item.water_date);
         obj.dDay = water_date.diff(dayjs(), 'day');
-        obj.nickname = cherish.nickname;
-        obj.growth = parseInt((parseFloat(cherish.growth) / 12.0) * 100);
+        obj.nickname = item.nickname;
+        obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url =
-          cherish && cherish.Plant && cherish.Plant.thumbnail_image_url
-            ? cherish.Plant.thumbnail_image_url
+          item && item.Plant && item.Plant.thumbnail_image_url
+            ? item.Plant.thumbnail_image_url
             : '썸네일없음';
+        //식물 수식어 랜덤 가져오기
+        const waterCount = await plantService.getWaterCount({ CherishId: item.id });
+        const standard = plantService.getPlantStandard({
+          dDay: water_date.diff(dayjs(), 'day'),
+          waterCount: waterCount,
+        });
+        const modifier = await plantService.getPlantModifier({ standard: standard });
+        obj.modifier = modifier.dataValues.sentence;
         result.push(obj);
-      });
+      }
       result.sort((a, b) => {
         return a.dDay - b.dDay;
       });
