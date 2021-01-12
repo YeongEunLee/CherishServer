@@ -82,7 +82,7 @@ module.exports = {
         cycle_date,
         notice_time,
         water_date,
-        PlantId: plant.dataValues.PlantId,
+        PlantId: plant.dataValues.id,
         UserId,
         water_notice,
       });
@@ -198,7 +198,7 @@ module.exports = {
        */
       const water_date = dayjs(cherish.water_date);
       result.dDay = water_date.diff(now_date, 'day');
-      const dDay = water_date.diff(now_date, 'day');
+      //const dDay = water_date.diff(now_date, 'day');
 
       // 식물 이름(plant_name), 식물 썸네일 사진(plant_thumbnail_image_url)
       const plant = await Plant.findOne({
@@ -219,11 +219,12 @@ module.exports = {
       };
 
       const message = await Status_message.findOne({
-        attributes: ['message'],
+        attributes: ['message', 'gage'],
         where: { id: message_id(result.dDay) },
       });
 
-      result.status_message = message;
+      result.status_message = message.dataValues.message;
+      result.gage = message.dataValues.gage;
 
       // 메모(water) 가져오기
       const water = await Water.findAll({
@@ -233,14 +234,20 @@ module.exports = {
         },
         // order: [['id', 'DESC']],
       });
-      if (water) {
+      result.review = [];
+      if (water && water.length >= 1) {
         result.keyword1 = water[0].keyword1;
-        result.keyword2 = water[0].keyword2;
-        result.keyword3 = water[0].keyword3;
         water.map((w, i) => {
-          water[i].dataValues.water_date = dayjs(w.water_date).format('MM/DD');
+          const water_date = dayjs(w.water_date).format('MM/DD');
+          const review = water && water[i].review ? water[i].review : '';
+          result.review[i] = { water_date, review };
         });
-        result.reviews = water;
+      }
+      if (water && water.length >= 2) {
+        result.keyword2 = water[0].keyword2;
+      }
+      if (water && water.length >= 2) {
+        result.keyword3 = water[0].keyword3;
       }
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
     } catch (err) {
