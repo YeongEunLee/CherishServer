@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
       mobile_os_type: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(200),
       },
       mobile_device_token: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(200),
       },
       send_yn: {
         type: DataTypes.STRING(2),
