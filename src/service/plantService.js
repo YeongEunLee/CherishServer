@@ -22,11 +22,11 @@ module.exports = {
   getPlantStandard: ({ dDay, waterCount }) => {
     try {
       let standard;
-      if (waterCount == 0) {
+      if (waterCount == 0 && dDay >= 1) {
         standard = 1;
       } else if (waterCount != 0 && dDay >= 1) {
         standard = 2;
-      } else if (waterCount != 0 && dDay == 0) {
+      } else if (dDay == 0) {
         standard = 3;
       } else {
         standard = 4;
