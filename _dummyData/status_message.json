@@ -1,17 +1,21 @@
 [{
-  "day": 0,
-  "message" : "물주세요"
-},
-{
-  "day": 1,
-  "message" : "갈증나요"
-},
-{
-  "day": 2,
-  "message" : "기분이 좋아요"
-},
-{
-  "day": 3,
-  "message" : "힘이 솟아요"
-}
+    "day": 0,
+    "message": "물주세요",
+    "gage": 0.25
+  },
+  {
+    "day": 1,
+    "message": "갈증나요",
+    "gage": 0.5
+  },
+  {
+    "day": 2,
+    "message": "기분이 좋아요",
+    "gage": 0.75
+  },
+  {
+    "day": 3,
+    "message": "힘이 솟아요",
+    "gage": 1.0
+  }
 ]

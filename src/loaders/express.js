@@ -8,7 +8,7 @@ module.exports = (app) => {
    * Database sync
    */
   sequelize.sync({
-    force: false,
+    alter: false,
   });
   /**
    * Health Check endpoints

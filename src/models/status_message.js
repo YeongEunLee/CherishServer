@@ -4,9 +4,15 @@ module.exports = (sequelize, DataTypes) => {
     {
       day: {
         type: DataTypes.INTEGER,
+        allowNull: false,
       },
       message: {
         type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      gage: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
       },
     },
     {
