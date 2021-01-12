@@ -1,15 +1,7 @@
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const {
-  Cherish,
-  Plant,
-  Water,
-  sequelize,
-  User
-} = require('../models');
+const { Cherish, Plant, Water, sequelize, User } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -41,29 +33,31 @@ module.exports = {
 
       const nickname = cherish.dataValues.nickname;
 
-      //service 추가
-
+      const result = {};
       const water = await Water.findOne({
         attributes: ['id', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
         },
-        order: [
-          ['water_date', 'DESC']
-        ]
+        order: [['water_date', 'DESC']],
       });
-      //
-      water.dataValues.water_date = dayjs(water.water_date).format('YY-DD-MM');
-      //
-      return res.status(sc.OK).send(ut.success(rm.CONTACT_KEYWORD_SUCCESS, {
-        nickname,
-        water
-      }));
+
+      if (water) {
+        result.keyword1 = water.dataValues.keyword1;
+        result.keyword2 = water.dataValues.keyword2;
+        result.keyword3 = water.dataValues.keyword3;
+        result.water_date = dayjs(water.water_date).format('YY-DD-MM');
+      }
+
+      return res.status(sc.OK).send(
+        ut.success(rm.CONTACT_KEYWORD_SUCCESS, {
+          nickname,
+          result,
+        })
+      );
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail);
     }
   },
-
-
-}
+};

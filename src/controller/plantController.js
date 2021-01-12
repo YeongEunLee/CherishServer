@@ -232,7 +232,7 @@ module.exports = {
         where: {
           CherishId: CherishId,
         },
-        // order: [['id', 'DESC']],
+        order: [['id', 'DESC']],
       });
       result.review = [];
       if (water && water.length >= 1) {
@@ -246,7 +246,7 @@ module.exports = {
       if (water && water.length >= 2) {
         result.keyword2 = water[0].keyword2;
       }
-      if (water && water.length >= 2) {
+      if (water && water.length >= 3) {
         result.keyword3 = water[0].keyword3;
       }
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
