@@ -235,7 +235,7 @@ module.exports = {
         order: [['id', 'DESC']],
       });
       result.review = [];
-      if (water && water.length >= 1) {
+      if (water && water.length >= 0) {
         result.keyword1 = water[0].keyword1;
         water.map((w, i) => {
           const water_date = dayjs(w.water_date).format('MM/DD');
@@ -243,12 +243,11 @@ module.exports = {
           result.review[i] = { water_date, review };
         });
       }
-      if (water && water.length >= 2) {
+      if (water && water.length >= 1) {
         result.keyword2 = water[0].keyword2;
-      }
-      if (water && water.length >= 3) {
         result.keyword3 = water[0].keyword3;
       }
+
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
     } catch (err) {
       console.log(err);
