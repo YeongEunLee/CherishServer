@@ -31,7 +31,7 @@ module.exports = {
     // await queryInterface.bulkInsert('plant', plant, {});
     // await queryInterface.bulkInsert('cherish', cherish, {});
     // await queryInterface.bulkInsert('water', water, {});
-    await queryInterface.bulkInsert('plant_level', plant_level, {});
+    //await queryInterface.bulkInsert('plant_level', plant_level, {});
     // await queryInterface.bulkInsert('status_message', status_message, {});
     // await queryInterface.bulkInsert('modifier', modifier, {});
   },
