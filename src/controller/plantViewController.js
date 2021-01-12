@@ -25,14 +25,25 @@ module.exports = {
           id: id,
         },
       });
+      const plantRes = {};
 
       const mod = plantResult.dataValues.modifier;
       const modi = mod.split('\n ')[1];
-      plantResult.modifier = modi;
+      plantRes.modifier = modi;
 
       const exp = plantResult.dataValues.explanation;
       const explain = exp.split('\n')[0];
-      plantResult.explanation = explain;
+      plantRes.explanation = explain;
+
+      plantRes.flower_meaning = plantResult.dataValues.flower_meaning;
+
+      const plantImage = await Plant_level.findOne({
+        attributes: ['image_url'],
+        where: {
+          PlantId: id,
+          level: 2,
+        },
+      });
 
       const plantDetail = await Plant_level.findAll({
         attributes: ['level_name', 'description', 'image_url'],
@@ -41,9 +52,11 @@ module.exports = {
         },
       });
 
+      plantRes.image_url = plantImage.dataValues.image_url;
+
       return res
         .status(sc.OK)
-        .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantResult, plantDetail }));
+        .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantRes, plantDetail }));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
