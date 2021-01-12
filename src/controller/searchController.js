@@ -32,7 +32,7 @@ module.exports = {
         },
       });
 
-      const WaterDate = dayjs(cherish.water_date).format('YY-DD-MM');
+      water.datavalues.water_date = dayjs(cherish.water_date).format('YY-DD-MM');
       return res
         .status(sc.OK)
         .send(ut.success(rm.SEARCH_SUCCESS, {
