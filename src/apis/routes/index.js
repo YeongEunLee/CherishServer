@@ -18,4 +18,6 @@ router.use('/plantDetail', require('./plantDetail'));
 
 router.use('/search', require('./search'));
 
+router.use('/contact', require('./contact'));
+
 module.exports = router;

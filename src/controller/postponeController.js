@@ -88,6 +88,7 @@ module.exports = {
         },
       });
       const is_limit_postpone_number = cherish && cherish.postpone_number >= 3 ? true : false;
+      cherish.dataValues.water_date = dayjs(cherish.water_date).format('YY-MM-DD');
 
       return res
         .status(sc.OK)
