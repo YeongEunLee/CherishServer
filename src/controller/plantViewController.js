@@ -6,6 +6,7 @@ const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { NULL_VALUE } = require('../modules/responseMessage');
+const plant = require('../models/plant');
 
 module.exports = {
   getPlantDetail: async (req, res) => {
@@ -24,6 +25,7 @@ module.exports = {
           id: id,
         },
       });
+
       const mod = plantResult.dataValues.modifier;
       const modi = mod.split('\n ')[1];
       plantResult.modifier = modi;
@@ -32,7 +34,6 @@ module.exports = {
       const explain = exp.split('\n')[0];
       plantResult.explanation = explain;
 
-      console.log(modi);
       const plantDetail = await Plant_level.findAll({
         attributes: ['level_name', 'description', 'image_url'],
         where: {
