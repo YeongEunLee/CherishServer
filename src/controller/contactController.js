@@ -33,17 +33,6 @@ module.exports = {
 
       const nickname = cherish.dataValues.nickname;
 
-      //service 추가
-      /*
-      const waterAll = await Water.findAll({
-        where: {
-          CherishId: CherishId,
-        },
-      });
-      const waterCount = waterAll.length;
-      console.log(waterCount);
-      */
-
       const result = {};
       const water = await Water.findOne({
         attributes: ['id', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
@@ -52,8 +41,6 @@ module.exports = {
         },
         order: [['water_date', 'DESC']],
       });
-
-      //console.log(water.length);
 
       if (water) {
         result.keyword1 = water.dataValues.keyword1;
