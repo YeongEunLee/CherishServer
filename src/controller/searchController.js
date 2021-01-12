@@ -1,9 +1,17 @@
 const dayjs = require('dayjs');
-const { Cherish, Plant, Water, sequelize, User } = require('../models');
+const {
+  Cherish,
+  Plant,
+  Water,
+  sequelize,
+  User
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { validationResult } = require('express-validator');
+const {
+  validationResult
+} = require('express-validator');
 
 module.exports = {
   /**
@@ -23,8 +31,7 @@ module.exports = {
           id: CherishId,
         },
       });
-
-      water.dataValues.water_date = dayjs(cherish.water_date).format('YY-DD-MM');
+      const WaterDate = dayjs(cherish.water_date).format('YY-DD-MM');
       return res.status(sc.OK).send(
         ut.success(rm.SEARCH_SUCCESS, {
           WaterDate,
