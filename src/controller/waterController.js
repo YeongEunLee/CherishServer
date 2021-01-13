@@ -17,6 +17,8 @@ const {
   NULL_VALUE
 } = require('../modules/responseMessage');
 
+const waterService = require('../service/waterService');
+
 module.exports = {
   /**
    * body: water_date, review, keyword1, keyword2, keyword3, UserId
@@ -33,8 +35,8 @@ module.exports = {
     } = req.body;
 
     try {
-      // water_date 나 CherishId 가 없으면? 나빠요..
-      if (!water_date || !CherishId) {
+      // CherishId 가 없으면? 나빠요..
+      if (!CherishId) {
         console.log('필요한 값이 없습니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
@@ -49,14 +51,24 @@ module.exports = {
       }
 
       // models_water에 작성한 내용 생성하기
-      const water = await Water.create({
-        CherishId,
-        water_date,
-        review,
-        keyword1,
-        keyword2,
-        keyword3,
+
+      const water = await waterService.postWater(CherishId, review, keyword1, keyword2, keyword3);
+
+      // water_date 구하기
+      const w = await Water.findOne({
+        attributes: ['water_date'],
+        where: {
+          CherishId: CherishId,
+        }
       });
+
+      /*
+      // water_date 구하기
+      var moment = require('moment');
+      require('moment-timezone');
+      moment.tz.setDefault("Asia/Seoul");
+      Water.water_date = moment().format('YYYY-MM-DD HH:mm:ss');
+      */
 
       // Cherish에서 growth 받아오기
       const cherishGrowth = await Cherish.findOne({
@@ -84,6 +96,7 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+
 
   // CherishId 별 리뷰내용 보기
   getWater: async (req, res) => {
