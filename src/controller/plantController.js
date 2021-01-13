@@ -238,7 +238,6 @@ module.exports = {
       result.reviews = [];
 
       if (water && water.length >= 1) {
-
         result.keyword1 = water[0].keyword1;
         result.keyword2 = water[0].keyword2;
         result.keyword3 = water[0].keyword3;
