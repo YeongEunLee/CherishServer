@@ -52,7 +52,7 @@ module.exports = {
             model: Plant_level
           }],
         }, ],
-        attributes: ['id', 'nickname', 'growth', 'water_date', 'PlantId'],
+        attributes: ['id', 'nickname', 'growth', 'water_date', 'PlantId', 'phone'],
       });
       const result = [];
       cherishes.map(async (cherish) => {
@@ -74,10 +74,12 @@ module.exports = {
         obj.PlantId = cherish.PlantId;
         result.push(obj);
       });
+
       const cherishIdList = cherishes.map((cherish) => cherish.id);
       const cherishCompleteList = cherishes.filter((cherish) => {
         return cherish.growth === 12;
       });
+
       const totalCherish = cherishes.length;
       const waterCount = await Water.count({
         where: {
@@ -85,6 +87,7 @@ module.exports = {
         }
       });
       const completeCount = cherishCompleteList.length;
+
       return res.status(sc.OK).send(
         ut.success(rm.READ_ALL_CHERISH_MY_PAGE_SUCCESS, {
           user_nickname,

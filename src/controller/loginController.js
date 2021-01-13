@@ -13,6 +13,7 @@ const rm = require('../modules/responseMessage');
 const userService = require('../service/userService');
 
 module.exports = {
+  /* 회원조회 */
   signin: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -38,20 +39,26 @@ module.exports = {
       if (password !== alreadyEmail.password) {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.MISS_MATCH_PW, password));
       }
+
       const user = await userService.signin({
         email,
-        password,
+        password
       });
+
       const UserId = user.id;
+      const user_nickname = user.nickname;
+
       //4. status: 200 ,message: SIGN_IN_SUCCESS, data: email반환
       return res.status(sc.OK).send(ut.success(rm.SIGN_IN_SUCCESS, {
-        UserId
+        UserId,
+        user_nickname
       }));
     } catch (error) {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_IN_FAIL));
     }
   },
 
+  /* 회원가입 */
   signup: async (req, res) => {
     const {
       email,
