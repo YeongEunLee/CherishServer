@@ -35,4 +35,12 @@ module.exports = {
   /* 연락수단 연결  */
   CONTACT_KEYWORD_SUCCESS: '최근 연락의 키워드 가져오기 성공^o^',
   CONTACT_KEYWORD_FAIL: '최근 연락의 키워드 가져오기 실패 ＞︿＜',
+
+  /*push*/
+  GET_PUSH_USER_SUCCESS: '푸시 유저 조회 성공',
+  GET_PUSH_USER_FAIL: '푸시 유저 조회 실패',
+  UPDATE_PUSH_USER_SUCCESS: '푸시 테이블 업데이트 성공',
+  UPDATE_PUSH_USER_FAIL: '푸시 테이블 업데이트 실패',
+  UPDATE_Y_N_SUCCESS: 'send_yn 업데이트 성공',
+  UPDATE_Y_N_FAIL: 'send_yn 업데이트 실패',
 };

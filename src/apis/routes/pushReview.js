@@ -6,26 +6,15 @@ const { check } = require('express-validator');
 const pushController = require('../../controller/pushController');
 
 /**
- * @api {put} /
+ * @api {post} /
  * @apiName
  * @apiGroup
  */
-router.get(
-  '/:send_code',
-  [check('send_code', 'send_code is required').not().isEmpty()],
-  pushController.getPushUser
-);
 
 router.post(
   '/',
   [check('CherishId', 'CherishId is required').not().isEmpty()],
-  pushController.contactCherish
-);
-
-router.put(
-  '/',
-  [check('CherishId', 'CherishId is required').not().isEmpty()],
-  pushController.updateSendYN
+  pushController.reviewPush
 );
 
 module.exports = router;
