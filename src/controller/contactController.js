@@ -46,7 +46,12 @@ module.exports = {
         result.keyword1 = water.dataValues.keyword1;
         result.keyword2 = water.dataValues.keyword2;
         result.keyword3 = water.dataValues.keyword3;
-        result.water_date = dayjs(water.water_date).format('YY-DD-MM');
+        result.water_date = dayjs(water.water_date).format('YY-MM-DD');
+      } else {
+        result.keyword1 = '';
+        result.keyword2 = '';
+        result.keyword3 = '';
+        result.water_date = '';
       }
 
       return res.status(sc.OK).send(
