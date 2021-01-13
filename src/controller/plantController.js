@@ -1,4 +1,6 @@
-const { validationResult } = require('express-validator');
+const {
+  validationResult
+} = require('express-validator');
 const dayjs = require('dayjs');
 
 const {
@@ -14,8 +16,13 @@ const {
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { cherishService, plantService } = require('../service');
-const { getPlantModifier } = require('../service/plantService');
+const {
+  cherishService,
+  plantService
+} = require('../service');
+const {
+  getPlantModifier
+} = require('../service/plantService');
 const cherish = require('../models/cherish');
 
 module.exports = {
@@ -57,7 +64,9 @@ module.exports = {
           'thumbnail_image_url',
           'PlantStatusId',
         ],
-        where: { PlantStatusId: PlantStatusId(cycle_date) },
+        where: {
+          PlantStatusId: PlantStatusId(cycle_date)
+        },
       });
 
       const plantImageURL = await Plant_level.findOne({
@@ -107,17 +116,20 @@ module.exports = {
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
-      const alreadyCherish = await cherishService.cherishCheck({ CherishId });
+      const alreadyCherish = await cherishService.cherishCheck({
+        CherishId
+      });
       if (!alreadyCherish) {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
-      await Cherish.update(
-        {
-          status_code: false,
-        },
-        { where: { id: CherishId } }
-      );
+      await Cherish.update({
+        status_code: false,
+      }, {
+        where: {
+          id: CherishId
+        }
+      });
 
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
@@ -131,7 +143,13 @@ module.exports = {
    **/
   modifyCherish: async (req, res) => {
     const CherishId = req.body.id;
-    const { nickname, birth, cycle_date, notice_time, water_notice } = req.body;
+    const {
+      nickname,
+      birth,
+      cycle_date,
+      notice_time,
+      water_notice
+    } = req.body;
 
     if (!CherishId) {
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
@@ -140,20 +158,23 @@ module.exports = {
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
-      const alreadyCherish = await cherishService.cherishCheck({ CherishId });
+      const alreadyCherish = await cherishService.cherishCheck({
+        CherishId
+      });
       if (!alreadyCherish) {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
-      await Cherish.update(
-        {
-          nickname: nickname,
-          birth: birth,
-          cycle_date: cycle_date,
-          notice_time: notice_time,
-          water_notice: water_notice,
-        },
-        { where: { id: CherishId } }
-      );
+      await Cherish.update({
+        nickname: nickname,
+        birth: birth,
+        cycle_date: cycle_date,
+        notice_time: notice_time,
+        water_notice: water_notice,
+      }, {
+        where: {
+          id: CherishId
+        }
+      });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
@@ -161,6 +182,7 @@ module.exports = {
     }
   },
 
+  /* 유저의 체리쉬 리스트 조회 */
   getCherishInfo: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -168,10 +190,12 @@ module.exports = {
         errors: errors.array(),
       });
     }
-    const { CherishId } = req.query;
+    const {
+      CherishId
+    } = req.query;
     try {
       const cherish = await Cherish.findOne({
-        attributes: ['name', 'nickname', 'birth', 'PlantId', 'start_date', 'water_date'],
+        attributes: ['name', 'nickname', 'phone', 'birth', 'PlantId', 'start_date', 'water_date'],
         where: {
           id: CherishId,
         },
@@ -179,6 +203,7 @@ module.exports = {
       const result = {};
       result.name = cherish.name;
       result.nickname = cherish.nickname;
+      result.phone = cherish.phone;
 
       /**
        * birth Format MM.DD로 변경
@@ -220,7 +245,9 @@ module.exports = {
 
       const message = await Status_message.findOne({
         attributes: ['message', 'gage'],
-        where: { id: message_id(result.dDay) },
+        where: {
+          id: message_id(result.dDay)
+        },
       });
 
       result.status_message = message.dataValues.message;
@@ -232,7 +259,9 @@ module.exports = {
         where: {
           CherishId: CherishId,
         },
-        order: [['id', 'DESC']],
+        order: [
+          ['id', 'DESC']
+        ],
       });
 
       result.reviews = [];
@@ -244,7 +273,10 @@ module.exports = {
         water.map((w, i) => {
           const water_date = dayjs(w.water_date).format('MM/DD');
           const review = water && water[i].review ? water[i].review : '';
-          result.reviews[i] = { water_date, review };
+          result.reviews[i] = {
+            water_date,
+            review
+          };
         });
       } else if (water.length == 0) {
         result.keyword1 = '';
@@ -269,11 +301,9 @@ module.exports = {
     const id = req.params.id; //userId
     try {
       const cherishes = await Cherish.findAll({
-        include: [
-          {
-            model: Plant,
-          },
-        ],
+        include: [{
+          model: Plant,
+        }, ],
         where: {
           UserId: id,
         },
@@ -289,26 +319,34 @@ module.exports = {
       const result = [];
       for (item of cherishes) {
         const obj = {};
-        const level = plantService.getPlantLevel({ growth: item.growth });
+        const level = plantService.getPlantLevel({
+          growth: item.growth
+        });
         const PlantId = item.PlantId;
         obj.id = item.id;
         const water_date = dayjs(item.water_date);
         obj.dDay = water_date.diff(dayjs(), 'day');
         obj.nickname = item.nickname;
+        obj.phone = item.phone;
         obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url =
-          item && item.Plant && item.Plant.thumbnail_image_url
-            ? item.Plant.thumbnail_image_url
-            : '썸네일없음';
+          item && item.Plant && item.Plant.thumbnail_image_url ?
+          item.Plant.thumbnail_image_url :
+          '썸네일없음';
         //식물 수식어 랜덤 가져오기
-        const waterCount = await plantService.getWaterCount({ CherishId: item.id });
+        const waterCount = await plantService.getWaterCount({
+          CherishId: item.id
+        });
         const standard = plantService.getPlantStandard({
           dDay: water_date.diff(dayjs(), 'day'),
           waterCount: waterCount,
         });
-        const modifier = await plantService.getPlantModifier({ standard: standard });
+        const modifier = await plantService.getPlantModifier({
+          standard: standard
+        });
         obj.modifier = modifier.dataValues.sentence;
+
         result.push(obj);
       }
       result.sort((a, b) => {
@@ -316,7 +354,10 @@ module.exports = {
       });
       return res
         .status(sc.OK)
-        .send(ut.success(rm.READ_ALL_CHERISH_SUCCESS, { result, totalCherish: result.length }));
+        .send(ut.success(rm.READ_ALL_CHERISH_SUCCESS, {
+          result,
+          totalCherish: result.length
+        }));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
