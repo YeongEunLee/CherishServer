@@ -72,8 +72,6 @@ module.exports = {
           '썸네일 없음';
         obj.level = level;
         obj.PlantId = cherish.PlantId;
-        //번호추가
-        obj.phone = cherish.phone;
         result.push(obj);
       });
 
