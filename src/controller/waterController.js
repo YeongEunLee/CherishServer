@@ -77,29 +77,8 @@ module.exports = {
           id: CherishId,
         },
       });
-      const result = {};
 
-      const cherish = await Cherish.findOne({
-        attributes: ['nickname', 'UserId'],
-        where: {
-          id: CherishId,
-        },
-      });
-
-      const UserId = cherish.UserId;
-
-      const user = await User.findOne({
-        attributes: ['nickname'],
-        where: {
-          id: UserId,
-        },
-      });
-
-      result.user_nickname = user.nickname;
-      result.cherish_nickname = cherish.nickname;
-      result.score = score;
-
-      return res.status(sc.OK).send(ut.success(rm.OK, result));
+      return res.status(sc.OK).send(ut.success(rm.OK, score));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
