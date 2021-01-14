@@ -16,7 +16,6 @@ const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 
-
 const { cherishService, plantService, pushService } = require('../service');
 
 const { getPlantModifier } = require('../service/plantService');
@@ -347,12 +346,13 @@ module.exports = {
         });
         const Plant_Id = plantId.dataValues.PlantId;
         const PlantName = await Plant.findOne({
-          attributes: ['name'],
+          attributes: ['name', 'gif'],
           where: {
             id: Plant_Id,
           },
         });
         obj.plantName = PlantName.dataValues.name;
+        obj.gif = PlantName.dataValues.gif;
 
         //식물 수식어 랜덤 가져오기
         const waterCount = await plantService.getWaterCount({
