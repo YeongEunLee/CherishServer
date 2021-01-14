@@ -45,7 +45,8 @@ Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 💧
 
 # 3. ERD Diagram
 
-![KakaoTalk_Photo_2021-01-05-21-51-48](https://user-images.githubusercontent.com/60417796/103648445-3e172d00-4fa0-11eb-9958-b8c8bae367e4.png)
+![ERD_final](https://user-images.githubusercontent.com/60417796/104613332-79b1a580-56ca-11eb-8af7-3ea578abacc1.png)
+
 
 ---
 
@@ -53,8 +54,13 @@ Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 💧
 
 - Cherish 등록 / 수정 / 삭제
 - Cherish 물주기 / 미루기
-- Cherish 후기 등록
+- Cherish 후기 등록 / 수정 / 삭제
 - 회원가입 / 로그인
+- 식물카드(체리쉬) 상세보기
+- 마이페이지
+- 메인뷰
+- 최신 연락 키워드 조회
+- PUSH 알림
 
 ---
 
@@ -63,21 +69,32 @@ Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 💧
 #### 남궁권 ([kkoon9](https://github.com/kkoon9))
 
 - 프로젝트 구축
-- 미루기 횟수 체크 API
 - 메인 뷰 API
+- 식물 카드 상세보기 API
+- 미루기 횟수 체크 API
 - 마이페이지 API
+- PUSH 알림
 
 ####  이영은 ([YeongEunLee](https://github.com/YeongEunLee))
 
 - 데이터 모델링
-- Cherish 등록 API
-- Cherish 정보 수정 / 삭제 API
+- Cherish 등록하기 API
+- Cherish 정보 수정하기 API
+- Cherish 삭제하기 API
 - 물주는 날짜 미루기 API
+- Keyword, Review 조회 하기 API
+- 식물 상세 정보 조회 하기 API
+- PUSH 알림 API
 
 ####  한수아 ([sssua_0928](https://github.com/sssua_0928))
 
-- 후기 등록 API
+- 후기 등록(물주기) API
 - 로그인 API
+- 물주는 날짜 조회하기 API
+- 최신 연락 Keyword 조회하기 API
+- 회원 가입 API
+- 푸시 알림 API
+
 
 ####  칸반보드 노션링크[(참고)](https://www.notion.so/Server-6854a0c36b1146f19cfe32dafde87ef5)
 
@@ -96,3 +113,7 @@ Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 💧
 - [AWS S3](https://aws.amazon.com/ko/s3/) - 클라우드 스토리지
 
 ---
+
+# 7. 서버 아키텍쳐
+![서버 아키텍처(2)](https://user-images.githubusercontent.com/72644361/104618304-dd8a9d00-56cf-11eb-9c7e-6606b7ffe75c.png)
+
