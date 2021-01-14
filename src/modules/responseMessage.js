@@ -34,6 +34,8 @@ module.exports = {
   CALENDAR_READ_FAIL: '캘린더 조회 실패했습니다.',
   CALENDAR_MODIFY_SUCCESS: '캘린더 수정 성공했습니다.',
   CALENDAR_MODIFY_FAIL: '캘린더 수정 실패했습니다.',
+  CALENDAR_DELETE_SUCCESS: '캘린더 삭제 성공했습니다.',
+  CALENDAR_DELETE_FAIL: '캘린더 삭제 실패했습니다.',
   /* 연락수단 연결  */
   CONTACT_KEYWORD_SUCCESS: '최근 연락의 키워드 가져오기 성공^o^',
   CONTACT_KEYWORD_FAIL: '최근 연락의 키워드 가져오기 실패 ＞︿＜',
