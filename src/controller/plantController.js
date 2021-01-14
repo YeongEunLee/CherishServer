@@ -15,9 +15,13 @@ const {
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
+
+
 const { cherishService, plantService, pushService } = require('../service');
+
 const { getPlantModifier } = require('../service/plantService');
 const cherish = require('../models/cherish');
+const plant = require('../models/plant');
 
 module.exports = {
   /**
@@ -242,7 +246,7 @@ module.exports = {
       };
 
       const message = await Status_message.findOne({
-        attributes: ['message', 'gage'],
+        attributes: ['message', 'gage', 'status'],
         where: {
           id: message_id(result.dDay),
         },
@@ -250,6 +254,7 @@ module.exports = {
 
       result.status_message = message.dataValues.message;
       result.gage = message.dataValues.gage;
+      result.status = message.dataValues.status;
 
       // 메모(water) 가져오기
       const water = await Water.findAll({
@@ -332,6 +337,23 @@ module.exports = {
           item && item.Plant && item.Plant.thumbnail_image_url
             ? item.Plant.thumbnail_image_url
             : '썸네일없음';
+
+        //식물 이름 가져오기
+        const plantId = await Cherish.findOne({
+          attributes: ['PlantId'],
+          where: {
+            id: item.id,
+          },
+        });
+        const Plant_Id = plantId.dataValues.PlantId;
+        const PlantName = await Plant.findOne({
+          attributes: ['name'],
+          where: {
+            id: Plant_Id,
+          },
+        });
+        obj.plantName = PlantName.dataValues.name;
+
         //식물 수식어 랜덤 가져오기
         const waterCount = await plantService.getWaterCount({
           CherishId: item.id,
