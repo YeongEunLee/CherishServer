@@ -1,106 +1,107 @@
-[{
-		"level": 0,
-		"level_name": "새싹",
-		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
-		"image_url": "로즈마리 새싹 사진",
-		"PlantId": 1
-	},
-	{
-		"level": 1,
-		"level_name": "꽃망울",
-		"description": "꽃망울이 방울방울 맺혔어요!",
-		"image_url": "로즈마리 꽃망울 사진",
-		"PlantId": 1
-	},
-	{
-		"level": 2,
-		"level_name": "개화",
-		"description": "예쁜 꽃이 활짝 피어났어요!",
-		"image_url": "로즈마리 개화 사진",
-		"PlantId": 1
-	},
-	{
-		"level": 0,
-		"level_name": "새싹",
-		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
-		"image_url": "아메리칸블루 새싹 사진",
-		"PlantId": 2
-	},
-	{
-		"level": 1,
-		"level_name": "꽃망울",
-		"description": "꽃망울이 방울방울 맺혔어요!",
-		"image_url": "아메리칸블루 꽃망울 사진",
-		"PlantId": 2
-	},
-	{
-		"level": 2,
-		"level_name": "개화",
-		"description": "예쁜 꽃이 활짝 피어났어요!",
-		"image_url": "아메리칸블루 개화 사진",
-		"PlantId": 2
-	},
-	{
-		"level": 0,
-		"level_name": "새싹",
-		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
-		"image_url": "민들레 새싹 사진",
-		"PlantId": 3
-	},
-	{
-		"level": 1,
-		"level_name": "꽃망울",
-		"description": "꽃망울이 방울방울 맺혔어요!",
-		"image_url": "민들레 꽃망울 사진",
-		"PlantId": 3
-	},
-	{
-		"level": 2,
-		"level_name": "개화",
-		"description": "예쁜 꽃이 활짝 피어났어요!",
-		"image_url": "민들레 개화 사진",
-		"PlantId": 3
-	},
-	{
-		"level": 0,
-		"level_name": "새싹",
-		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
-		"image_url": "스투키 새싹 사진",
-		"PlantId": 4
-	},
-	{
-		"level": 1,
-		"level_name": "꽃망울",
-		"description": "꽃망울이 방울방울 맺혔어요!",
-		"image_url": "스투키 꽃망울 사진",
-		"PlantId": 4
-	},
-	{
-		"level": 2,
-		"level_name": "개화",
-		"description": "예쁜 꽃이 활짝 피어났어요!",
-		"image_url": "스투키 개화 사진",
-		"PlantId": 4
-	},
-	{
-		"level": 0,
-		"level_name": "새싹",
-		"description": "새싹이 쏘옥 얼굴을 내밀었어요!",
-		"image_url": "단모환 새싹 사진",
-		"PlantId": 5
-	},
-	{
-		"level": 1,
-		"level_name": "꽃망울",
-		"description": "꽃망울이 방울방울 맺혔어요!",
-		"image_url": "단모환 꽃망울 사진",
-		"PlantId": 5
-	},
-	{
-		"level": 2,
-		"level_name": "개화",
-		"description": "예쁜 꽃이 활짝 피어났어요!",
-		"image_url": "단모환 개화 사진",
-		"PlantId": 5
-	}
+[
+  {
+    "level": 0,
+    "level_name": "새싹",
+    "description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+    "image_url": "로즈마리 새싹 사진",
+    "PlantId": 1
+  },
+  {
+    "level": 1,
+    "level_name": "꽃망울",
+    "description": "꽃망울이 방울방울 맺혔어요!",
+    "image_url": "로즈마리 꽃망울 사진",
+    "PlantId": 1
+  },
+  {
+    "level": 2,
+    "level_name": "개화",
+    "description": "예쁜 꽃이 활짝 피어났어요!",
+    "image_url": "로즈마리 개화 사진",
+    "PlantId": 1
+  },
+  {
+    "level": 0,
+    "level_name": "새싹",
+    "description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+    "image_url": "아메리칸블루 새싹 사진",
+    "PlantId": 2
+  },
+  {
+    "level": 1,
+    "level_name": "꽃망울",
+    "description": "꽃망울이 방울방울 맺혔어요!",
+    "image_url": "아메리칸블루 꽃망울 사진",
+    "PlantId": 2
+  },
+  {
+    "level": 2,
+    "level_name": "개화",
+    "description": "예쁜 꽃이 활짝 피어났어요!",
+    "image_url": "아메리칸블루 개화 사진",
+    "PlantId": 2
+  },
+  {
+    "level": 0,
+    "level_name": "새싹",
+    "description": "새싹이 쏘옥 얼굴을 내밀었어요!",
+    "image_url": "민들레 새싹 사진",
+    "PlantId": 3
+  },
+  {
+    "level": 1,
+    "level_name": "꽃망울",
+    "description": "꽃망울이 방울방울 맺혔어요!",
+    "image_url": "민들레 꽃망울 사진",
+    "PlantId": 3
+  },
+  {
+    "level": 2,
+    "level_name": "개화",
+    "description": "예쁜 꽃이 활짝 피어났어요!",
+    "image_url": "민들레 개화 사진",
+    "PlantId": 3
+  },
+  {
+    "level": 0,
+    "level_name": "입꽃이",
+    "description": "새로운 화분에 적응하기 시작했어요!",
+    "image_url": "스투키 입꽃이 사진",
+    "PlantId": 4
+  },
+  {
+    "level": 1,
+    "level_name": "어린 순",
+    "description": "어린 순이 쏘옥 얼굴을 내밀었어요!",
+    "image_url": "스투키 어린 순 사진",
+    "PlantId": 4
+  },
+  {
+    "level": 2,
+    "level_name": "성목",
+    "description": "어느 새 늠름한 스투키가 되었어요!",
+    "image_url": "스투키 성목 사진",
+    "PlantId": 4
+  },
+  {
+    "level": 0,
+    "level_name": "어린순",
+    "description": "어린순이 쏘옥 얼굴을 내밀었어요!",
+    "image_url": "단모환 어린순 사진",
+    "PlantId": 5
+  },
+  {
+    "level": 1,
+    "level_name": "꽃망울",
+    "description": "귀여운 꽃망울이 맺혔어요!",
+    "image_url": "단모환 꽃망울 사진",
+    "PlantId": 5
+  },
+  {
+    "level": 2,
+    "level_name": "개화",
+    "description": "예쁜 꽃이 활짝 피어났어요!",
+    "image_url": "단모환 개화 사진",
+    "PlantId": 5
+  }
 ]

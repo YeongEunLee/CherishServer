@@ -1,4 +1,5 @@
 module.exports = {
   cherishService: require('./cherishService'),
-  plantService: require('./plantService')
+  plantService: require('./plantService'),
+  pushService: require('./pushService'),
 };
