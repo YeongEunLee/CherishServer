@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
+      gif: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+      },
     },
     {
       timestamps: true,

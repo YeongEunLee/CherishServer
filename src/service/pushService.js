@@ -1,0 +1,53 @@
+const { Plant_status, Cherish, Modifier, App_push_user, sequelize, User } = require('../models');
+
+module.exports = {
+  createPushCOM: async ({ UserId, CherishId, water_date }) => {
+    try {
+      const mobile_device_token = await User.findOne({
+        attributes: ['fcm_token'],
+        where: {
+          id: UserId,
+        },
+      });
+
+      await App_push_user.create({
+        send_code: 'COM',
+        push_date: water_date,
+        mobile_os_type: 'I',
+        mobile_device_token: mobile_device_token.dataValues.fcm_token,
+        send_yn: 'N',
+        title: '물줄 시간 입니다',
+        message: '물줄 시간 입니다.',
+        CherishId: CherishId,
+        UserId: UserId,
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  createPushREV: async ({ UserId, CherishId, push_date }) => {
+    try {
+      const mobile_device_token = await User.findOne({
+        attributes: ['fcm_token'],
+        where: {
+          id: UserId,
+        },
+      });
+
+      await App_push_user.create({
+        send_code: 'REV',
+        push_date: push_date,
+        mobile_os_type: 'I',
+        mobile_device_token: mobile_device_token.dataValues.fcm_token,
+        send_yn: 'N',
+        title: '연락 후기를 등록해보세요',
+        message: '연락 후기를 등록해보세요.',
+        CherishId: CherishId,
+        UserId: UserId,
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+};
