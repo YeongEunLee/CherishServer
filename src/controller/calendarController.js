@@ -40,13 +40,10 @@ module.exports = {
   },
 
   modifyCalendar: async (req, res) => {
-    // 1. req.params 에서 CherishId 가져오기
-    const CherishId = req.params.id;
-    // 2.
     try {
       const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
 
-      await Water.update(
+      const water = await Water.update(
         {
           review: review,
           keyword1: keyword1,
@@ -60,10 +57,25 @@ module.exports = {
           },
         }
       );
-
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_MODIFY_SUCCESS));
     } catch (error) {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_MODIFY_FAIL));
+    }
+  },
+
+  deleteCalendar: async (req, res) => {
+    try {
+      const { CherishId, water_date } = req.body;
+
+      await Water.destroy({
+        where: {
+          CherishId: CherishId,
+          water_date: water_date,
+        },
+      });
+      return res.status(sc.OK).send(ut.success(rm.CALENDAR_DELETE_SUCCESS));
+    } catch (error) {
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_DELETE_FAIL));
     }
   },
 };

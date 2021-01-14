@@ -14,4 +14,5 @@ router.get('/:id', calendarController.getCalendar);
 
 router.put('/', calendarController.modifyCalendar);
 
+router.delete('/', calendarController.deleteCalendar);
 module.exports = router;
