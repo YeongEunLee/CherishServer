@@ -18,11 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(300),
         allowNull: false,
       },
-      iOS_thumbnail_image_url: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-      },
-      And_thumbnail_image_url: {
+      thumbnail_image_url: {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
