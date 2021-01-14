@@ -115,5 +115,5 @@ Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 💧
 ---
 
 # 7. 서버 아키텍쳐
-![서버 아키텍처](https://user-images.githubusercontent.com/72644361/104614229-681ccd80-56cb-11eb-97c2-3d3e3ba8e000.png)
+![서버 아키텍처(2)](https://user-images.githubusercontent.com/72644361/104618304-dd8a9d00-56cf-11eb-9c7e-6606b7ffe75c.png)
 
