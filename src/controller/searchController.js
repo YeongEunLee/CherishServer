@@ -31,7 +31,7 @@ module.exports = {
           id: CherishId,
         },
       });
-      const WaterDate = dayjs(cherish.water_date).format('YY-DD-MM');
+      const WaterDate = dayjs(cherish.water_date).format('YYYY-MM-DD');
       return res.status(sc.OK).send(
         ut.success(rm.SEARCH_SUCCESS, {
           WaterDate,
