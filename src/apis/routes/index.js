@@ -20,4 +20,8 @@ router.use('/search', require('./search'));
 
 router.use('/contact', require('./contact'));
 
+router.use('/push', require('./push'));
+
+router.use('/pushReview', require('./pushReview'));
+
 module.exports = router;

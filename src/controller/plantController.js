@@ -10,11 +10,15 @@ const {
   Plant_level,
   Status_message,
   Modifier,
+  App_push_user,
 } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { cherishService, plantService } = require('../service');
+
+
+const { cherishService, plantService, pushService } = require('../service');
+
 const { getPlantModifier } = require('../service/plantService');
 const cherish = require('../models/cherish');
 const plant = require('../models/plant');
@@ -67,7 +71,7 @@ module.exports = {
         attributes: ['image_url'],
         where: {
           PlantId: plant.dataValues.id,
-          level: 3,
+          level: 2,
         },
       });
 
@@ -75,9 +79,9 @@ module.exports = {
 
       //현재 날짜에 cycle_date 더해서 water_date 구하기
       const now_date = dayjs().format('YYYY-MM-DD hh:mm:ss');
-      const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD hh:mm:ss');
+      const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD');
 
-      await Cherish.create({
+      const cherish = await Cherish.create({
         name,
         nickname,
         birth,
@@ -88,6 +92,12 @@ module.exports = {
         PlantId: plant.dataValues.id,
         UserId,
         water_notice,
+      });
+
+      await pushService.createPushCOM({
+        UserId,
+        CherishId: cherish.id,
+        water_date,
       });
 
       return res.status(sc.OK).send(
@@ -327,6 +337,7 @@ module.exports = {
           item && item.Plant && item.Plant.thumbnail_image_url
             ? item.Plant.thumbnail_image_url
             : '썸네일없음';
+
         //식물 이름 가져오기
         const plantId = await Cherish.findOne({
           attributes: ['PlantId'],
