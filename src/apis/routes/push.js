@@ -25,7 +25,7 @@ router.post(
 router.put(
   '/',
   [check('CherishId', 'CherishId is required').not().isEmpty()],
-  pushController.updateSendYN
+  pushController.updateSendYN_COM
 );
 
 module.exports = router;

@@ -85,6 +85,7 @@ module.exports = {
       attributes: ['UserId'],
       where: { id: CherishId },
     });
+    console.log(push_date);
 
     try {
       await pushService.createPushREV({
@@ -99,7 +100,7 @@ module.exports = {
     }
   },
 
-  updateSendYN: async (req, res) => {
+  updateSendYN_COM: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -107,6 +108,7 @@ module.exports = {
       });
     }
     const { CherishId } = req.body;
+
     try {
       await App_push_user.update(
         {
@@ -115,6 +117,38 @@ module.exports = {
         {
           where: {
             CherishId: CherishId,
+            send_yn: 'N',
+            send_code: 'COM',
+          },
+        }
+      );
+
+      return res.status(sc.OK).send(ut.success(rm.UPDATE_Y_N_SUCCESS));
+    } catch (err) {
+      console.log(err);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_Y_N_FAIL));
+    }
+  },
+
+  updateSendYN_REV: async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { CherishId } = req.body;
+
+    try {
+      await App_push_user.update(
+        {
+          send_yn: 'Y',
+        },
+        {
+          where: {
+            CherishId: CherishId,
+            send_yn: 'N',
+            send_code: 'REV',
           },
         }
       );

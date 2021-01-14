@@ -17,4 +17,10 @@ router.post(
   pushController.reviewPush
 );
 
+router.put(
+  '/',
+  [check('CherishId', 'CherishId is required').not().isEmpty()],
+  pushController.updateSendYN_REV
+);
+
 module.exports = router;
