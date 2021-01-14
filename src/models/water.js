@@ -11,17 +11,17 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: '',
       },
       keyword1: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(5),
         defaultValue: '',
         allowNull: false,
       },
       keyword2: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(5),
         defaultValue: '',
         allowNull: false,
       },
       keyword3: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(5),
         defaultValue: '',
         allowNull: false,
       },

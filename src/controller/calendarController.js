@@ -38,4 +38,32 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_READ_FAIL));
     }
   },
+
+  modifyCalendar: async (req, res) => {
+    // 1. req.params 에서 CherishId 가져오기
+    const CherishId = req.params.id;
+    // 2.
+    try {
+      const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
+
+      await Water.update(
+        {
+          review: review,
+          keyword1: keyword1,
+          keyword2: keyword2,
+          keyword3: keyword3,
+        },
+        {
+          where: {
+            CherishId: CherishId,
+            water_date: water_date,
+          },
+        }
+      );
+
+      return res.status(sc.OK).send(ut.success(rm.CALENDAR_MODIFY_SUCCESS));
+    } catch (error) {
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_MODIFY_FAIL));
+    }
+  },
 };

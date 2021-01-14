@@ -12,4 +12,6 @@ const calendarController = require('../../controller/calendarController');
  */
 router.get('/:id', calendarController.getCalendar);
 
+router.put('/', calendarController.modifyCalendar);
+
 module.exports = router;
