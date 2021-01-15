@@ -10,21 +10,49 @@ const plantController = require('../../controller/plantController');
  * @apiName modifyCherish
  * @apiGroup Cherish
  */
-router.put('/', plantController.modifyCherish);
+router.put(
+  '/',
+  [
+    check('id', 'id is required').not().isEmpty(),
+    check('nickname', 'nickname is required').not().isEmpty(),
+    check('birth', 'birth is required').not().isEmpty(),
+    check('cycle_date', 'cycle_date is required').not().isEmpty(),
+    check('water_notice', 'water_notice is required').not().isEmpty(),
+    check('notice_time', 'notice_time is required').not().isEmpty(),
+  ],
+  plantController.modifyCherish
+);
 
 /**
  * @api {post} /cherish
  * @apiName createPlant
  * @apiGroup Cherish
  */
-router.post('/', plantController.createPlant);
+router.post(
+  '/',
+  [
+    check('name', 'name is required').not().isEmpty(),
+    check('nickname', 'nickname is required').not().isEmpty(),
+    check('phone', 'phone is required').not().isEmpty(),
+    check('birth', 'birth is required').not().isEmpty(),
+    check('cycle_date', 'cycle_date is required').not().isEmpty(),
+    check('water_notice', 'water_notice is required').not().isEmpty(),
+    check('notice_time', 'notice_time is required').not().isEmpty(),
+    check('UserId', 'UserId is required').not().isEmpty(),
+  ],
+  plantController.createPlant
+);
 
 /**
  * @api {delete} /cherish
  * @apiName deleteCherish
  * @apiGroup Cherish
  */
-router.delete('/:id', plantController.deleteCherish);
+router.delete(
+  '/:id',
+  [check('id', 'id is required').not().isEmpty()],
+  plantController.deleteCherish
+);
 
 /**
  * @api {get} /cherish
@@ -42,5 +70,10 @@ router.get(
  * @apiName getCherishList
  * @apiGroup Cherish
  */
-router.get('/:id', [check('id', 'id is required').not().isEmpty()], plantController.getCherishList);
+router.get(
+  '/:id',
+
+  [check('id', 'id is required').not().isEmpty()],
+  plantController.getCherishList
+);
 module.exports = router;
