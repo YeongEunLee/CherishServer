@@ -2,6 +2,7 @@ const express = require('express');
 const api = require('../apis/routes');
 const errorHandler = require('./error');
 const { sequelize } = require('../models');
+const logger = require('../config/winston');
 
 module.exports = (app) => {
   /**
@@ -15,9 +16,11 @@ module.exports = (app) => {
    * @TODO Explain why they are here
    */
   app.get('/health', (req, res) => {
+    logger.info('GET /health ');
     res.status(200).end();
   });
   app.head('/health', (req, res) => {
+    logger.info('HEAD /health ');
     res.status(200).end();
   });
   app.use(

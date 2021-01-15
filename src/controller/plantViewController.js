@@ -1,19 +1,22 @@
 const { validationResult } = require('express-validator');
 
-const { Plant_level, Plant, sequelize } = require('../models');
+const { Plant_level, Plant } = require('../models');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { NULL_VALUE } = require('../modules/responseMessage');
 const plant = require('../models/plant');
+const logger = require('../config/winston');
 
 module.exports = {
   getPlantDetail: async (req, res) => {
+    logger.error(`GET /plantView/:id`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /plantView - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const id = req.params.id;
@@ -59,6 +62,7 @@ module.exports = {
         .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantRes, plantDetail }));
     } catch (err) {
       console.log(err);
+      logger.error(`GET /plantView - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },

@@ -1,10 +1,7 @@
 # 🌿 Cherish-Server
+![server](https://user-images.githubusercontent.com/72644361/104651996-c792d180-56fb-11eb-867c-5b55dbe21833.png)
 
-![76639891](https://user-images.githubusercontent.com/60417796/103647818-399e4480-4f9f-11eb-997c-47013ce80af6.png)
-
-Cherish - 당신의 소중한 사람들을 위한 연락 관리 서비스 💧
 <br>
-서버파트 리포지토리
 </div>
 
 ---

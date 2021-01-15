@@ -1,37 +1,26 @@
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const {
-  Cherish,
-  Plant,
-  Water,
-  Plant_status,
-  sequelize,
-  Plant_level,
-  User
-} = require('../models');
+const { Cherish, Plant, Water, Plant_level, User } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const {
-  cherishService,
-  plantService
-} = require('../service');
+const { plantService } = require('../service');
 const water = require('../models/water');
+const logger = require('../config/winston');
 
 module.exports = {
   userMyPage: async (req, res) => {
+    logger.info(`GET /user/:id - userMyPage`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /user/:id - Paramaters Error - userMyPage`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
-    const {
-      id
-    } = req.params;
+    const { id } = req.params;
     try {
       const user = await User.findOne({
         attributes: ['name', 'nickname', 'postpone_count'], // postpone_count
@@ -46,19 +35,23 @@ module.exports = {
         where: {
           UserId: id,
         },
-        include: [{
-          model: Plant,
-          include: [{
-            model: Plant_level
-          }],
-        }, ],
+        include: [
+          {
+            model: Plant,
+            include: [
+              {
+                model: Plant_level,
+              },
+            ],
+          },
+        ],
         attributes: ['id', 'nickname', 'growth', 'water_date', 'PlantId', 'phone'],
       });
       const result = [];
       cherishes.map(async (cherish) => {
         const obj = {};
         const level = plantService.getPlantLevel({
-          growth: cherish.growth
+          growth: cherish.growth,
         });
         obj.id = cherish.id;
         const water_date = dayjs(cherish.water_date);
@@ -67,9 +60,9 @@ module.exports = {
         obj.name =
           cherish && cherish.Plant && cherish.Plant.name ? cherish.Plant.name : '이름 없음';
         obj.thumbnail_image_url =
-          cherish && cherish.Plant && cherish.Plant.thumbnail_image_url ?
-          cherish.Plant.thumbnail_image_url :
-          '썸네일 없음';
+          cherish && cherish.Plant && cherish.Plant.thumbnail_image_url
+            ? cherish.Plant.thumbnail_image_url
+            : '썸네일 없음';
         obj.level = level;
         obj.PlantId = cherish.PlantId;
         result.push(obj);
@@ -83,8 +76,8 @@ module.exports = {
       const totalCherish = cherishes.length;
       const waterCount = await Water.count({
         where: {
-          CherishId: cherishIdList
-        }
+          CherishId: cherishIdList,
+        },
       });
       const completeCount = cherishCompleteList.length;
 
@@ -100,6 +93,7 @@ module.exports = {
       );
     } catch (err) {
       console.log(err);
+      logger.error(`GET /user/:id - Server Error - userMyPage`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },

@@ -5,12 +5,21 @@ const { Cherish, Water } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
+const logger = require('../config/winston');
 
 module.exports = {
   getCalendar: async (req, res) => {
-    // 1. req.params 에서 CherishId 가져오기
+    logger.info('GET /calendar/:id');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`GET /calendar - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
     const CherishId = req.params.id;
-    // 2.
+
     try {
       const water = await Water.findAll({
         attributes: ['review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
@@ -35,14 +44,24 @@ module.exports = {
         .status(sc.OK)
         .send(ut.success(rm.CALENDAR_READ_SUCCESS, { water, future_water_date }));
     } catch (error) {
+      logger.error(`GET /calendar - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_READ_FAIL));
     }
   },
 
   modifyCalendar: async (req, res) => {
-    try {
-      const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
+    logger.info('PUT /calendar');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`PUT /calendar - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
 
+    try {
       const water = await Water.update(
         {
           review: review,
@@ -59,14 +78,24 @@ module.exports = {
       );
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_MODIFY_SUCCESS));
     } catch (error) {
+      logger.error(`PUT /calendar - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_MODIFY_FAIL));
     }
   },
 
   deleteCalendar: async (req, res) => {
-    try {
-      const { CherishId, water_date } = req.body;
+    logger.info('DELETE /calendar');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`DELETE /calendar - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { CherishId, water_date } = req.body;
 
+    try {
       await Water.destroy({
         where: {
           CherishId: CherishId,
@@ -75,6 +104,7 @@ module.exports = {
       });
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_DELETE_SUCCESS));
     } catch (error) {
+      logger.error(`DELETE /calendar - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_DELETE_FAIL));
     }
   },
