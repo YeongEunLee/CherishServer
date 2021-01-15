@@ -21,10 +21,6 @@ router.post(
  * @apiName getWater
  * @apiGroup Water
  */
-router.get(
-  '/:id',
-  [check('CherishId', 'CherishId is required').not().isEmpty()],
-  waterController.getWater
-);
+router.get('/:id', [check('id', 'id is required').not().isEmpty()], waterController.getWater);
 
 module.exports = router;
