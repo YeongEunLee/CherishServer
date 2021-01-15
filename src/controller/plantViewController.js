@@ -40,6 +40,9 @@ module.exports = {
 
       plantRes.flower_meaning = plantResult.dataValues.flower_meaning;
 
+      const plantResponse = [];
+      plantResponse.push(plantRes);
+
       const plantImage = await Plant_level.findOne({
         attributes: ['image_url'],
         where: {
@@ -59,7 +62,7 @@ module.exports = {
 
       return res
         .status(sc.OK)
-        .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantRes, plantDetail }));
+        .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantResponse, plantDetail }));
     } catch (err) {
       console.log(err);
       logger.error(`GET /plantView - Server Error`);
