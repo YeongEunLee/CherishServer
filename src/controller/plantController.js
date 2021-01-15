@@ -363,13 +363,14 @@ module.exports = {
         });
         const Plant_Id = plantId.dataValues.PlantId;
         const PlantName = await Plant.findOne({
-          attributes: ['name', 'gif'],
+          attributes: ['name', 'gif', 'main_bg'],
           where: {
             id: Plant_Id,
           },
         });
         obj.plantName = PlantName.dataValues.name;
         obj.gif = PlantName.dataValues.gif;
+        obj.main_bg = PlantName.dataValues.main_bg;
 
         //식물 수식어 랜덤 가져오기
         const waterCount = await plantService.getWaterCount({
