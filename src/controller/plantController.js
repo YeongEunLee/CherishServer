@@ -239,7 +239,7 @@ module.exports = {
 
       // 식물 이름(plant_name), 식물 썸네일 사진(plant_thumbnail_image_url)
       const plant = await Plant.findOne({
-        attributes: ['name', 'thumbnail_image_url'],
+        attributes: ['id', 'name', 'thumbnail_image_url'],
         where: {
           id: cherish.dataValues.PlantId,
         },
@@ -254,6 +254,8 @@ module.exports = {
         else if (dDay <= 2) return 3;
         else return 4;
       };
+
+      result.plantId = plant.id;
 
       const message = await Status_message.findOne({
         attributes: ['message', 'gage', 'status'],
