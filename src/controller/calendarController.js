@@ -60,7 +60,7 @@ module.exports = {
       });
     }
     const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
-
+    try {
       await Water.update(
 
         {
