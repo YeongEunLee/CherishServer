@@ -1,21 +1,12 @@
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const {
-  Cherish,
-  Water,
-  User,
-  sequelize
-} = require('../models');
+const { Cherish, Water, User, sequelize } = require('../models');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const {
-  NULL_VALUE
-} = require('../modules/responseMessage');
+const { NULL_VALUE } = require('../modules/responseMessage');
 
 const waterService = require('../service/waterService');
 
@@ -25,14 +16,7 @@ module.exports = {
    */
   postWater: async (req, res) => {
     //
-    const {
-      water_date,
-      review,
-      keyword1,
-      keyword2,
-      keyword3,
-      CherishId
-    } = req.body;
+    const { water_date, review, keyword1, keyword2, keyword3, CherishId } = req.body;
 
     try {
       // CherishId 가 없으면? 나빠요..
@@ -50,25 +34,17 @@ module.exports = {
         score += 1;
       }
 
-      // models_water에 작성한 내용 생성하기
+      const waterDate = dayjs(water_date).format('YYYY-MM-DD');
 
-      const water = await waterService.postWater(CherishId, review, keyword1, keyword2, keyword3);
+      await waterService.postWater(CherishId, waterDate, review, keyword1, keyword2, keyword3);
 
       // water_date 구하기
       const w = await Water.findOne({
         attributes: ['water_date'],
         where: {
           CherishId: CherishId,
-        }
+        },
       });
-
-      /*
-      // water_date 구하기
-      var moment = require('moment');
-      require('moment-timezone');
-      moment.tz.setDefault("Asia/Seoul");
-      Water.water_date = moment().format('YYYY-MM-DD HH:mm:ss');
-      */
 
       // Cherish에서 growth 받아오기
       const cherishGrowth = await Cherish.findOne({
@@ -82,13 +58,16 @@ module.exports = {
         cherishGrowth.growth += score;
       }
 
-      await Cherish.update({
-        postpone_number: 0,
-      }, {
-        where: {
-          id: CherishId,
+      await Cherish.update(
+        {
+          postpone_number: 0,
         },
-      });
+        {
+          where: {
+            id: CherishId,
+          },
+        }
+      );
 
       return res.status(sc.OK).send(ut.success(rm.OK, score));
     } catch (err) {
@@ -96,7 +75,6 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
-
 
   // CherishId 별 리뷰내용 보기
   getWater: async (req, res) => {
@@ -107,13 +85,11 @@ module.exports = {
       });
     }
 
-    const {
-      CherishId
-    } = req.query;
+    const { CherishId } = req.query;
 
     try {
       // Water 리뷰 가져오기
-      const water = await Water.findAll({
+      await Water.findAll({
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,

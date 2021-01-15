@@ -43,7 +43,7 @@ module.exports = {
     try {
       const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
 
-      const water = await Water.update(
+      await Water.update(
         {
           review: review,
           keyword1: keyword1,
@@ -57,6 +57,7 @@ module.exports = {
           },
         }
       );
+      console.log(water_date);
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_MODIFY_SUCCESS));
     } catch (error) {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_MODIFY_FAIL));
