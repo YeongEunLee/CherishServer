@@ -234,7 +234,6 @@ module.exports = {
       });
       result.plant_name = plant.name;
       result.plant_thumbnail_image_url = plant.thumbnail_image_url;
-      result.plantId = plant.id;
 
       //상세뷰 상태 가져오기
       const message_id = (dDay) => {
@@ -243,6 +242,8 @@ module.exports = {
         else if (dDay <= 2) return 3;
         else return 4;
       };
+
+      result.plantId = plant.id;
 
       const message = await Status_message.findOne({
         attributes: ['message', 'gage', 'status'],
