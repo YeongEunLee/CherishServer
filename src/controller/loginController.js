@@ -1,31 +1,25 @@
-const {
-  validationResult
-} = require('express-validator');
-const dayjs = require('dayjs');
+const { validationResult } = require('express-validator');
 
-const {
-  User,
-  sequelize
-} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const userService = require('../service/userService');
+const logger = require('../config/winston');
 
 module.exports = {
   /* 회원조회 */
   signin: async (req, res) => {
+    logger.info('POST /login/signin');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`POST /login/signin - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     // 1. req.body에서 데이터 가져오기
-    const {
-      email,
-      password
-    } = req.body;
+    const { email, password } = req.body;
 
     try {
       //2. 존재하는 아이디인지 확인하기. 존재하지 않는 아이디면 NO USER 반환
@@ -33,40 +27,39 @@ module.exports = {
         email,
       });
       if (!alreadyEmail) {
+        logger.error(`POST /login/signin - emailCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NO_USER));
       }
       //3. password(=alreadyPassword)와 일치하면 true, 일치하지 않으면 Miss Match password 반환
       if (password !== alreadyEmail.password) {
+        logger.error(`POST /login/signin - password Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.MISS_MATCH_PW, password));
       }
 
       const user = await userService.signin({
         email,
-        password
+        password,
       });
 
       const UserId = user.id;
       const user_nickname = user.nickname;
 
       //4. status: 200 ,message: SIGN_IN_SUCCESS, data: email반환
-      return res.status(sc.OK).send(ut.success(rm.SIGN_IN_SUCCESS, {
-        UserId,
-        user_nickname
-      }));
+      return res.status(sc.OK).send(
+        ut.success(rm.SIGN_IN_SUCCESS, {
+          UserId,
+          user_nickname,
+        })
+      );
     } catch (error) {
+      logger.error(`POST /login/signin - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_IN_FAIL));
     }
   },
 
   /* 회원가입 */
   signup: async (req, res) => {
-    const {
-      email,
-      password,
-      sex,
-      birth,
-      nickname
-    } = req.body;
+    const { email, password, sex, birth, nickname } = req.body;
 
     if (!email || !password || !sex || !birth || !nickname) {
       console.log('필요한 값이 없습니다!');
