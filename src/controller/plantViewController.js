@@ -23,7 +23,7 @@ module.exports = {
 
     try {
       const plantResult = await Plant.findOne({
-        attributes: ['modifier', 'flower_meaning', 'explanation'],
+        attributes: ['modifier', 'flower_meaning', 'explanation', 'image'],
         where: {
           id: id,
         },
@@ -39,6 +39,7 @@ module.exports = {
       plantRes.explanation = explain;
 
       plantRes.flower_meaning = plantResult.dataValues.flower_meaning;
+      plantRes.image = plantResult.dataValues.image;
 
       const plantResponse = [];
       plantResponse.push(plantRes);
@@ -52,7 +53,7 @@ module.exports = {
       });
 
       const plantDetail = await Plant_level.findAll({
-        attributes: ['level_name', 'description', 'image_url'],
+        attributes: ['level_name', 'description', 'image_url', 'image'],
         where: {
           PlantId: id,
         },
