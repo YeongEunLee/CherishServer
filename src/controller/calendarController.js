@@ -67,6 +67,7 @@ module.exports = {
         message: errors.array(),
       });
     }
+
     const {
       CherishId,
       water_date,
@@ -75,6 +76,7 @@ module.exports = {
       keyword2,
       keyword3
     } = req.body;
+
 
     try {
       await Water.update(

@@ -23,7 +23,7 @@ module.exports = {
 
     try {
       const plantResult = await Plant.findOne({
-        attributes: ['modifier', 'flower_meaning', 'explanation'],
+        attributes: ['modifier', 'flower_meaning', 'explanation', 'image'],
         where: {
           id: id,
         },
@@ -39,6 +39,10 @@ module.exports = {
       plantRes.explanation = explain;
 
       plantRes.flower_meaning = plantResult.dataValues.flower_meaning;
+      plantRes.image = plantResult.dataValues.image;
+
+      const plantResponse = [];
+      plantResponse.push(plantRes);
 
       const plantImage = await Plant_level.findOne({
         attributes: ['image_url'],
@@ -49,7 +53,7 @@ module.exports = {
       });
 
       const plantDetail = await Plant_level.findAll({
-        attributes: ['level_name', 'description', 'image_url'],
+        attributes: ['level_name', 'description', 'image_url', 'image'],
         where: {
           PlantId: id,
         },
@@ -59,7 +63,7 @@ module.exports = {
 
       return res
         .status(sc.OK)
-        .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantRes, plantDetail }));
+        .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantResponse, plantDetail }));
     } catch (err) {
       console.log(err);
       logger.error(`GET /plantView - Server Error`);
