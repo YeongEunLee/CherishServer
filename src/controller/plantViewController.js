@@ -10,10 +10,13 @@ const plant = require('../models/plant');
 
 module.exports = {
   getPlantDetail: async (req, res) => {
+    logger.error(`GET /plantView/:id`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /plantView - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const id = req.params.id;
@@ -59,6 +62,7 @@ module.exports = {
         .send(ut.success(rm.PLANT_DERAIL_READ_SUCCESS, { plantRes, plantDetail }));
     } catch (err) {
       console.log(err);
+      logger.error(`GET /plantView - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },

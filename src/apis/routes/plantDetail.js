@@ -6,8 +6,8 @@ const { check } = require('express-validator');
 const plantViewController = require('../../controller/plantViewController');
 
 /**
- * @api {get} /plant/:id
- * @apiName getPlant
+ * @api {get} /plantDetail/:id
+ * @apiName getPlantDetail
  * @apiGroup Plant_level
  */
 router.get(

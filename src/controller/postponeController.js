@@ -13,10 +13,13 @@ module.exports = {
    */
 
   postponeWaterDate: async (req, res) => {
+    logger.info(`PUT /postpone - postponeWaterDate`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`PUT /postpone - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { id, postpone, is_limit_postpone_number } = req.body;
@@ -68,15 +71,19 @@ module.exports = {
     } catch (err) {
       console.log(err);
       await t.rollback();
+      logger.error(`PUT /postpone - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
 
   getPostpone: async (req, res) => {
+    logger.info(`GET /postpone - getPostpone`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /postpone - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { CherishId } = req.query;
@@ -99,10 +106,13 @@ module.exports = {
     }
   },
   getPostponeCount: async (req, res) => {
+    logger.info(`GET /postpone - getPostponeCount`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /postpone - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { CherishId } = req.query;
@@ -126,6 +136,7 @@ module.exports = {
       );
     } catch (err) {
       console.log(err);
+      logger.error(`GET /postpone - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
