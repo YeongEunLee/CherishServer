@@ -11,7 +11,6 @@ const rm = require('../modules/responseMessage');
 
 const { NULL_VALUE } = require('../modules/responseMessage');
 
-
 const waterService = require('../service/waterService');
 const logger = require('../config/winston');
 
