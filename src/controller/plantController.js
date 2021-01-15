@@ -1,17 +1,7 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const {
-  Cherish,
-  Plant,
-  Water,
-  Plant_status,
-  sequelize,
-  Plant_level,
-  Status_message,
-  Modifier,
-  App_push_user,
-} = require('../models');
+const { Cherish, Plant, Water, Plant_level, Status_message } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -21,12 +11,22 @@ const { cherishService, plantService, pushService } = require('../service');
 const { getPlantModifier } = require('../service/plantService');
 const cherish = require('../models/cherish');
 const plant = require('../models/plant');
+const logger = require('../config/winston');
 
 module.exports = {
   /**
    * body: name, nickname, birth, phone, cycle_date, notice_time
    */
   createPlant: async (req, res) => {
+    logger.info('POST /cherish');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`POST /cherish - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
     const {
       name,
       nickname,
@@ -38,11 +38,6 @@ module.exports = {
       water_notice,
     } = req.body;
     try {
-      if (!name || !nickname || !birth || !phone || !cycle_date || !notice_time || !UserId) {
-        console.log('필요한 값이 없습니다.');
-        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
-      }
-
       const PlantStatusId = (cycle_date) => {
         if (cycle_date <= 3) return 1;
         else if (cycle_date <= 7) return 2;
@@ -106,6 +101,7 @@ module.exports = {
       );
     } catch (err) {
       console.log(err);
+      logger.error(`POST /cherish - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
@@ -113,16 +109,23 @@ module.exports = {
    * cherish 삭제
    **/
   deleteCherish: async (req, res) => {
+    logger.info('DELETE /cherish/:id');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`DELETE /cherish/:id - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
     const CherishId = req.params.id;
 
-    if (!CherishId) {
-      return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
-    }
     try {
       const alreadyCherish = await cherishService.cherishCheck({
         CherishId,
       });
       if (!alreadyCherish) {
+        logger.error(`DELETE /cherish/:id - cherishCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
@@ -140,6 +143,7 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
+      logger.error(`DELETE /cherish/:id - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
@@ -148,20 +152,24 @@ module.exports = {
    * cherish 정보 수정
    **/
   modifyCherish: async (req, res) => {
+    logger.info('PUT /cherish');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`PUT /cherish - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
     const CherishId = req.body.id;
     const { nickname, birth, cycle_date, notice_time, water_notice } = req.body;
 
-    if (!CherishId) {
-      return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
-    }
-    if (!nickname || !birth || !cycle_date || !notice_time || !water_notice) {
-      return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
-    }
     try {
       const alreadyCherish = await cherishService.cherishCheck({
         CherishId,
       });
       if (!alreadyCherish) {
+        logger.error(`PUT /cherish - cherishCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
       await Cherish.update(
@@ -181,16 +189,20 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
+      logger.error(`PUT /cherish - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
 
   /* 유저의 체리쉬 리스트 조회 */
   getCherishInfo: async (req, res) => {
+    logger.info('GET /cherish - getCherishInfo');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /cherish - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { CherishId } = req.query;
@@ -288,15 +300,19 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.READ_ALL_CHERISH_BY_ID_SUCCESS, result));
     } catch (err) {
       console.log(err);
+      logger.error(`GET /cherish - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
 
   getCherishList: async (req, res) => {
+    logger.info('GET /cherish/:id - getCherishList');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /cherish/:id - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const id = req.params.id; //userId
@@ -381,6 +397,7 @@ module.exports = {
       );
     } catch (err) {
       console.log(err);
+      logger.error(`GET /cherish/:id - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
