@@ -1,17 +1,9 @@
 const dayjs = require('dayjs');
-const {
-  Cherish,
-  Plant,
-  Water,
-  sequelize,
-  User
-} = require('../models');
+const { Cherish, Plant, Water, sequelize, User } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 
 module.exports = {
   /**
@@ -21,7 +13,15 @@ module.exports = {
    */
 
   searchWaterDate: async (req, res) => {
-    // 1. req.params 에서 CherishId 가져오기
+    logger.info(`GET /search/:id - searchWaterDate`);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`GET /search/:id - Paramaters Error - searchWaterDate`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
     const CherishId = req.params.id;
     // 2.
     try {
@@ -38,6 +38,8 @@ module.exports = {
         })
       );
     } catch (error) {
+      logger.error(`GET /search/:id - Server Error - searchWaterDate`);
+      console.log(error);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SEARCH_FAIL));
     }
   },

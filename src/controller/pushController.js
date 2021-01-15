@@ -146,7 +146,7 @@ module.exports = {
   },
 
   updateSendYN_REV: async (req, res) => {
-    logger.info(`PUT /pushReview - Paramaters Error - updateSendYN_REV`);
+    logger.info(`PUT /pushReview - updateSendYN_REV`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`PUT /pushReview - Paramaters Error - updateSendYN_REV`);
