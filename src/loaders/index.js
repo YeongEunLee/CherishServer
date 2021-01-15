@@ -1,7 +1,7 @@
 const expressLoader = require('./express');
-const Logger = require('./logger');
+const logger = require('../config/winston');
 
 module.exports = async (expressApp) => {
   await expressLoader(expressApp);
-  Logger.info('✌️ Express loaded');
+  logger.info('✌️ Express loaded');
 };

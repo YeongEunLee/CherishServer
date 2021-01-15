@@ -1,10 +1,11 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, sequelize, User } = require('../models');
+const { Cherish, Water } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
+const logger = require('../config/winston');
 
 module.exports = {
   /**
@@ -15,8 +16,10 @@ module.exports = {
   getNewKeyword: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`DELETE /contact - Paramaters Error`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
 
@@ -62,6 +65,7 @@ module.exports = {
       );
     } catch (err) {
       console.log(err);
+      logger.error(`DELETE /contact - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail);
     }
   },
