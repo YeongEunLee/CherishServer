@@ -8,10 +8,13 @@ const { pushService } = require('../service');
 
 module.exports = {
   getPushUser: async (req, res) => {
+    logger.info(`GET /push - getPushUser`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /push - Paramaters Error - getPushUser`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
 
@@ -38,15 +41,19 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.GET_PUSH_USER_SUCCESS, pushUser));
     } catch (err) {
       console.log(err);
+      logger.error(`GET /push - Server Error - getPushUser`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.GET_PUSH_USER_FAIL));
     }
   },
 
   contactCherish: async (req, res) => {
+    logger.info(`POST /push - contactCherish`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`POST /push - Parameters Error - contactCherish`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { CherishId } = req.body;
@@ -73,10 +80,13 @@ module.exports = {
   },
 
   reviewPush: async (req, res) => {
+    logger.info(`POST /pushReview - reviewPush`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`POST /pushReview - Paramaters Error - reviewPush`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { CherishId } = req.body;
@@ -96,15 +106,19 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.UPDATE_PUSH_USER_SUCCESS));
     } catch (err) {
       console.log(err);
+      logger.error(`POST /pushReview - Server Error - reviewPush`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_PUSH_USER_FAIL));
     }
   },
 
   updateSendYN_COM: async (req, res) => {
+    logger.info(`PUT /push - updateSendYN_COM`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`PUT /push - Paramaters Error - updateSendYN_COM`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { CherishId } = req.body;
@@ -126,15 +140,19 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.UPDATE_Y_N_SUCCESS));
     } catch (err) {
       console.log(err);
+      logger.error(`PUT /push - Server Error - updateSendYN_COM`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_Y_N_FAIL));
     }
   },
 
   updateSendYN_REV: async (req, res) => {
+    logger.info(`PUT /pushReview - Paramaters Error - updateSendYN_REV`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`PUT /pushReview - Paramaters Error - updateSendYN_REV`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
     }
     const { CherishId } = req.body;
@@ -156,6 +174,7 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.UPDATE_Y_N_SUCCESS));
     } catch (err) {
       console.log(err);
+      logger.error(`PUT /pushReview - Server Error - updateSendYN_REV`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_Y_N_FAIL));
     }
   },
