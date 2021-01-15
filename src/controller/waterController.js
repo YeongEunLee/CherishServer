@@ -1,9 +1,7 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-
 const { Cherish, Water, User, sequelize } = require('../models');
-
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
@@ -19,7 +17,6 @@ module.exports = {
    * body: water_date, review, keyword1, keyword2, keyword3, UserId
    */
   postWater: async (req, res) => {
-
     logger.info(`POST /water - postWater`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -48,8 +45,7 @@ module.exports = {
         score += 1;
       }
 
-      const waterDate = dayjs(water_date).format('YYYY-MM-DD');
-
+      const waterDate = dayjs().format('YYYY-MM-DD hh:mm:ss'); // 물준날은 당일로
       await waterService.postWater(CherishId, waterDate, review, keyword1, keyword2, keyword3);
 
       // water_date 구하기
@@ -62,19 +58,23 @@ module.exports = {
 
       // Cherish에서 growth 받아오기
       const cherishGrowth = await Cherish.findOne({
-        attributes: ['growth'],
+        attributes: ['growth', 'cycle_date'],
         where: {
           id: CherishId,
         },
       });
-
+      let growth = cherishGrowth.dataValues.growth;
       if (score != 0) {
-        cherishGrowth.growth += score;
+        growth += score;
       }
-
+      const date = dayjs()
+        .add(parseInt(cherishGrowth.dataValues.cycle_date), 'day')
+        .format('YYYY-MM-DD');
       await Cherish.update(
         {
           postpone_number: 0,
+          growth: growth,
+          water_date: date,
         },
         {
           where: {
