@@ -1,10 +1,11 @@
 const dayjs = require('dayjs');
-const { App_push_user, sequelize, Cherish } = require('../models');
+const { App_push_user, Cherish } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { validationResult } = require('express-validator');
 const { pushService } = require('../service');
+const logger = require('../config/winston');
 
 module.exports = {
   getPushUser: async (req, res) => {

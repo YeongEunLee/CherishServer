@@ -1,12 +1,12 @@
 const { validationResult } = require('express-validator');
 
-const { Plant_level, Plant, sequelize } = require('../models');
+const { Plant_level, Plant } = require('../models');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { NULL_VALUE } = require('../modules/responseMessage');
 const plant = require('../models/plant');
+const logger = require('../config/winston');
 
 module.exports = {
   getPlantDetail: async (req, res) => {

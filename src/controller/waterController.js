@@ -1,23 +1,14 @@
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const {
-  Cherish,
-  Water,
-  User,
-  sequelize
-} = require('../models');
+const { Cherish, Water } = require('../models');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const {
-  NULL_VALUE
-} = require('../modules/responseMessage');
 
 const waterService = require('../service/waterService');
+const logger = require('../config/winston');
 
 module.exports = {
   /**
@@ -33,14 +24,7 @@ module.exports = {
         message: errors.array(),
       });
     }
-    const {
-      water_date,
-      review,
-      keyword1,
-      keyword2,
-      keyword3,
-      CherishId
-    } = req.body;
+    const { water_date, review, keyword1, keyword2, keyword3, CherishId } = req.body;
 
     try {
       // CherishId 가 없으면? 나빠요..
@@ -67,7 +51,7 @@ module.exports = {
         attributes: ['water_date'],
         where: {
           CherishId: CherishId,
-        }
+        },
       });
 
       /*
@@ -90,13 +74,16 @@ module.exports = {
         cherishGrowth.growth += score;
       }
 
-      await Cherish.update({
-        postpone_number: 0,
-      }, {
-        where: {
-          id: CherishId,
+      await Cherish.update(
+        {
+          postpone_number: 0,
         },
-      });
+        {
+          where: {
+            id: CherishId,
+          },
+        }
+      );
 
       return res.status(sc.OK).send(ut.success(rm.OK, score));
     } catch (err) {
@@ -105,7 +92,6 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
-
 
   // CherishId 별 리뷰내용 보기
   getWater: async (req, res) => {
@@ -117,10 +103,8 @@ module.exports = {
         success: false,
         message: errors.array(),
       });
-
-    const {
-      CherishId
-    } = req.query;
+    }
+    const { CherishId } = req.query;
 
     try {
       // Water 리뷰 가져오기

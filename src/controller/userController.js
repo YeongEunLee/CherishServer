@@ -1,12 +1,13 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, Plant_status, sequelize, Plant_level, User } = require('../models');
+const { Cherish, Plant, Water, Plant_level, User } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-const { cherishService, plantService } = require('../service');
+const { plantService } = require('../service');
 const water = require('../models/water');
+const logger = require('../config/winston');
 
 module.exports = {
   userMyPage: async (req, res) => {

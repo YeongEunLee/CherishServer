@@ -1,9 +1,10 @@
 const dayjs = require('dayjs');
-const { Cherish, Plant, Water, sequelize, User } = require('../models');
+const { Cherish } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { validationResult } = require('express-validator');
+const logger = require('../config/winston');
 
 module.exports = {
   /**
