@@ -1,18 +1,11 @@
-const {
-  Water
-} = require('../models');
+const { Water } = require('../models');
+const dayjs = require('dayjs');
 
 module.exports = {
-
-  postWater: async (CherishId, review, keyword1, keyword2, keyword3) => {
+  postWater: async (CherishId, water_date, review, keyword1, keyword2, keyword3) => {
     try {
-
       //water_date 구하기
-      const moment = require('moment');
-      require('moment-timezone');
-      moment.tz.setDefault("Asia/Seoul");
-      const waterDate = moment().format('YYYY-MM-DD HH:mm:ss');
-      console.log('It is ', waterDate);
+      const waterDate = dayjs(water_date).format('YYYY-MM-DD');
 
       const water = await Water.create({
         CherishId,
@@ -20,10 +13,8 @@ module.exports = {
         keyword1,
         keyword2,
         keyword3,
-        water_date: waterDate
+        water_date: waterDate,
       });
-
-
 
       return water;
     } catch (err) {
