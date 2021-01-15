@@ -24,7 +24,15 @@ module.exports = {
    * body: water_date, review, keyword1, keyword2, keyword3, UserId
    */
   postWater: async (req, res) => {
-    //
+    logger.info(`POST /water - postWater`);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`POST /water - Paramaters Error - postWater`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
     const {
       water_date,
       review,
@@ -93,6 +101,7 @@ module.exports = {
       return res.status(sc.OK).send(ut.success(rm.OK, score));
     } catch (err) {
       console.log(err);
+      logger.error(`POST /water - Server Error - postWater`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
@@ -100,12 +109,14 @@ module.exports = {
 
   // CherishId 별 리뷰내용 보기
   getWater: async (req, res) => {
+    logger.info(`GET /water/:id - getWater`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.error(`GET /water/:id - Paramaters Error - getWater`);
       return res.status(400).json({
-        errors: errors.array(),
+        success: false,
+        message: errors.array(),
       });
-    }
 
     const {
       CherishId

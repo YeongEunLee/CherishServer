@@ -10,13 +10,21 @@ const waterController = require('../../controller/waterController');
  * @apiName postWater
  * @apiGroup Water
  */
-router.post('/', waterController.postWater);
+router.post(
+  '/',
+  [check('CherishId', 'CherishId is required').not().isEmpty()],
+  waterController.postWater
+);
 
 /**
  * @api {get} /water/:id
  * @apiName getWater
  * @apiGroup Water
  */
-router.get('/:id', waterController.getWater);
+router.get(
+  '/:id',
+  [check('CherishId', 'CherishId is required').not().isEmpty()],
+  waterController.getWater
+);
 
 module.exports = router;
