@@ -1,7 +1,12 @@
-const { validationResult } = require('express-validator');
+const {
+  validationResult
+} = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Water } = require('../models');
+const {
+  Cherish,
+  Water
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -42,7 +47,10 @@ module.exports = {
 
       return res
         .status(sc.OK)
-        .send(ut.success(rm.CALENDAR_READ_SUCCESS, { water, future_water_date }));
+        .send(ut.success(rm.CALENDAR_READ_SUCCESS, {
+          water,
+          future_water_date
+        }));
     } catch (error) {
       logger.error(`GET /calendar - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_READ_FAIL));
@@ -59,7 +67,17 @@ module.exports = {
         message: errors.array(),
       });
     }
-    const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
+
+    const {
+      CherishId,
+      water_date,
+      review,
+      keyword1,
+      keyword2,
+      keyword3
+    } = req.body;
+
+
     try {
       await Water.update(
 
@@ -68,8 +86,7 @@ module.exports = {
           keyword1: keyword1,
           keyword2: keyword2,
           keyword3: keyword3,
-        },
-        {
+        }, {
           where: {
             CherishId: CherishId,
             water_date: water_date,
@@ -94,7 +111,10 @@ module.exports = {
         message: errors.array(),
       });
     }
-    const { CherishId, water_date } = req.body;
+    const {
+      CherishId,
+      water_date
+    } = req.body;
 
     try {
       await Water.destroy({

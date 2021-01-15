@@ -1,16 +1,22 @@
-const { Plant_level, Water, Cherish, Modifier, sequelize } = require('../models');
+const {
+  Plant_level,
+  Water,
+  Cherish,
+  Modifier,
+  sequelize
+} = require('../models');
 
 module.exports = {
-  getPlantLevel: ({ growth }) => {
+  getPlantLevel: ({
+    growth
+  }) => {
     try {
       let level;
-      if (growth < 3) {
-        level = 0;
-      } else if (growth < 7) {
+      if ((growth >= 0) && (growth < 3)) {
         level = 1;
-      } else if (growth < 12) {
+      } else if ((growth >= 3) && (growth < 7)) {
         level = 2;
-      } else {
+      } else if ((growth >= 7) && (growth <= 12)) {
         level = 3;
       }
       return level;
@@ -19,7 +25,10 @@ module.exports = {
     }
   },
 
-  getPlantStandard: ({ dDay, waterCount }) => {
+  getPlantStandard: ({
+    dDay,
+    waterCount
+  }) => {
     try {
       let standard;
       if (waterCount == 0 && dDay >= 1) {
@@ -37,10 +46,14 @@ module.exports = {
     }
   },
 
-  getPlantModifier: async ({ standard }) => {
+  getPlantModifier: async ({
+    standard
+  }) => {
     try {
       const plantModifier = await Modifier.findOne({
-        where: { standard: standard },
+        where: {
+          standard: standard
+        },
         order: sequelize.random(),
       });
       return plantModifier;
@@ -49,7 +62,9 @@ module.exports = {
     }
   },
 
-  getWaterCount: async ({ CherishId }) => {
+  getWaterCount: async ({
+    CherishId
+  }) => {
     try {
       const waterCount = await Water.findAll({
         where: {
@@ -62,7 +77,9 @@ module.exports = {
     }
   },
 
-  cherishCheck: async ({ CherishId }) => {
+  cherishCheck: async ({
+    CherishId
+  }) => {
     try {
       const alreadyCherish = await Cherish.findOne({
         where: {
