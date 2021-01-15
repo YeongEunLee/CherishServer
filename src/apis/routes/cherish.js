@@ -4,7 +4,6 @@ const router = express.Router();
 const { check } = require('express-validator');
 
 const plantController = require('../../controller/plantController');
-const logger = require('../config/winston');
 
 /**
  * @api {put} /cherish
@@ -13,7 +12,6 @@ const logger = require('../config/winston');
  */
 router.put(
   '/',
-  logger.info('PUT /cherish'),
   [
     check('id', 'id is required').not().isEmpty(),
     check('nickname', 'nickname is required').not().isEmpty(),
@@ -32,7 +30,6 @@ router.put(
  */
 router.post(
   '/',
-  logger.info('POST /cherish'),
   [
     check('name', 'name is required').not().isEmpty(),
     check('nickname', 'nickname is required').not().isEmpty(),
@@ -53,7 +50,6 @@ router.post(
  */
 router.delete(
   '/:id',
-  logger.info('DELETE /cherish/:id'),
   [check('id', 'id is required').not().isEmpty()],
   plantController.deleteCherish
 );
@@ -65,7 +61,6 @@ router.delete(
  */
 router.get(
   '/',
-  logger.info('GET /cherish - getCherishInfo'),
   [check('CherishId', 'CherishId is required').not().isEmpty()],
   plantController.getCherishInfo
 );
@@ -77,7 +72,6 @@ router.get(
  */
 router.get(
   '/:id',
-  logger.info('GET /cherish/:id - getCherishList'),
 
   [check('id', 'id is required').not().isEmpty()],
   plantController.getCherishList

@@ -9,6 +9,7 @@ const logger = require('../config/winston');
 
 module.exports = {
   getCalendar: async (req, res) => {
+    logger.info('GET /calendar/:id');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`GET /calendar - Paramaters Error`);
@@ -49,6 +50,7 @@ module.exports = {
   },
 
   modifyCalendar: async (req, res) => {
+    logger.info('PUT /calendar');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`PUT /calendar - Paramaters Error`);
@@ -82,6 +84,7 @@ module.exports = {
   },
 
   deleteCalendar: async (req, res) => {
+    logger.info('DELETE /calendar');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`DELETE /calendar - Paramaters Error`);

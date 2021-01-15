@@ -11,12 +11,14 @@ const { cherishService, plantService, pushService } = require('../service');
 const { getPlantModifier } = require('../service/plantService');
 const cherish = require('../models/cherish');
 const plant = require('../models/plant');
+const logger = require('../config/winston');
 
 module.exports = {
   /**
    * body: name, nickname, birth, phone, cycle_date, notice_time
    */
   createPlant: async (req, res) => {
+    logger.info('POST /cherish');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`POST /cherish - Paramaters Error`);
@@ -107,6 +109,7 @@ module.exports = {
    * cherish 삭제
    **/
   deleteCherish: async (req, res) => {
+    logger.info('DELETE /cherish/:id');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`DELETE /cherish/:id - Paramaters Error`);
@@ -149,6 +152,7 @@ module.exports = {
    * cherish 정보 수정
    **/
   modifyCherish: async (req, res) => {
+    logger.info('PUT /cherish');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`PUT /cherish - Paramaters Error`);
@@ -192,6 +196,7 @@ module.exports = {
 
   /* 유저의 체리쉬 리스트 조회 */
   getCherishInfo: async (req, res) => {
+    logger.info('GET /cherish - getCherishInfo');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`GET /cherish - Paramaters Error`);
@@ -299,6 +304,7 @@ module.exports = {
   },
 
   getCherishList: async (req, res) => {
+    logger.info('GET /cherish/:id - getCherishList');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`GET /cherish/:id - Paramaters Error`);

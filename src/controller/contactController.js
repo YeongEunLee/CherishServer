@@ -14,6 +14,7 @@ module.exports = {
    * body: keyword1, keyword2, keyword3
    */
   getNewKeyword: async (req, res) => {
+    logger.info('GET /contact/:id - getNewKeyword');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.error(`DELETE /contact - Paramaters Error`);
