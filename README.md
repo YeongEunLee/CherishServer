@@ -6,9 +6,9 @@
 
 ---
 
-# 1. API DOC LINK (notion)
+# 1. API DOC LINK (Notion)
 
-- [관련 링크](https://www.notion.so/Dev-Wiki-e74109446f7e4989b8f6049e939bdf2f)
+- [API 문서](https://www.notion.so/API-6c4294a239d1446c844022af30b3b252)
 
 ---
 
@@ -63,7 +63,7 @@
 
 # 5. Team Role
 
-#### 남궁권 ([kkoon9](https://github.com/kkoon9))
+#### 🤴 남궁권 ([kkoon9](https://github.com/kkoon9))
 
 - 프로젝트 구축
 - 메인 뷰 API
@@ -72,7 +72,7 @@
 - 마이페이지 API
 - PUSH 알림
 
-####  이영은 ([YeongEunLee](https://github.com/YeongEunLee))
+####  👸 이영은 ([YeongEunLee](https://github.com/YeongEunLee))
 
 - 데이터 모델링
 - Cherish 등록하기 API
@@ -83,7 +83,7 @@
 - 식물 상세 정보 조회 하기 API
 - PUSH 알림 API
 
-####  한수아 ([sssua_0928](https://github.com/sssua_0928))
+####  👶 한수아 ([sssua_0928](https://github.com/sssua_0928))
 
 - 후기 등록(물주기) API
 - 로그인 API
@@ -93,7 +93,7 @@
 - 푸시 알림 API
 
 
-####  칸반보드 노션링크[(참고)](https://www.notion.so/Server-6854a0c36b1146f19cfe32dafde87ef5)
+####  칸반보드 노션링크 [(참고)](https://www.notion.so/Server-6854a0c36b1146f19cfe32dafde87ef5)
 
 ---
 
