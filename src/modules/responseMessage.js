@@ -49,5 +49,5 @@ module.exports = {
   UPDATE_Y_N_FAIL: 'send_yn 업데이트 실패',
 
   /*user*/
-  GET_USER_SUCCESS: '푸시 유저 조회 성공',
+  GET_USER_SUCCESS: '유저 조회 성공',
 };

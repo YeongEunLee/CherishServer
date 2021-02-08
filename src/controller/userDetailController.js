@@ -6,11 +6,11 @@ const rm = require('../modules/responseMessage');
 
 module.exports = {
   getUserDetail: async (req, res) => {
-    const { CherishId } = req.params;
+    const { CherishId } = req.body;
 
     try {
 
-      const userCherish = await Cherish.findOne({
+      const cherishDetail = await Cherish.findOne({
         attributes: ['cycle_date', 'notice_time','UserId'],
         where: {
           id: CherishId
@@ -20,14 +20,13 @@ module.exports = {
       const userDetail = await User.findOne({
         attributes: ['name', 'nickname', 'birth', 'phone'], 
         where: {
-          id: userCherish.dataValues.UserId
+          id: cherishDetail.dataValues.UserId
         },
       });
-      console.log(userCherish)
       return res.status(sc.OK).send(
         ut.success(rm.GET_USER_SUCCESS, {
-          //userDetail,
-          //userCherish
+          userDetail,
+          cherishDetail
         })
       );
     } catch (err) {

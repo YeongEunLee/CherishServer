@@ -10,6 +10,7 @@ const userDetailController = require('../../controller/userDetailController');
  * @apiName getUserDetail
  * @apiGroup getUserDetail
  */
-router.get('/:id', [check('id', 'id is required').not().isEmpty()], userDetailController.getUserDetail);
+//router.get('/', [check('id', 'id is required').not().isEmpty()], userDetailController.getUserDetail);
+router.get('/', userDetailController.getUserDetail);
 
 module.exports = router;
