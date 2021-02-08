@@ -47,4 +47,7 @@ module.exports = {
   UPDATE_PUSH_USER_FAIL: '푸시 테이블 업데이트 실패',
   UPDATE_Y_N_SUCCESS: 'send_yn 업데이트 성공',
   UPDATE_Y_N_FAIL: 'send_yn 업데이트 실패',
+
+  /*user*/
+  GET_USER_SUCCESS: '푸시 유저 조회 성공',
 };

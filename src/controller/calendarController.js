@@ -77,7 +77,7 @@ module.exports = {
       keyword3
     } = req.body;
 
-
+    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00')
     try {
       await Water.update(
 
@@ -89,11 +89,11 @@ module.exports = {
         }, {
           where: {
             CherishId: CherishId,
-            water_date: water_date,
+            water_date: newWaterDate,
           },
         }
       );
-      console.log(water_date);
+
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_MODIFY_SUCCESS));
     } catch (error) {
       logger.error(`PUT /calendar - Server Error`);
@@ -116,11 +116,12 @@ module.exports = {
       water_date
     } = req.body;
 
+    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00')
     try {
       await Water.destroy({
         where: {
           CherishId: CherishId,
-          water_date: water_date,
+          water_date: newWaterDate,
         },
       });
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_DELETE_SUCCESS));
