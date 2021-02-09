@@ -11,6 +11,6 @@ const userDetailController = require('../../controller/userDetailController');
  * @apiGroup getUserDetail
  */
 //router.get('/', [check('id', 'id is required').not().isEmpty()], userDetailController.getUserDetail);
-router.get('/', userDetailController.getUserDetail);
+router.get('/:CherishId', userDetailController.getUserDetail);
 
 module.exports = router;
