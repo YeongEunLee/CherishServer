@@ -6,7 +6,7 @@ const rm = require('../modules/responseMessage');
 
 module.exports = {
   getUserDetail: async (req, res) => {
-    const { CherishId } = req.body;
+    const { CherishId } = req.params;
 
     try {
 
