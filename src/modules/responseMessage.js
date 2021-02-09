@@ -13,6 +13,7 @@ module.exports = {
   READ_ALL_CHERISH_BY_ID_SUCCESS: '체리쉬 상세보기를 성공하였습니다.',
   READ_ALL_CHERISH_MY_PAGE_SUCCESS: '체리쉬 마이 페이지 조회를 성공하였습니다.',
   READ_ALL_CHERISH_SUCCESS: '유저의 체리쉬 리스트 조회를 성공하였습니다.',
+  UPDATE_TOKEN_SUCCESS: '유저의 fcm 토큰 업데이트를 성공하였습니다.',
 
   /* 로그인 */
   SIGN_IN_SUCCESS: '로그인 성공 ^o^',
