@@ -11,6 +11,7 @@ module.exports = {
   DOWN_GROWTH: '식물 애정도가 차감되었습니다..',
   GET_WATER_POSTPONE: '미루기 횟수입니다.',
   READ_ALL_CHERISH_BY_ID_SUCCESS: '체리쉬 상세보기를 성공하였습니다.',
+  DUPLICATE_PHONE_FAIL: '이미 등록한 식물이 있는 번호입니다.',
   READ_ALL_CHERISH_MY_PAGE_SUCCESS: '체리쉬 마이 페이지 조회를 성공하였습니다.',
   READ_ALL_CHERISH_SUCCESS: '유저의 체리쉬 리스트 조회를 성공하였습니다.',
   UPDATE_TOKEN_SUCCESS: '유저의 fcm 토큰 업데이트를 성공하였습니다.',

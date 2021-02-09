@@ -38,6 +38,16 @@ module.exports = {
       water_notice,
     } = req.body;
     try {
+      const isCheckPhoneDuplicate = await Cherish.findOne({
+        where: {
+          UserId,
+          phone,
+        },
+      });
+      if (isCheckPhoneDuplicate) {
+        logger.error(`POST /cherish - Phone Duplicate Error`);
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.DUPLICATE_PHONE_FAIL));
+      }
       const PlantStatusId = (cycle_date) => {
         if (cycle_date <= 3) return 1;
         else if (cycle_date <= 7) return 2;
