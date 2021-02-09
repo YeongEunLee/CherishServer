@@ -1,4 +1,6 @@
-const { validationResult } = require('express-validator');
+const {
+  validationResult
+} = require('express-validator');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
@@ -19,7 +21,10 @@ module.exports = {
       });
     }
     // 1. req.body에서 데이터 가져오기
-    const { email, password } = req.body;
+    const {
+      email,
+      password
+    } = req.body;
 
     try {
       //2. 존재하는 아이디인지 확인하기. 존재하지 않는 아이디면 NO USER 반환
@@ -59,9 +64,17 @@ module.exports = {
 
   /* 회원가입 */
   signup: async (req, res) => {
-    const { email, password, sex, birth, nickname } = req.body;
+    const {
+      name,
+      email,
+      password,
+      sex,
+      nickname,
+      phone,
+      birth
+    } = req.body;
 
-    if (!email || !password || !sex || !birth || !nickname) {
+    if (!name || !email || !password || !sex || !nickname || !phone || !birth) {
       console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
@@ -73,7 +86,7 @@ module.exports = {
         console.log('이미 존재하는 이메일 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.ALREADY_EMAIL));
       }
-      const user = await userService.signup(email, password, sex, birth, nickname);
+      const user = await userService.signup(name, email, password, sex, nickname, phone, birth);
 
       return res.status(sc.OK).send(
         ut.success(rm.SIGN_UP_SUCCESS, {

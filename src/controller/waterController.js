@@ -45,7 +45,7 @@ module.exports = {
         score += 1;
       }
 
-      const waterDate = dayjs().format('YYYY-MM-DD hh:mm:ss'); // 물준날은 당일로
+      const waterDate = dayjs().format('YYYY-MM-DD'); // 물준날은 당일로
       await waterService.postWater(CherishId, waterDate, review, keyword1, keyword2, keyword3);
 
       // water_date 구하기
