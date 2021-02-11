@@ -1,5 +1,4 @@
 const {
-  Plant,
   Plant_level,
   Water,
   Cherish,
@@ -92,4 +91,4 @@ module.exports = {
       throw err;
     }
   },
-}
+};

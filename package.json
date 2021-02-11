@@ -37,7 +37,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.9.0",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.5.0",
+    "sequelize": "^6.3.5",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.0"
   }
