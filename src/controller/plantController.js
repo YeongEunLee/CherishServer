@@ -412,4 +412,33 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+  checkPhone: async (req, res) => {
+    logger.info('POST /cherish/checkPhone');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`POST /cherish/checkPhone - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { phone, UserId } = req.body;
+    try {
+      const isCheckPhoneDuplicate = await Cherish.findOne({
+        where: {
+          UserId,
+          phone,
+        },
+      });
+      if (isCheckPhoneDuplicate) {
+        logger.error(`POST /cherish/checkPhone - Phone Duplicate Error`);
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.DUPLICATE_PHONE_FAIL));
+      }
+      return res.status(sc.OK).send(ut.success(rm.DUPLICATE_PHONE_SUCCESS));
+    } catch (err) {
+      console.log(err);
+      logger.error(`POST /cherish/checkPhone - Server Error`);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+    }
+  },
 };
