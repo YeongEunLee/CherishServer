@@ -345,8 +345,6 @@ module.exports = {
     }
     const id = req.params.id; //userId
     try {
-      // const cherishes = await plantService.stateCheck({UserId: id,});
-
       const cherishes = await Cherish.findAll({
         include: [{
           model: Plant,
@@ -364,10 +362,6 @@ module.exports = {
         const level = plant_info.level;
         plant_map.set(`${PlantId},${level}`, plant_info.image_url);
       });
-
-      // 가지고 온 cherishes의 id와 state_code를 state구분 service에 가져가기
-      // service에서는 state_code가 1인 경우에만 id return
-      // cherishes = plantService.stateCheck({})
 
       const result = [];
       for (item of cherishes) {
