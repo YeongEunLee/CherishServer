@@ -1,4 +1,5 @@
 const {
+  Plant,
   Plant_level,
   Water,
   Cherish,
@@ -91,4 +92,24 @@ module.exports = {
       throw err;
     }
   },
-};
+  /*
+  stateCheck: async ({
+      UserId
+    }) => {
+      try {
+        const cherishes = await Cherish.findAll({
+          include: [{
+            model: Plant,
+          }, ],
+          where: {
+            id: UserId,
+            status_code: 1,
+          },
+        });
+        return cherishes;
+      } catch (err) {
+        throw err;
+      }
+    }
+  */
+}

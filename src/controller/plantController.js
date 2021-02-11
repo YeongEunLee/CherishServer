@@ -1,14 +1,28 @@
-const { validationResult } = require('express-validator');
+const {
+  validationResult
+} = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, Plant_level, Status_message } = require('../models');
+const {
+  Cherish,
+  Plant,
+  Water,
+  Plant_level,
+  Status_message
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 
-const { cherishService, plantService, pushService } = require('../service');
+const {
+  cherishService,
+  plantService,
+  pushService
+} = require('../service');
 
-const { getPlantModifier } = require('../service/plantService');
+const {
+  getPlantModifier
+} = require('../service/plantService');
 const cherish = require('../models/cherish');
 const plant = require('../models/plant');
 const logger = require('../config/winston');
@@ -139,16 +153,13 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
 
-      await Cherish.update(
-        {
-          status_code: false,
+      await Cherish.update({
+        status_code: false,
+      }, {
+        where: {
+          id: CherishId,
         },
-        {
-          where: {
-            id: CherishId,
-          },
-        }
-      );
+      });
 
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
@@ -172,7 +183,13 @@ module.exports = {
       });
     }
     const CherishId = req.body.id;
-    const { nickname, birth, cycle_date, notice_time, water_notice } = req.body;
+    const {
+      nickname,
+      birth,
+      cycle_date,
+      notice_time,
+      water_notice
+    } = req.body;
 
     try {
       const alreadyCherish = await cherishService.cherishCheck({
@@ -182,20 +199,17 @@ module.exports = {
         logger.error(`PUT /cherish - cherishCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
-      await Cherish.update(
-        {
-          nickname: nickname,
-          birth: birth,
-          cycle_date: cycle_date,
-          notice_time: notice_time,
-          water_notice: water_notice,
+      await Cherish.update({
+        nickname: nickname,
+        birth: birth,
+        cycle_date: cycle_date,
+        notice_time: notice_time,
+        water_notice: water_notice,
+      }, {
+        where: {
+          id: CherishId,
         },
-        {
-          where: {
-            id: CherishId,
-          },
-        }
-      );
+      });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
@@ -215,7 +229,9 @@ module.exports = {
         message: errors.array(),
       });
     }
-    const { CherishId } = req.query;
+    const {
+      CherishId
+    } = req.query;
     try {
       const cherish = await Cherish.findOne({
         attributes: ['name', 'nickname', 'phone', 'birth', 'PlantId', 'start_date', 'water_date'],
@@ -284,7 +300,9 @@ module.exports = {
         where: {
           CherishId: CherishId,
         },
-        order: [['id', 'DESC']],
+        order: [
+          ['id', 'DESC']
+        ],
       });
 
       result.reviews = [];
@@ -327,16 +345,18 @@ module.exports = {
     }
     const id = req.params.id; //userId
     try {
+      // const cherishes = await plantService.stateCheck({UserId: id,});
+
       const cherishes = await Cherish.findAll({
-        include: [
-          {
-            model: Plant,
-          },
-        ],
+        include: [{
+          model: Plant,
+        }, ],
         where: {
           UserId: id,
+          status_code: 1,
         },
       });
+
       const plant_level = await Plant_level.findAll({});
       const plant_map = new Map();
       plant_level.map(async (plant_info) => {
@@ -344,6 +364,10 @@ module.exports = {
         const level = plant_info.level;
         plant_map.set(`${PlantId},${level}`, plant_info.image_url);
       });
+
+      // 가지고 온 cherishes의 id와 state_code를 state구분 service에 가져가기
+      // service에서는 state_code가 1인 경우에만 id return
+      // cherishes = plantService.stateCheck({})
 
       const result = [];
       for (item of cherishes) {
@@ -360,9 +384,9 @@ module.exports = {
         obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url =
-          item && item.Plant && item.Plant.thumbnail_image_url
-            ? item.Plant.thumbnail_image_url
-            : '썸네일없음';
+          item && item.Plant && item.Plant.thumbnail_image_url ?
+          item.Plant.thumbnail_image_url :
+          '썸네일없음';
 
         //식물 이름 가져오기
         const plantId = await Cherish.findOne({
