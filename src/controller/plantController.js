@@ -351,6 +351,7 @@ module.exports = {
         }, ],
         where: {
           UserId: id,
+          status_code: 1,
         },
       });
       const plant_level = await Plant_level.findAll({});
