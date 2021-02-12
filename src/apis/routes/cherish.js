@@ -76,4 +76,19 @@ router.get(
   [check('id', 'id is required').not().isEmpty()],
   plantController.getCherishList
 );
+
+/**
+ * @api {post} /cherish/checkPhone
+ * @apiName checkPhone
+ * @apiGroup Cherish
+ */
+router.post(
+  '/checkPhone',
+  [
+    check('phone', 'phone is required').not().isEmpty(),
+    check('UserId', 'UserId is required').not().isEmpty(),
+  ],
+  plantController.checkPhone
+);
+
 module.exports = router;

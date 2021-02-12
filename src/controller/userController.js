@@ -1,12 +1,11 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, Plant_level, User } = require('../models');
+const { Cherish, Plant, Water, Plant_level, User, App_push_user } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { plantService } = require('../service');
-const water = require('../models/water');
 const logger = require('../config/winston');
 
 module.exports = {
@@ -68,6 +67,14 @@ module.exports = {
         result.push(obj);
       });
 
+      result.sort((a, b) => {
+        let result = a.dDay - b.dDay;
+        if(result === 0) {
+          result = a.growth - b.growth;
+        }
+        return result;
+      });
+
       const cherishIdList = cherishes.map((cherish) => cherish.id);
       const cherishCompleteList = cherishes.filter((cherish) => {
         return cherish.growth === 12;
@@ -94,6 +101,45 @@ module.exports = {
     } catch (err) {
       console.log(err);
       logger.error(`GET /user/:id - Server Error - userMyPage`);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+    }
+  },
+  updateFCMToken: async (req, res) => {
+    logger.info(`PUT /user - updateFCMToken`);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`PUT /user - Paramaters Error - updateFCMToken`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { id, fcm_token } = req.body;
+    try {
+      await User.update(
+        {
+          fcm_token,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      await App_push_user.update(
+        {
+          mobile_device_token: fcm_token,
+        },
+        {
+          where: {
+            UserId: id,
+          },
+        }
+      );
+      return res.status(sc.OK).send(ut.success(rm.UPDATE_TOKEN_SUCCESS));
+    } catch (err) {
+      console.log(err);
+      logger.error(`PUT /user - Server Error - updateFCMToken`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
