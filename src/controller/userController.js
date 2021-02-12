@@ -67,6 +67,10 @@ module.exports = {
         result.push(obj);
       });
 
+      result.sort((a, b) => {
+        return a.dDay - b.dDay;
+      });
+
       const cherishIdList = cherishes.map((cherish) => cherish.id);
       const cherishCompleteList = cherishes.filter((cherish) => {
         return cherish.growth === 12;
