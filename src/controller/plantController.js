@@ -415,8 +415,13 @@ module.exports = {
         result.push(obj);
       }
       result.sort((a, b) => {
-        return a.dDay - b.dDay;
+        let result = a.dDay - b.dDay;
+        if(result === 0) {
+          result = a.growth - b.growth;
+        }
+        return result;
       });
+      
       return res.status(sc.OK).send(
         ut.success(rm.READ_ALL_CHERISH_SUCCESS, {
           result,
