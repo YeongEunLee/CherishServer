@@ -33,6 +33,7 @@ module.exports = {
       const cherishes = await Cherish.findAll({
         where: {
           UserId: id,
+          status_code: 1
         },
         include: [
           {
