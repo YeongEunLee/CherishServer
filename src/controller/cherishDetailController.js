@@ -2,30 +2,26 @@ const { Cherish, User } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
+const dayjs = require('dayjs');
 //const logger = require('../config/winston');
 
 module.exports = {
-  getUserDetail: async (req, res) => {
+  getCherishDetail: async (req, res) => {
     const { CherishId } = req.params;
 
     try {
-
       const cherishDetail = await Cherish.findOne({
-        attributes: ['cycle_date', 'notice_time','UserId'],
+        attributes: ['nickname', 'birth', 'cycle_date', 'notice_time','water_notice'],
         where: {
           id: CherishId
         }
       })
 
-      const userDetail = await User.findOne({
-        attributes: ['name', 'nickname', 'birth', 'phone'], 
-        where: {
-          id: cherishDetail.dataValues.UserId
-        },
-      });
+      cherishDetail.dataValues.birth = dayjs(cherishDetail.dataValues.birth).format('YYYY-MM-DD');
+      //dayjs(cherish.birth).format('MM.DD');
+
       return res.status(sc.OK).send(
         ut.success(rm.GET_USER_SUCCESS, {
-          userDetail,
           cherishDetail
         })
       );

@@ -24,6 +24,6 @@ router.use('/push', require('./push'));
 
 router.use('/pushReview', require('./pushReview'));
 
-router.use('/getUserDetail', require('./userDetail'))
+router.use('/getCherishDetail', require('./cherishDetail'))
 
 module.exports = router;
