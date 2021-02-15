@@ -22,7 +22,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const user = await User.findOne({
-        attributes: ['name', 'nickname', 'postpone_count'], // postpone_count
+        attributes: ['nickname', 'postpone_count'], // postpone_count
         where: {
           id: id,
         },
