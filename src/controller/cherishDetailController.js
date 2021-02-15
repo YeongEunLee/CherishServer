@@ -11,7 +11,7 @@ module.exports = {
 
     try {
       const cherishDetail = await Cherish.findOne({
-        attributes: ['nickname', 'birth', 'cycle_date', 'notice_time','water_notice'],
+        attributes: ['nickname', 'birth', 'phone','cycle_date', 'notice_time','water_notice'],
         where: {
           id: CherishId
         }
