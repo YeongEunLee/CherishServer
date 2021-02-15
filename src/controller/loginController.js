@@ -65,7 +65,6 @@ module.exports = {
   /* 회원가입 */
   signup: async (req, res) => {
     const {
-      name,
       email,
       password,
       sex,
@@ -74,7 +73,7 @@ module.exports = {
       birth
     } = req.body;
 
-    if (!name || !email || !password || !sex || !nickname || !phone || !birth) {
+    if (!email || !password || !sex || !nickname || !phone || !birth) {
       console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
