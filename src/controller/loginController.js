@@ -85,7 +85,7 @@ module.exports = {
         console.log('이미 존재하는 이메일 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.ALREADY_EMAIL));
       }
-      const user = await userService.signup(name, email, password, sex, nickname, phone, birth);
+      const user = await userService.signup(email, password, sex, nickname, phone, birth);
 
       return res.status(sc.OK).send(
         ut.success(rm.SIGN_UP_SUCCESS, {
