@@ -73,11 +73,14 @@ module.exports = {
       birth
     } = req.body;
 
+    // 전 API에서 입력한 email 가져오기
+
     if (!email || !password || !sex || !nickname || !phone || !birth) {
       console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
     try {
+      //중복확인 부분
       const alreadyEmail = await userService.emailCheck({
         email,
       });
@@ -85,6 +88,7 @@ module.exports = {
         console.log('이미 존재하는 이메일 입니다.');
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.ALREADY_EMAIL));
       }
+      //여까지(일단 살려둘래)
       const user = await userService.signup(email, password, sex, nickname, phone, birth);
 
       return res.status(sc.OK).send(
