@@ -32,6 +32,7 @@ module.exports = {
    * body: name, nickname, birth, phone, cycle_date, notice_time
    */
   createPlant: async (req, res) => {
+    /*
     logger.info('POST /cherish');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -41,6 +42,7 @@ module.exports = {
         message: errors.array(),
       });
     }
+    */
     const {
       name,
       nickname,
