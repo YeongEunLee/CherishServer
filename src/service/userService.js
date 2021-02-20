@@ -38,12 +38,11 @@ module.exports = {
     }
   },
 
-  signup: async (name, email, password, sex, nickname, phone, birth) => {
+  signup: async (email, password, sex, nickname, phone, birth) => {
     try {
       //const salt = crypto.randomBytes(64).toString('base64');
       //const saltPassword = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('base64');
       const user = await User.create({
-        name,
         email,
         password,
         sex,

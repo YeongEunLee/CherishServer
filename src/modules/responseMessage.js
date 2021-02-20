@@ -22,12 +22,14 @@ module.exports = {
   SIGN_IN_FAIL: '로그인 실패＞︿＜',
   ALREADY_ID: '존재하는 ID 입니다.',
   NO_USER: '존재하지않는 유저 id 입니다.',
-  ALREADY_EMAIL: '이미 존재하는 이메일 입니다.',
   NO_EMAIL: '존재하지 않는 이메일 입니다.',
   MISS_MATCH_PW: '비밀번호가 일치하지 않습니다',
   NULL_VALUE: '필요한 값이 존재하지 않습니다',
   SIGN_UP_SUCCESS: '회원가입에 성공했슴다^0^',
   SIGN_UP_FAIL: '회원가입에 실패했슴다＞︿＜',
+  ALREADY_EMAIL: '이미 존재하는 이메일 입니다.',
+  CHECKED_EMAIL_SUCCESS: '이메일 중복확인 성공^0^',
+  CHECKED_EMAIL_FAIL: '이메일 중복확인 실패＞︿＜',
 
   /* 물 줄 날짜 조회*/
   SEARCH_SUCCESS: '물줄날짜 조회 성공 ^o^',

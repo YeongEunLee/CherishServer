@@ -1,7 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'User',
-    {
+    'User', {
+      name: {
+        type: DataTypes.STRING(45),
+        allowNull: true,
+      },
       email: {
         type: DataTypes.STRING(45),
         allowNull: false,
@@ -40,8 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       fcm_token: {
         type: DataTypes.STRING(200),
       },
-    },
-    {
+    }, {
       timestamps: true,
       tableName: 'user',
     }

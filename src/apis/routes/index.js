@@ -24,6 +24,8 @@ router.use('/push', require('./push'));
 
 router.use('/pushReview', require('./pushReview'));
 
-router.use('/getCherishDetail', require('./cherishDetail'))
+router.use('/getCherishDetail', require('./cherishDetail'));
+
+router.use('/checkSameEmail', require('./checkEmail'));
 
 module.exports = router;
