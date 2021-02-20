@@ -28,4 +28,6 @@ router.use('/getCherishDetail', require('./cherishDetail'));
 
 router.use('/checkSameEmail', require('./checkEmail'));
 
+router.use('/addView', require('./addView'));
+
 module.exports = router;
