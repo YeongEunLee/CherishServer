@@ -2,10 +2,6 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'User',
     {
-      name: {
-        type: DataTypes.STRING(45),
-        allowNull: false,
-      },
       email: {
         type: DataTypes.STRING(45),
         allowNull: false,
@@ -19,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       nickname: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(8),
         allowNull: false,
       },
       phone: {

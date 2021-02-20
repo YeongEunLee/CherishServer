@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     'Cherish',
     {
       name: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(8),
         allowNull: false,
       },
       nickname: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(8),
         allowNull: false,
       },
       birth: {
