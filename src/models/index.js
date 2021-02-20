@@ -14,7 +14,6 @@ db.Plant = require('./plant')(sequelize, Sequelize);
 db.Plant_level = require('./plant_level')(sequelize, Sequelize);
 db.Cherish = require('./cherish')(sequelize, Sequelize);
 db.Water = require('./water')(sequelize, Sequelize);
-db.Keyword = require('./keyword')(sequelize, Sequelize);
 db.Status_message = require('./status_message')(sequelize, Sequelize);
 db.Modifier = require('./modifier')(sequelize, Sequelize);
 db.App_push_user = require('./app_push_user')(sequelize, Sequelize);
