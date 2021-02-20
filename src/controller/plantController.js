@@ -429,6 +429,7 @@ module.exports = {
         where: {
           UserId,
           phone,
+          status_code: 1,
         },
       });
       if (isCheckPhoneDuplicate) {
