@@ -8,8 +8,8 @@ async function startServer() {
   await loader(app);
 
   app
-    .listen(config.port, () => {
-      logger.info(`✌️ Server listening on port: ${config.port}`);
+    .listen(config.PORT, () => {
+      logger.info(`✌️ Server listening on port: ${config.PORT}`);
     })
     .on('error', (err) => {
       logger.error(err);
