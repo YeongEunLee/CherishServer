@@ -28,7 +28,6 @@ module.exports = {
           password,
         },
       });
-      console.log(user);
       return user;
     } catch (err) {
       console.log(err);
@@ -63,14 +62,10 @@ module.exports = {
    * @return 인증번호(6자리)
    */
   sendNumber: async ({ phone }) => {
-    const NCP_accessKey = secretKey.NCP_API_access_key;
-    const NCP_secretKey = secretKey.NCP_API_secret_key;
-    const NCP_serviceID = secretKey.SENS_service_ID;
-    const myPhoneNumber = secretKey.myPhoneNumber;
-    console.log(NCP_accessKey);
-    console.log(NCP_secretKey);
-    console.log(NCP_serviceID);
-    console.log(myPhoneNumber);
+    const NCP_accessKey = secretKey.NCP_API_ACCESS_KEY;
+    const NCP_secretKey = secretKey.NCP_API_SECRET_KEY;
+    const NCP_serviceID = secretKey.SENS_SERVICE_ID;
+    const myPhoneNumber = secretKey.MY_PHONE_NUMBER;
     const space = ' '; // one space
     const newLine = '\n'; // new line
     const method = 'POST'; // method
