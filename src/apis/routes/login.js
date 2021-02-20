@@ -1,9 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const {
-  check
-} = require('express-validator');
+const { check } = require('express-validator');
 
 const loginController = require('../../controller/loginController');
 
@@ -22,4 +20,14 @@ router.post(
 );
 router.post('/signup', loginController.signup);
 
+/**
+ * @api {post} /phoneAuth
+ * @apiName phoneAuth
+ * @apiGroup Login
+ */
+router.post(
+  '/phoneAuth',
+  [check('phone', 'phone is required').not().isEmpty()],
+  loginController.phoneAuth
+);
 module.exports = router;
