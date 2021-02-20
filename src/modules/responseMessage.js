@@ -55,4 +55,5 @@ module.exports = {
 
   /*user*/
   GET_USER_SUCCESS: '유저 조회 성공',
+  SEND_SUCCESS: '인증번호 전송 성공',
 };

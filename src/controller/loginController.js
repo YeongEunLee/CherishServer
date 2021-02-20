@@ -1,6 +1,4 @@
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
@@ -21,10 +19,7 @@ module.exports = {
       });
     }
     // 1. req.body에서 데이터 가져오기
-    const {
-      email,
-      password
-    } = req.body;
+    const { email, password } = req.body;
 
     try {
       //2. 존재하는 아이디인지 확인하기. 존재하지 않는 아이디면 NO USER 반환
@@ -64,14 +59,7 @@ module.exports = {
 
   /* 회원가입 */
   signup: async (req, res) => {
-    const {
-      email,
-      password,
-      sex,
-      nickname,
-      phone,
-      birth
-    } = req.body;
+    const { email, password, sex, nickname, phone, birth } = req.body;
 
     // 전 API에서 입력한 email 가져오기
 
@@ -99,6 +87,30 @@ module.exports = {
     } catch (error) {
       console.error(error);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_UP_FAIL));
+    }
+  },
+  phoneAuth: async (req, res) => {
+    logger.info(`POST /phoneAuth - phoneAuth`);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`POST /phoneAuth - Paramaters Error - phoneAuth`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { phone } = req.body;
+    try {
+      const verifyCode = await userService.sendNumber({ phone });
+      if (verifyCode === 0) {
+        logger.error(`POST /phoneAuth - Server Error - phoneAuth`);
+        return res.status(sc.OK).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+      }
+      return res.status(sc.OK).send(ut.success(rm.SEND_SUCCESS, verifyCode));
+    } catch (err) {
+      console.log(err);
+      logger.error(`POST /phoneAuth - Server Error - phoneAuth`);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
 };
