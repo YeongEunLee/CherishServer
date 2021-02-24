@@ -93,8 +93,8 @@ module.exports = {
       return res.status(sc.OK).send(
         ut.success(rm.READ_ALL_CHERISH_MY_PAGE_SUCCESS, {
           user_nickname,
-          postponeCount,
           email,
+          postponeCount,
           totalCherish,
           waterCount,
           completeCount,
