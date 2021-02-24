@@ -22,7 +22,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const user = await User.findOne({
-        attributes: ['nickname', 'postpone_count'], // postpone_count
+        attributes: ['nickname', 'postpone_count', 'email'], // postpone_count
         where: {
           id: id,
         },
@@ -30,6 +30,7 @@ module.exports = {
 
       const user_nickname = user.nickname;
       const postponeCount = user.postpone_count;
+      const email = user.email;
       const cherishes = await Cherish.findAll({
         where: {
           UserId: id,
@@ -92,6 +93,7 @@ module.exports = {
       return res.status(sc.OK).send(
         ut.success(rm.READ_ALL_CHERISH_MY_PAGE_SUCCESS, {
           user_nickname,
+          email,
           postponeCount,
           totalCherish,
           waterCount,
