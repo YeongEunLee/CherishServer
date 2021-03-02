@@ -5,6 +5,8 @@ const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const userService = require('../service/userService');
 const logger = require('../config/winston');
+const jwt = require('jsonwebtoken')
+const secretKey = require('../config');
 
 module.exports = {
   /* 회원조회 */
@@ -44,11 +46,20 @@ module.exports = {
       const UserId = user.id;
       const user_nickname = user.nickname;
 
+      // 토큰 발행
+      const token = await jwt.sign({
+        UserId,
+      }, secretKey.JWT_SECRET, {
+        expiresIn: '15m', // 15분
+          issuer: 'TL',
+      });
+
       //4. status: 200 ,message: SIGN_IN_SUCCESS, data: email반환
       return res.status(sc.OK).send(
         ut.success(rm.SIGN_IN_SUCCESS, {
           UserId,
           user_nickname,
+          token
         })
       );
     } catch (error) {

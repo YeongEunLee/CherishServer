@@ -56,4 +56,9 @@ module.exports = {
   /*user*/
   GET_USER_SUCCESS: '유저 조회 성공',
   SEND_SUCCESS: '인증번호 전송 성공',
+
+  /*토큰*/
+  EXPIRED_TOKEN: 'expired token',
+  INVALID_TOKEN: 'invalid token',
+  SUCCESS_TOKEN: '토큰 발급 성공'
 };
