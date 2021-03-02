@@ -30,4 +30,6 @@ router.use('/checkSameEmail', require('./checkEmail'));
 
 router.use('/addView', require('./addView'));
 
+router.use('/token', require('./token'));
+
 module.exports = router;
