@@ -8,7 +8,7 @@ const rm = require('../modules/responseMessage');
 
 const { cherishService, plantService, pushService } = require('../service');
 
-const { getPlantModifier } = require('../service/plantService');
+const { getPlantModifier, getPlantId } = require('../service/plantService');
 const cherish = require('../models/cherish');
 const plant = require('../models/plant');
 const logger = require('../config/winston');
@@ -177,6 +177,9 @@ module.exports = {
         logger.error(`PUT /cherish - cherishCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
+      const newPlantId = await plantService.getPlantId({
+        cycle_date,
+      });
       await Cherish.update(
         {
           nickname: nickname,
@@ -184,6 +187,7 @@ module.exports = {
           cycle_date: cycle_date,
           notice_time: notice_time,
           water_notice: water_notice,
+          PlantId: newPlantId, 
         },
         {
           where: {
