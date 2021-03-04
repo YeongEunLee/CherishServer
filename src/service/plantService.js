@@ -91,4 +91,25 @@ module.exports = {
       throw err;
     }
   },
+
+  getPlantId: ({
+    cycle_date
+  }) => {
+    try {
+      if (cycle_date <= 3) {
+        plantId = 1;
+      } else if (cycle_date <= 7) {
+        plantId = 2;
+      } else if (cycle_date <= 15) {
+        plantId = 3;
+      } else if (cycle_date <= 30) {
+        plantId = 4;
+      } else {
+        plantId = 5;
+      }
+      return plantId;
+    } catch (err) {
+      throw err;
+    }
+  },
 };
