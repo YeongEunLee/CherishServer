@@ -19,7 +19,6 @@ router.post(
   loginController.signin
 );
 
-
 router.post('/signup', loginController.signup);
 
 /**
@@ -32,4 +31,16 @@ router.post(
   [check('phone', 'phone is required').not().isEmpty()],
   loginController.phoneAuth
 );
+
+/**
+ * @api {post} /findPassword
+ * @apiName signin
+ * @apiGroup User
+ */
+router.post(
+  '/findPassword',
+  [check('email', 'email is required').not().isEmpty()],
+  loginController.findPassword
+);
+
 module.exports = router;
