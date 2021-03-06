@@ -35,6 +35,25 @@ module.exports = {
     }
   },
 
+  updatePassword: async ({ email, password1 }) => {
+    try {
+      await User.update(
+        {
+          password: password1,
+        },
+        {
+          where: {
+            email,
+          },
+        }
+      );
+      return true;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
+
   signup: async (email, password, sex, nickname, phone, birth) => {
     try {
       //const salt = crypto.randomBytes(64).toString('base64');
