@@ -7,6 +7,7 @@ const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { plantService } = require('../service');
 const logger = require('../config/winston');
+const userService = require('../service/userService');
 
 module.exports = {
   userMyPage: async (req, res) => {
@@ -34,7 +35,7 @@ module.exports = {
       const cherishes = await Cherish.findAll({
         where: {
           UserId: id,
-          status_code: 1
+          status_code: 1,
         },
         include: [
           {
@@ -71,7 +72,7 @@ module.exports = {
 
       result.sort((a, b) => {
         let result = a.dDay - b.dDay;
-        if(result === 0) {
+        if (result === 0) {
           result = a.growth - b.growth;
         }
         return result;
@@ -143,6 +144,26 @@ module.exports = {
     } catch (err) {
       console.log(err);
       logger.error(`PUT /user - Server Error - updateFCMToken`);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
+    }
+  },
+  deleteUser: async (req, res) => {
+    logger.info(`DELETE /user - deleteUser`);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`DELETE /user - Paramaters Error - deleteUser`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { id } = req.body;
+    try {
+      await userService.deleteUser({ id });
+      return res.status(sc.OK).send(ut.success(rm.DELETE_USER_SUCCESS));
+    } catch (err) {
+      console.log(err);
+      logger.error(`DELETE /user - Server Error - deleteUser`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },

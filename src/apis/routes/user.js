@@ -13,7 +13,7 @@ const userController = require('../../controller/userController');
 router.get('/:id', [check('id', 'id is required').not().isEmpty()], userController.userMyPage);
 
 /**
- * @api {put}/user
+ * @api {put}/user/token
  * @apiName updateFCMToken
  * @apiGroup user
  */
@@ -25,5 +25,12 @@ router.put(
   ],
   userController.updateFCMToken
 );
+
+/**
+ * @api {delete}/user
+ * @apiName deleteUser
+ * @apiGroup user
+ */
+router.delete('/', [check('id', 'id is required').not().isEmpty()], userController.deleteUser);
 
 module.exports = router;
