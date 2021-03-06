@@ -140,4 +140,16 @@ module.exports = {
       return 0;
     }
   },
+  deleteUser: async ({ id }) => {
+    try {
+      await User.destroy({
+        where: {
+          id,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
 };

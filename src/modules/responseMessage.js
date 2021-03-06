@@ -35,6 +35,8 @@ module.exports = {
   UPDATE_PASSWORD_SUCCESS: '비밀번호 변경 성공 ^o^',
   UPDATE_PASSWORD_FAIL: '비밀번호 변경 실패＞︿＜',
   NO_MATCH_PASSWORD: '비밀번호가 일치하지 않습니다',
+  DELETE_USER_SUCCESS: '유저 삭제에 성공했슴다^0^',
+  DELETE_USER_FAIL: '유저 삭제에 실패했슴다＞︿＜',
   /* 물 줄 날짜 조회*/
   SEARCH_SUCCESS: '물줄날짜 조회 성공 ^o^',
   SEARCH_FAIL: '물줄날짜 조회 실패 ＞︿＜',
