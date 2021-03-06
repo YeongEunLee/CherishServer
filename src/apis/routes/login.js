@@ -34,7 +34,7 @@ router.post(
 
 /**
  * @api {post} /findPassword
- * @apiName signin
+ * @apiName findPassword
  * @apiGroup User
  */
 router.post(
@@ -45,7 +45,7 @@ router.post(
 
 /**
  * @api {post} /updatePassword
- * @apiName signin
+ * @apiName updatePassword
  * @apiGroup User
  */
 router.post(
