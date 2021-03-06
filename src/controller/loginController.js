@@ -170,6 +170,44 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.FIND_PASSWORD_FAIL));
     }
   },
+
+  /* 비밀번호 변경 */
+  updatePassword: async (req, res) => {
+    logger.info('POST /login/updatePassword');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`POST /login/updatePassword - Paramaters Error`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    // 1. req.body에서 데이터 가져오기
+    const { email, password1, password2 } = req.body;
+
+    //2. password1과 password2가 맞는지 확인
+    if (password1 !== password2) {
+      logger.error(`POST /login/updatePassword - Paramaters Error`);
+      return res.status(400).send(ut.fail(rm.NO_MATCH_PASSWORD));
+    }
+    try {
+      const alreadyEmail = await userService.emailCheck({
+        email,
+      });
+      if (!alreadyEmail) {
+        logger.error(`POST /login/updatePassword - emailCheck Error`);
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NO_USER));
+      }
+      await userService.updatePassword({
+        email,
+        password1,
+      });
+      return res.status(sc.OK).send(ut.success(rm.UPDATE_PASSWORD_SUCCESS));
+    } catch (error) {
+      logger.error(`POST /login/updatePassword - Server Error`);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_PASSWORD_FAIL));
+    }
+  },
 };
 
 /**

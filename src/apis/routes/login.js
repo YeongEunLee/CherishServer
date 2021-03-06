@@ -43,4 +43,17 @@ router.post(
   loginController.findPassword
 );
 
+/**
+ * @api {post} /updatePassword
+ * @apiName signin
+ * @apiGroup User
+ */
+router.post(
+  '/updatePassword',
+  [check('email', 'email is required').not().isEmpty()],
+  [check('password1', 'password1 is required').not().isEmpty()],
+  [check('password2', 'password2 is required').not().isEmpty()],
+  loginController.updatePassword
+);
+
 module.exports = router;
