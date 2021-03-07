@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const api = require('../apis/routes');
 const errorHandler = require('./error');
 const { sequelize } = require('../models');
@@ -23,6 +24,7 @@ module.exports = (app) => {
     logger.info('HEAD /health ');
     res.status(200).end();
   });
+  app.use(helmet());
   app.use(
     express.urlencoded({
       extended: false,
