@@ -44,6 +44,7 @@ module.exports = {
         where: {
           UserId,
           phone,
+          status_code: 1,
         },
       });
       if (isCheckPhoneDuplicate) {
@@ -187,7 +188,7 @@ module.exports = {
           cycle_date: cycle_date,
           notice_time: notice_time,
           water_notice: water_notice,
-          PlantId: newPlantId, 
+          PlantId: newPlantId,
         },
         {
           where: {
