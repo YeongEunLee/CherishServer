@@ -1,13 +1,11 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Water, User, sequelize } = require('../models');
+const { Cherish, Water } = require('../models');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
-
-const { NULL_VALUE } = require('../modules/responseMessage');
 
 const waterService = require('../service/waterService');
 const logger = require('../config/winston');
@@ -65,13 +63,14 @@ module.exports = {
       });
       let growth = cherishGrowth.dataValues.growth;
       if (score != 0) {
-        if (growth != 0){
+        if (growth != 0) {
           growth += score;
         }
       }
       const date = dayjs()
         .add(parseInt(cherishGrowth.dataValues.cycle_date), 'day')
-        .format('YYYY-MM-DD');
+        .format('YYYY-MM-DD 23:59:59');
+      console.log(date);
       await Cherish.update(
         {
           postpone_number: 0,
