@@ -63,13 +63,12 @@ module.exports = {
       });
       let growth = cherishGrowth.dataValues.growth;
       if (score != 0) {
-        if (growth != 0) {
           growth += score;
-        }
       }
+    
       const date = dayjs()
         .add(parseInt(cherishGrowth.dataValues.cycle_date), 'day')
-        .format('YYYY-MM-DD 23:59:59');
+        .format('YYYY-MM-DD 09:00:00');
       console.log(date);
       await Cherish.update(
         {

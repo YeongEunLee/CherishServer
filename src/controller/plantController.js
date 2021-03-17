@@ -76,9 +76,9 @@ module.exports = {
       });
 
       plant.dataValues.image_url = plant.dataValues.image;
-      console.log(plant.dataValues.image_url);
+      //console.log(plant.dataValues.image_url);
       //현재 날짜에 cycle_date 더해서 water_date 구하기
-      const now_date = dayjs().format('YYYY-MM-DD hh:mm:ss');
+      const now_date = dayjs().format('YYYY-MM-DD');
       const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD');
 
       const cherish = await Cherish.create({
@@ -92,6 +92,7 @@ module.exports = {
         PlantId: plant.dataValues.id,
         UserId,
         water_notice,
+        start_date : now_date
       });
 
       await pushService.createPushCOM({
@@ -238,8 +239,9 @@ module.exports = {
        * start_date로 경과일(duration) 구하기
        */
       const start_date = dayjs(cherish.start_date);
-      const now_date = dayjs();
-      result.duration = now_date.diff(start_date, 'day');
+      const now_date_format = dayjs().format('YYYY-MM-DD 09:00:00');
+      const now_date = dayjs(now_date_format);
+      result.duration = now_date.diff(start_date, 'day') + 1;
 
       /**
        * water_date로 디데이(dDay) 구하기
@@ -364,7 +366,7 @@ module.exports = {
           item && item.Plant && item.Plant.thumbnail_image_url
             ? item.Plant.thumbnail_image_url
             : '썸네일없음';
-
+          
         //식물 이름 가져오기
         const plantId = await Cherish.findOne({
           attributes: ['PlantId'],
