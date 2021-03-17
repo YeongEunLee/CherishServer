@@ -56,8 +56,10 @@ module.exports = {
           growth: cherish.growth,
         });
         obj.id = cherish.id;
-        const water_date = dayjs(cherish.water_date);
-        obj.dDay = water_date.diff(dayjs(), 'day');
+        const water_date = dayjs(cherish.water_date)
+        const now_date_format = dayjs().format('YYYY-MM-DD 09:00:00')
+        const now_date = dayjs(now_date_format);
+        obj.dDay = water_date.diff(now_date, 'day');
         obj.nickname = cherish.nickname;
         obj.name =
           cherish && cherish.Plant && cherish.Plant.name ? cherish.Plant.name : '이름 없음';
