@@ -77,7 +77,7 @@ module.exports = {
       keyword3
     } = req.body;
 
-    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 00:00:00')
+    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00')
     try {
       await Water.update(
 
@@ -116,7 +116,7 @@ module.exports = {
       water_date
     } = req.body;
 
-    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 00:00:00')
+    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00')
     try {
       await Water.destroy({
         where: {
