@@ -182,6 +182,9 @@ module.exports = {
       const newPlantId = await plantService.getPlantId({
         cycle_date,
       });
+      const now_date = dayjs().format('YYYY-MM-DD');
+      const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD');
+
       await Cherish.update(
         {
           nickname: nickname,
@@ -190,6 +193,7 @@ module.exports = {
           notice_time: notice_time,
           water_notice: water_notice,
           PlantId: newPlantId,
+          water_date : water_date
         },
         {
           where: {
