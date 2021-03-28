@@ -68,6 +68,7 @@ module.exports = {
           'flower_meaning',
           'thumbnail_image_url',
           'PlantStatusId',
+          'gif',
           'image',
         ],
         where: {
@@ -75,8 +76,8 @@ module.exports = {
         },
       });
 
-      plant.dataValues.image_url = plant.dataValues.image;
-      //console.log(plant.dataValues.image_url);
+      plant.dataValues.image_url = plant.dataValues.gif;
+
       //현재 날짜에 cycle_date 더해서 water_date 구하기
       const now_date = dayjs().format('YYYY-MM-DD');
       const water_date = dayjs(now_date).add(cycle_date, 'day').format('YYYY-MM-DD');
