@@ -42,8 +42,8 @@ module.exports = {
     try {
       const isCheckPhoneDuplicate = await Cherish.findOne({
         where: {
-          UserId,
           phone,
+          UserId,
           status_code: 1,
         },
       });
@@ -93,7 +93,7 @@ module.exports = {
         PlantId: plant.dataValues.id,
         UserId,
         water_notice,
-        start_date : now_date
+        start_date: now_date,
       });
 
       await pushService.createPushCOM({
@@ -194,7 +194,7 @@ module.exports = {
           notice_time: notice_time,
           water_notice: water_notice,
           PlantId: newPlantId,
-          water_date : water_date
+          water_date: water_date,
         },
         {
           where: {
@@ -362,7 +362,7 @@ module.exports = {
         const PlantId = item.PlantId;
         obj.id = item.id;
         const water_date = dayjs(item.water_date);
-        const now_date_format = dayjs().format('YYYY-MM-DD 09:00:00')
+        const now_date_format = dayjs().format('YYYY-MM-DD 09:00:00');
         const now_date = dayjs(now_date_format);
         obj.dDay = water_date.diff(now_date, 'day');
         obj.nickname = item.nickname;
@@ -373,7 +373,7 @@ module.exports = {
           item && item.Plant && item.Plant.thumbnail_image_url
             ? item.Plant.thumbnail_image_url
             : '썸네일없음';
-          
+
         //식물 이름 가져오기
         const plantId = await Cherish.findOne({
           attributes: ['PlantId'],
