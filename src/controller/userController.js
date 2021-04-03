@@ -23,7 +23,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const user = await User.findOne({
-        attributes: ['nickname', 'postpone_count', 'email'], // postpone_count
+        attributes: ['nickname', 'postpone_count', 'email', 'phone'], // postpone_count
         where: {
           id: id,
         },
@@ -32,6 +32,7 @@ module.exports = {
       const user_nickname = user.nickname;
       const postponeCount = user.postpone_count;
       const email = user.email;
+      const phone = user.phone;
       const cherishes = await Cherish.findAll({
         where: {
           UserId: id,
@@ -56,8 +57,8 @@ module.exports = {
           growth: cherish.growth,
         });
         obj.id = cherish.id;
-        const water_date = dayjs(cherish.water_date)
-        const now_date_format = dayjs().format('YYYY-MM-DD 09:00:00')
+        const water_date = dayjs(cherish.water_date);
+        const now_date_format = dayjs().format('YYYY-MM-DD 09:00:00');
         const now_date = dayjs(now_date_format);
         obj.dDay = water_date.diff(now_date, 'day');
         obj.nickname = cherish.nickname;
@@ -102,6 +103,7 @@ module.exports = {
           waterCount,
           completeCount,
           result,
+          phone,
         })
       );
     } catch (err) {
