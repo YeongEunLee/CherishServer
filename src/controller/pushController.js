@@ -29,7 +29,8 @@ module.exports = {
                       INNER JOIN app_push_user APU ON C.id=APU.CherishId
                    WHERE APU.send_yn='N'
                      AND APU.send_code='${send_code}'
-                     AND C.notice_time='${notice_time}'`;
+                     AND C.notice_time='${notice_time}'
+                     AND C.water_notice='1'`;
     try {
       const [results] = await sequelize.query(query);
       let date = new Date();
