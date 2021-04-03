@@ -11,7 +11,7 @@ const pushController = require('../../controller/pushController');
  * @apiGroup
  */
 router.get(
-  '/:send_code',
+  '/:send_code/:notice_time',
   [check('send_code', 'send_code is required').not().isEmpty()],
   pushController.getPushUser
 );
