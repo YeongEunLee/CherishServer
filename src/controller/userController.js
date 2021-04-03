@@ -23,7 +23,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const user = await User.findOne({
-        attributes: ['nickname', 'postpone_count', 'email', 'phone'], // postpone_count
+        attributes: ['nickname', 'postpone_count', 'email'], // postpone_count
         where: {
           id: id,
         },
@@ -32,7 +32,6 @@ module.exports = {
       const user_nickname = user.nickname;
       const postponeCount = user.postpone_count;
       const email = user.email;
-      const phone = user.phone;
       const cherishes = await Cherish.findAll({
         where: {
           UserId: id,
@@ -70,6 +69,7 @@ module.exports = {
             : '썸네일 없음';
         obj.level = level;
         obj.PlantId = cherish.PlantId;
+        obj.phone = cherish.phone;
         result.push(obj);
       });
 
@@ -103,7 +103,6 @@ module.exports = {
           waterCount,
           completeCount,
           result,
-          phone,
         })
       );
     } catch (err) {
