@@ -29,14 +29,15 @@ module.exports = {
                       INNER JOIN app_push_user APU ON C.id=APU.CherishId
                    WHERE APU.send_yn='N'
                      AND APU.send_code='${send_code}'
-                     AND C.notice_time='${notice_time}'`;
+                     AND C.notice_time='${notice_time}'
+                     AND C.water_notice='1'`;
     try {
       const [results] = await sequelize.query(query);
       let date = new Date();
-      today = dayjs(date.toLocaleString('en', { timeZone: 'Asia/Seoul' })).format('YYYY-MM-DD');
-      console.log('today :', today);
+      const today = dayjs(date.toLocaleString('en', { timeZone: 'Asia/Seoul' })).format(
+        'YYYY-MM-DD'
+      );
       const push_list = results.filter((result) => {
-        console.log('push_date ', result.push_date);
         return result.push_date === today;
       });
       return res.status(sc.OK).send(ut.success(rm.GET_PUSH_USER_SUCCESS, push_list));
