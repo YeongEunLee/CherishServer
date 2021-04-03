@@ -22,6 +22,7 @@ module.exports = {
     const { send_code, notice_time } = req.params;
     console.log(send_code, notice_time);
     const query = `SELECT APU.mobile_device_token,
+                          C.nickname,
                           DATE_FORMAT(APU.push_date,'%Y-%m-%d') AS push_date,
                           APU.CherishId,
                           APU.UserId
