@@ -33,10 +33,10 @@ module.exports = {
     try {
       const [results] = await sequelize.query(query);
       let date = new Date();
-      today = dayjs(date.toLocaleString('en', { timeZone: 'Asia/Seoul' })).format('YYYY-MM-DD');
-      console.log('today :', today);
+      const today = dayjs(date.toLocaleString('en', { timeZone: 'Asia/Seoul' })).format(
+        'YYYY-MM-DD'
+      );
       const push_list = results.filter((result) => {
-        console.log('push_date ', result.push_date);
         return result.push_date === today;
       });
       return res.status(sc.OK).send(ut.success(rm.GET_PUSH_USER_SUCCESS, push_list));
