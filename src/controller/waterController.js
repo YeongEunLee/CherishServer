@@ -35,6 +35,7 @@ module.exports = {
       }
 
       let score = 1;
+      
       if (keyword1) {
         score += 1;
       }
