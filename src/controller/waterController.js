@@ -34,7 +34,7 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
       }
 
-      let score = 0;
+      let score = 1;
       if (keyword1) {
         score += 1;
       }
