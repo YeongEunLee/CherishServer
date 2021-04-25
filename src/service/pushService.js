@@ -50,4 +50,40 @@ module.exports = {
       throw err;
     }
   },
+
+  updatePushREV: async ({ UserId, CherishId }) => {
+    try {
+      await App_push_user.update(
+        {
+          send_yn: 'Y',
+        },
+        {
+          where: {
+            UserId,
+            CherishId,
+            send_code: 'REV',
+          },
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  updatePushFcmToken: async ({ UserId }) => {
+    try {
+      await App_push_user.update(
+        {
+          mobile_device_token: '',
+        },
+        {
+          where: {
+            UserId,
+          },
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
 };

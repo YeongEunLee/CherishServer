@@ -8,6 +8,8 @@ const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 
 const waterService = require('../service/waterService');
+const { pushService } = require('../service');
+
 const logger = require('../config/winston');
 
 module.exports = {
@@ -35,7 +37,7 @@ module.exports = {
       }
 
       let score = 1;
-      
+
       if (keyword1) {
         score += 1;
       }
@@ -57,20 +59,20 @@ module.exports = {
 
       // Cherish에서 growth 받아오기
       const cherishGrowth = await Cherish.findOne({
-        attributes: ['growth', 'cycle_date'],
+        attributes: ['UserId', 'growth', 'cycle_date'],
         where: {
           id: CherishId,
         },
       });
       let growth = cherishGrowth.dataValues.growth;
+      const UserId = cherishGrowth.dataValues.UserId;
       if (score != 0) {
-          growth += score;
+        growth += score;
       }
-    
+
       const date = dayjs()
         .add(parseInt(cherishGrowth.dataValues.cycle_date), 'day')
-        .format('YYYY-MM-DD 09:00:00');
-      console.log(date);
+        .format('YYYY-MM-DD');
       await Cherish.update(
         {
           postpone_number: 0,
@@ -83,7 +85,7 @@ module.exports = {
           },
         }
       );
-
+      pushService.updatePushREV({ UserId, CherishId });
       return res.status(sc.OK).send(ut.success(rm.OK, score));
     } catch (err) {
       console.log(err);
