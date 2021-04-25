@@ -181,4 +181,26 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_Y_N_FAIL));
     }
   },
+  updateToken: async (req, res) => {
+    logger.info(`PUT /push/token - updateToken`);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`PUT /push/token - Paramaters Error - updateToken`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { UserId } = req.body;
+    try {
+      await pushService.updatePushFcmToken({
+        UserId,
+      });
+      return res.status(sc.OK).send(ut.success(rm.UPDATE_PUSH_TOKEN_SUCCESS));
+    } catch (err) {
+      console.log(err);
+      logger.error(`PUT /push/token - Server Error - updateToken`);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_PUSH_TOKEN_FAIL));
+    }
+  },
 };

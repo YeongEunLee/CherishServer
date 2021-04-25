@@ -69,4 +69,21 @@ module.exports = {
       throw err;
     }
   },
+
+  updatePushFcmToken: async ({ UserId }) => {
+    try {
+      await App_push_user.update(
+        {
+          mobile_device_token: '',
+        },
+        {
+          where: {
+            UserId,
+          },
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
 };

@@ -28,4 +28,10 @@ router.put(
   pushController.updateSendYN_COM
 );
 
+router.put(
+  '/token',
+  [check('UserId', 'UserId is required').not().isEmpty()],
+  pushController.updateToken
+);
+
 module.exports = router;
