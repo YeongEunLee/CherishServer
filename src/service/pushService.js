@@ -1,3 +1,4 @@
+const { now } = require('sequelize/types/lib/utils');
 const { Plant_status, Cherish, Modifier, App_push_user, sequelize, User } = require('../models');
 
 module.exports = {
@@ -46,6 +47,25 @@ module.exports = {
         CherishId: CherishId,
         UserId: UserId,
       });
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  updatePushREV: async ({ UserId, CherishId }) => {
+    try {
+      await App_push_user.update(
+        {
+          send_yn: 'Y',
+        },
+        {
+          where: {
+            UserId,
+            CherishId,
+            sendCode: 'REV',
+          },
+        }
+      );
     } catch (err) {
       throw err;
     }

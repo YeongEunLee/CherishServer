@@ -8,6 +8,8 @@ const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 
 const waterService = require('../service/waterService');
+const { pushService } = require('../service');
+
 const logger = require('../config/winston');
 
 module.exports = {
@@ -82,7 +84,7 @@ module.exports = {
           },
         }
       );
-
+      pushService.updatePushREV({ UserId, CherishId });
       return res.status(sc.OK).send(ut.success(rm.OK, score));
     } catch (err) {
       console.log(err);
