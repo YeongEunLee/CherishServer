@@ -35,7 +35,7 @@ module.exports = {
       }
 
       let score = 1;
-      
+
       if (keyword1) {
         score += 1;
       }
@@ -64,13 +64,12 @@ module.exports = {
       });
       let growth = cherishGrowth.dataValues.growth;
       if (score != 0) {
-          growth += score;
+        growth += score;
       }
-    
+
       const date = dayjs()
         .add(parseInt(cherishGrowth.dataValues.cycle_date), 'day')
-        .format('YYYY-MM-DD 09:00:00');
-      console.log(date);
+        .format('YYYY-MM-DD');
       await Cherish.update(
         {
           postpone_number: 0,
