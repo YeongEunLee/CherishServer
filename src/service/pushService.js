@@ -61,7 +61,7 @@ module.exports = {
           where: {
             UserId,
             CherishId,
-            sendCode: 'REV',
+            send_code: 'REV',
           },
         }
       );

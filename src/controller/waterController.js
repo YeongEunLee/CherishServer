@@ -59,12 +59,13 @@ module.exports = {
 
       // Cherish에서 growth 받아오기
       const cherishGrowth = await Cherish.findOne({
-        attributes: ['growth', 'cycle_date'],
+        attributes: ['UserId', 'growth', 'cycle_date'],
         where: {
           id: CherishId,
         },
       });
       let growth = cherishGrowth.dataValues.growth;
+      const UserId = cherishGrowth.dataValues.UserId;
       if (score != 0) {
         growth += score;
       }
