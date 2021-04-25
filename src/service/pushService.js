@@ -1,4 +1,3 @@
-const { now } = require('sequelize/types/lib/utils');
 const { Plant_status, Cherish, Modifier, App_push_user, sequelize, User } = require('../models');
 
 module.exports = {
