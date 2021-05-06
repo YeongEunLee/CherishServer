@@ -367,7 +367,14 @@ module.exports = {
         obj.dDay = water_date.diff(now_date, 'day');
         obj.nickname = item.nickname;
         obj.phone = item.phone;
-        obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);
+        const grow = parseInt((parseFloat(item.growth) / 12.0) * 100);
+        if (grow >= 100) {
+          obj.growth = 100;
+        } 
+        else {
+          obj.growth = grow;
+        }
+        //obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);
         obj.image_url = plant_map.get(`${PlantId},${level}`);
         obj.thumbnail_image_url =
           item && item.Plant && item.Plant.thumbnail_image_url

@@ -70,10 +70,6 @@ module.exports = {
         growth += score;
       }
 
-      if (growth >= 100) {
-        growth = 100;
-      }
-
       const date = dayjs()
         .add(parseInt(cherishGrowth.dataValues.cycle_date), 'day')
         .format('YYYY-MM-DD');
