@@ -70,4 +70,6 @@ module.exports = {
   EXPIRED_TOKEN: 'expired token',
   INVALID_TOKEN: 'invalid token',
   SUCCESS_TOKEN: '토큰 발급 성공',
+
+  PLANT_DERAIL_READ_SUCCESS: '식물 조회에 성공하였습니다.',
 };
