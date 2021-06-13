@@ -517,7 +517,7 @@ module.exports = {
         where: {
           UserId,
           phone,
-          status_code: 1,
+          active: 'Y',
         },
       });
       if (isCheckPhoneDuplicate) {
