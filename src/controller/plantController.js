@@ -23,10 +23,9 @@ const logger = require('../config/winston');
 
 module.exports = {
   /**
-   * body: name, nickname, birth, phone, cycle_date, notice_time
+   * 식물 생성 API
    */
   createPlant: async (req, res) => {
-    /*
     logger.info('POST /cherish');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -36,7 +35,6 @@ module.exports = {
         message: errors.array(),
       });
     }
-    */
     const { name, nickname, birth, phone, cycle_date, notice_time, UserId, water_notice } =
       req.body;
     try {
@@ -44,20 +42,14 @@ module.exports = {
         where: {
           phone,
           UserId,
-          status_code: 1,
+          active: 'Y',
         },
       });
       if (isCheckPhoneDuplicate) {
         logger.error(`POST /cherish - Phone Duplicate Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.DUPLICATE_PHONE_FAIL));
       }
-      const PlantStatusId = (cycle_date) => {
-        if (cycle_date <= 3) return 1;
-        else if (cycle_date <= 7) return 2;
-        else if (cycle_date <= 15) return 3;
-        else if (cycle_date <= 30) return 4;
-        else return 5;
-      };
+      const PlantStatusId = plantService.getPlantId({ cycle_date });
 
       const plant = await Plant.findOne({
         attributes: [
@@ -100,6 +92,23 @@ module.exports = {
         UserId,
         CherishId: cherish.id,
         water_date,
+      });
+      // cherish_log 테이블
+      await cherish_log.create({
+        name: cherish.name,
+        nickname: cherish.nickname,
+        phone: cherish.phone,
+        sex: cherish.sex,
+        birth: cherish.birth,
+        growth: cherish.growth,
+        notice_time: cherish.notice_time,
+        start_date: cherish.start_date,
+        water_date: cherish.water_date,
+        postpone_number: cherish.postpone_number,
+        cycle_date: cherish.cycle_date,
+        active: cherish.active,
+        status: 'UPDATE',
+        service_name: 'modifyCherish',
       });
 
       return res.status(sc.OK).send(
