@@ -12,6 +12,11 @@ const calendarController = require('../../controller/calendarController');
  */
 router.get('/:id', [check('id', 'id is required').not().isEmpty()], calendarController.getCalendar);
 
+/**
+ * @api {PUT} /calendar
+ * @apiName modifyCalendar
+ * @apiGroup Calendar
+ */
 router.put(
   '/',
   [
