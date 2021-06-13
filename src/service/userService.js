@@ -11,6 +11,7 @@ module.exports = {
       const alreadyEmail = await User.findOne({
         where: {
           email,
+          active: 'Y',
         },
       });
       return alreadyEmail;

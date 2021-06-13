@@ -1,22 +1,18 @@
 const express = require('express');
 
 const router = express.Router();
-const {
-  check
-} = require('express-validator');
+const { check } = require('express-validator');
 
 const checkEmailController = require('../../controller/checkEmailController');
 
 /**
- * @api {post} /checkEmail
+ * @api {post} /checkSameEmail
  * @apiName checkSameEmail
- * @apiGroup User
+ * @apiGroup checkEmail
  */
 router.post(
   '/',
-  [
-    check('email', 'email is required').not().isEmpty(),
-  ],
+  [check('email', 'email is required').not().isEmpty()],
   checkEmailController.checkSameEmail
 );
 
