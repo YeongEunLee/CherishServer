@@ -51,6 +51,25 @@ module.exports = {
     }
   },
 
+  updatePushCom: async ({ CherishId, push_date }) => {
+    try {
+      await App_push_user.update(
+        {
+          push_date,
+        },
+        {
+          where: {
+            send_yn: 'N',
+            CherishId,
+            send_code: 'COM',
+          },
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
+
   updatePushREV: async ({ UserId, CherishId }) => {
     try {
       await App_push_user.update(
@@ -79,6 +98,25 @@ module.exports = {
         {
           where: {
             UserId,
+            active: 'Y',
+          },
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  deletePushByCherishId: async ({ CherishId }) => {
+    try {
+      await App_push_user.update(
+        {
+          active: 'N',
+        },
+        {
+          where: {
+            send_yn: 'N',
+            CherishId,
           },
         }
       );

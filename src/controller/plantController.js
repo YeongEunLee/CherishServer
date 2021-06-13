@@ -1,7 +1,15 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, Plant_level, Status_message } = require('../models');
+const {
+  Cherish,
+  Plant,
+  Water,
+  Plant_level,
+  Status_message,
+  sequelize,
+  cherish_log,
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -15,10 +23,9 @@ const logger = require('../config/winston');
 
 module.exports = {
   /**
-   * body: name, nickname, birth, phone, cycle_date, notice_time
+   * 식물 생성 API
    */
   createPlant: async (req, res) => {
-    /*
     logger.info('POST /cherish');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -28,36 +35,21 @@ module.exports = {
         message: errors.array(),
       });
     }
-    */
-    const {
-      name,
-      nickname,
-      birth,
-      phone,
-      cycle_date,
-      notice_time,
-      UserId,
-      water_notice,
-    } = req.body;
+    const { name, nickname, birth, phone, cycle_date, notice_time, UserId, water_notice } =
+      req.body;
     try {
       const isCheckPhoneDuplicate = await Cherish.findOne({
         where: {
           phone,
           UserId,
-          status_code: 1,
+          active: 'Y',
         },
       });
       if (isCheckPhoneDuplicate) {
         logger.error(`POST /cherish - Phone Duplicate Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.DUPLICATE_PHONE_FAIL));
       }
-      const PlantStatusId = (cycle_date) => {
-        if (cycle_date <= 3) return 1;
-        else if (cycle_date <= 7) return 2;
-        else if (cycle_date <= 15) return 3;
-        else if (cycle_date <= 30) return 4;
-        else return 5;
-      };
+      const plantStatusId = plantService.getPlantId({ cycle_date });
 
       const plant = await Plant.findOne({
         attributes: [
@@ -72,7 +64,7 @@ module.exports = {
           'image',
         ],
         where: {
-          PlantStatusId: PlantStatusId(cycle_date),
+          PlantStatusId: plantStatusId,
         },
       });
 
@@ -100,6 +92,24 @@ module.exports = {
         UserId,
         CherishId: cherish.id,
         water_date,
+      });
+      // cherish_log 테이블
+      await cherish_log.create({
+        cherish_id: cherish.id,
+        name: cherish.name,
+        nickname: cherish.nickname,
+        phone: cherish.phone,
+        sex: cherish.sex,
+        birth: cherish.birth,
+        growth: cherish.growth,
+        notice_time: cherish.notice_time,
+        start_date: cherish.start_date,
+        water_date: cherish.water_date,
+        postpone_number: cherish.postpone_number,
+        cycle_date: cherish.cycle_date,
+        active: cherish.active,
+        status: 'CREATE',
+        service_name: 'createPlant',
       });
 
       return res.status(sc.OK).send(
@@ -139,7 +149,8 @@ module.exports = {
 
       await Cherish.update(
         {
-          status_code: false,
+          active: 'N',
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
@@ -147,7 +158,35 @@ module.exports = {
           },
         }
       );
+      const cherish = await Cherish.findOne({
+        where: {
+          id: CherishId,
+          active: 'N',
+        },
+      });
+      // 삭제한 식물에 대한 푸시 알림 삭제
+      await pushService.deletePushByCherishId({
+        CherishId,
+      });
 
+      // cherish_log 테이블
+      await cherish_log.create({
+        cherish_id: CherishId,
+        name: cherish.name,
+        nickname: cherish.nickname,
+        phone: cherish.phone,
+        sex: cherish.sex,
+        birth: cherish.birth,
+        growth: cherish.growth,
+        notice_time: cherish.notice_time,
+        start_date: cherish.start_date,
+        water_date: cherish.water_date,
+        postpone_number: cherish.postpone_number,
+        cycle_date: cherish.cycle_date,
+        active: cherish.active,
+        status: 'DELETE',
+        service_name: 'deleteCherish',
+      });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
@@ -195,13 +234,41 @@ module.exports = {
           water_notice: water_notice,
           PlantId: newPlantId,
           water_date: water_date,
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
             id: CherishId,
+            active: 'Y',
           },
         }
       );
+      // 푸시 알람 시간 재조정
+      await pushService.updatePushCom({ CherishId, push_date: water_date });
+      const cherish = await Cherish.findOne({
+        where: {
+          id: CherishId,
+          active: 'Y',
+        },
+      });
+      // cherish_log 테이블
+      await cherish_log.create({
+        cherish_id: CherishId,
+        name: cherish.name,
+        nickname: cherish.nickname,
+        phone: cherish.phone,
+        sex: cherish.sex,
+        birth: cherish.birth,
+        growth: cherish.growth,
+        notice_time: cherish.notice_time,
+        start_date: cherish.start_date,
+        water_date: cherish.water_date,
+        postpone_number: cherish.postpone_number,
+        cycle_date: cherish.cycle_date,
+        active: cherish.active,
+        status: 'UPDATE',
+        service_name: 'modifyCherish',
+      });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
@@ -227,6 +294,7 @@ module.exports = {
         attributes: ['name', 'nickname', 'phone', 'birth', 'PlantId', 'start_date', 'water_date'],
         where: {
           id: CherishId,
+          active: 'Y',
         },
       });
       const result = {};
@@ -342,7 +410,7 @@ module.exports = {
         ],
         where: {
           UserId: id,
-          status_code: 1,
+          active: 'Y',
         },
       });
       const plant_level = await Plant_level.findAll({});
@@ -370,8 +438,7 @@ module.exports = {
         const grow = parseInt((parseFloat(item.growth) / 12.0) * 100);
         if (grow >= 100) {
           obj.growth = 100;
-        } 
-        else {
+        } else {
           obj.growth = grow;
         }
         //obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);
@@ -450,7 +517,7 @@ module.exports = {
         where: {
           UserId,
           phone,
-          status_code: 1,
+          active: 'Y',
         },
       });
       if (isCheckPhoneDuplicate) {

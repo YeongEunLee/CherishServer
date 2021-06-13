@@ -6,7 +6,7 @@ const { check } = require('express-validator');
 const loginController = require('../../controller/loginController');
 
 /**
- * @api {post} /login
+ * @api {post} /login/signin
  * @apiName signin
  * @apiGroup User
  */
@@ -19,10 +19,15 @@ router.post(
   loginController.signin
 );
 
+/**
+ * @api {post} /login/signup
+ * @apiName signup
+ * @apiGroup User
+ */
 router.post('/signup', loginController.signup);
 
 /**
- * @api {post} /phoneAuth
+ * @api {post} /login/phoneAuth
  * @apiName phoneAuth
  * @apiGroup Login
  */
@@ -33,7 +38,7 @@ router.post(
 );
 
 /**
- * @api {post} /findPassword
+ * @api {post} /login/findPassword
  * @apiName findPassword
  * @apiGroup User
  */
@@ -44,7 +49,7 @@ router.post(
 );
 
 /**
- * @api {post} /updatePassword
+ * @api {post} /login/updatePassword
  * @apiName updatePassword
  * @apiGroup User
  */

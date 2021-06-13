@@ -6,6 +6,7 @@ module.exports = {
       const alreadyCherish = await Cherish.findOne({
         where: {
           id: CherishId,
+          active: 'Y',
         },
       });
       return alreadyCherish;

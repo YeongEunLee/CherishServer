@@ -6,12 +6,17 @@ const { check } = require('express-validator');
 const calendarController = require('../../controller/calendarController');
 
 /**
- * @api {put} /calendar
+ * @api {GET} /calendar
  * @apiName getCalendar
  * @apiGroup Calendar
  */
 router.get('/:id', [check('id', 'id is required').not().isEmpty()], calendarController.getCalendar);
 
+/**
+ * @api {PUT} /calendar
+ * @apiName modifyCalendar
+ * @apiGroup Calendar
+ */
 router.put(
   '/',
   [
@@ -21,6 +26,11 @@ router.put(
   calendarController.modifyCalendar
 );
 
+/**
+ * @api {DELELE} /calendar
+ * @apiName deleteCalendar
+ * @apiGroup Calendar
+ */
 router.delete(
   '/',
   [

@@ -6,7 +6,7 @@ const { check } = require('express-validator');
 const contactController = require('../../controller/contactController');
 
 /**
- * @api {get} /contact
+ * @api {get} /contact/:id
  * @apiName getNewKeyword
  * @apiGroup Contact
  */

@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       message: {
         type: DataTypes.STRING(50),
       },
+      active: {
+        type: DataTypes.STRING(3),
+        defaultValue: 'Y',
+        allowNull: false,
+      },
       CherishId: {
         type: DataTypes.INTEGER,
       },

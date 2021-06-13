@@ -42,6 +42,7 @@ module.exports = {
   SEARCH_FAIL: '물줄날짜 조회 실패 ＞︿＜',
   /*Calendar*/
   CALENDAR_READ_SUCCESS: '캘린더 조회 성공했습니다.',
+  CALENDAR_READ_FAIL_BY_ID: 'ID에 해당하는 식물이 없습니다.',
   CALENDAR_READ_FAIL: '캘린더 조회 실패했습니다.',
   CALENDAR_MODIFY_SUCCESS: '캘린더 수정 성공했습니다.',
   CALENDAR_MODIFY_FAIL: '캘린더 수정 실패했습니다.',
@@ -69,4 +70,6 @@ module.exports = {
   EXPIRED_TOKEN: 'expired token',
   INVALID_TOKEN: 'invalid token',
   SUCCESS_TOKEN: '토큰 발급 성공',
+
+  PLANT_DERAIL_READ_SUCCESS: '식물 조회에 성공하였습니다.',
 };
