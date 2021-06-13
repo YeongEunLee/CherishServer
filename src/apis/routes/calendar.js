@@ -6,7 +6,7 @@ const { check } = require('express-validator');
 const calendarController = require('../../controller/calendarController');
 
 /**
- * @api {put} /calendar
+ * @api {GET} /calendar
  * @apiName getCalendar
  * @apiGroup Calendar
  */

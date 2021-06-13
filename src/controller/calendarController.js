@@ -1,12 +1,7 @@
-const {
-  validationResult
-} = require('express-validator');
+const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const {
-  Cherish,
-  Water
-} = require('../models');
+const { Cherish, Water } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -17,7 +12,7 @@ module.exports = {
     logger.info('GET /calendar/:id');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      logger.error(`GET /calendar - Paramaters Error`);
+      logger.error(`GET /calendar/:id - Paramaters Error`);
       return res.status(400).json({
         success: false,
         message: errors.array(),
@@ -38,19 +33,21 @@ module.exports = {
           id: CherishId,
         },
       });
-
+      if (!cherish_water_date) {
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.CALENDAR_READ_FAIL_BY_ID));
+      }
       const future_water_date = dayjs(cherish_water_date.water_date).format('YYYY-MM-DD');
       water.map((item) => {
         let waterDate = item.dataValues.water_date;
         item.dataValues.water_date = dayjs(waterDate).format('YYYY-MM-DD');
       });
 
-      return res
-        .status(sc.OK)
-        .send(ut.success(rm.CALENDAR_READ_SUCCESS, {
+      return res.status(sc.OK).send(
+        ut.success(rm.CALENDAR_READ_SUCCESS, {
           water,
-          future_water_date
-        }));
+          future_water_date,
+        })
+      );
     } catch (error) {
       logger.error(`GET /calendar - Server Error`);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.CALENDAR_READ_FAIL));
@@ -68,25 +65,18 @@ module.exports = {
       });
     }
 
-    const {
-      CherishId,
-      water_date,
-      review,
-      keyword1,
-      keyword2,
-      keyword3
-    } = req.body;
+    const { CherishId, water_date, review, keyword1, keyword2, keyword3 } = req.body;
 
-    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00')
+    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00');
     try {
       await Water.update(
-
         {
           review: review,
           keyword1: keyword1,
           keyword2: keyword2,
           keyword3: keyword3,
-        }, {
+        },
+        {
           where: {
             CherishId: CherishId,
             water_date: newWaterDate,
@@ -111,12 +101,9 @@ module.exports = {
         message: errors.array(),
       });
     }
-    const {
-      CherishId,
-      water_date
-    } = req.body;
+    const { CherishId, water_date } = req.body;
 
-    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00')
+    const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00');
     try {
       await Water.destroy({
         where: {
