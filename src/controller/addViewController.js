@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 
-const { User } = require('../models');
+const { User, user_log, sequelize } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -29,13 +29,38 @@ module.exports = {
       await User.update(
         {
           nickname: nickname,
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
             id: userId,
+            active: 'Y',
           },
         }
       );
+      const user = await User.findOne({
+        where: {
+          id: userId,
+          active: 'Y',
+        },
+      });
+      await user_log.create({
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        salt: user.salt,
+        nickname: user.nickname,
+        phone: user.phone,
+        sex: user.sex,
+        birth: user.birth,
+        profile_image_url: user.profile_image_url,
+        postpone_count: user.postpone_count,
+        fcm_token: user.fcm_token,
+        active: user.active,
+        status: 'UPDATE',
+        service_name: 'modifyUserNickname',
+        updatedAt: sequelize.fn('NOW'),
+      });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
