@@ -55,7 +55,7 @@ router.delete(
 );
 
 /**
- * @api {get} /cherish
+ * @api {get} /cherish?CherishId=?
  * @apiName getCherishInfo
  * @apiGroup Cherish
  */

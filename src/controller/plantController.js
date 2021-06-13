@@ -294,6 +294,7 @@ module.exports = {
         attributes: ['name', 'nickname', 'phone', 'birth', 'PlantId', 'start_date', 'water_date'],
         where: {
           id: CherishId,
+          active: 'Y',
         },
       });
       const result = {};
@@ -409,7 +410,7 @@ module.exports = {
         ],
         where: {
           UserId: id,
-          status_code: 1,
+          active: 'Y',
         },
       });
       const plant_level = await Plant_level.findAll({});
