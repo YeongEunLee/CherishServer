@@ -105,4 +105,22 @@ module.exports = {
       throw err;
     }
   },
+
+  deletePushByCherishId: async ({ CherishId }) => {
+    try {
+      await App_push_user.update(
+        {
+          active: 'N',
+        },
+        {
+          where: {
+            send_yn: 'N',
+            CherishId,
+          },
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
 };

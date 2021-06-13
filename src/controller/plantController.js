@@ -49,7 +49,7 @@ module.exports = {
         logger.error(`POST /cherish - Phone Duplicate Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.DUPLICATE_PHONE_FAIL));
       }
-      const PlantStatusId = plantService.getPlantId({ cycle_date });
+      const plantStatusId = plantService.getPlantId({ cycle_date });
 
       const plant = await Plant.findOne({
         attributes: [
@@ -64,7 +64,7 @@ module.exports = {
           'image',
         ],
         where: {
-          PlantStatusId: PlantStatusId(cycle_date),
+          PlantStatusId: plantStatusId,
         },
       });
 
@@ -149,7 +149,8 @@ module.exports = {
 
       await Cherish.update(
         {
-          status_code: false,
+          active: 'N',
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
@@ -157,7 +158,35 @@ module.exports = {
           },
         }
       );
+      const cherish = await Cherish.findOne({
+        where: {
+          id: CherishId,
+          active: 'N',
+        },
+      });
+      // 삭제한 식물에 대한 푸시 알림 삭제
+      await pushService.deletePushByCherishId({
+        CherishId,
+      });
 
+      // cherish_log 테이블
+      await cherish_log.create({
+        cherish_id: CherishId,
+        name: cherish.name,
+        nickname: cherish.nickname,
+        phone: cherish.phone,
+        sex: cherish.sex,
+        birth: cherish.birth,
+        growth: cherish.growth,
+        notice_time: cherish.notice_time,
+        start_date: cherish.start_date,
+        water_date: cherish.water_date,
+        postpone_number: cherish.postpone_number,
+        cycle_date: cherish.cycle_date,
+        active: cherish.active,
+        status: 'DELETE',
+        service_name: 'deleteCherish',
+      });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
