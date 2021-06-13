@@ -59,7 +59,6 @@ module.exports = {
         active: user.active,
         status: 'UPDATE',
         service_name: 'modifyUserNickname',
-        updatedAt: sequelize.fn('NOW'),
       });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
