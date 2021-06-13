@@ -1,10 +1,11 @@
 const dayjs = require('dayjs');
-const { Cherish, sequelize, User } = require('../models');
+const { Cherish, sequelize, User, user_log, cherish_log } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const { validationResult } = require('express-validator');
 const logger = require('../config/winston');
+const pushService = require('../service/pushService');
 
 module.exports = {
   /**
@@ -30,8 +31,8 @@ module.exports = {
       const cherish = await Cherish.findOne({
         where: {
           id: id,
+          active: 'Y',
         },
-        attributes: ['water_date', 'growth'],
       });
       const date = cherish.water_date;
       const newDate = dayjs(date).add(postpone, 'day').format('YYYY-MM-DD hh:mm:ss');
@@ -43,15 +44,21 @@ module.exports = {
         {
           where: {
             id: id,
+            active: 'Y',
           },
         },
         { transaction: t }
       );
-      await Cherish.increment({ postpone_number: 1 }, { where: { id: id } }, { transaction: t });
+      await Cherish.increment(
+        { postpone_number: 1 },
+        { where: { id: id, active: 'Y' } },
+        { transaction: t }
+      );
 
       const user = await Cherish.findOne({
         where: {
           id: id,
+          active: 'Y',
         },
         attributes: ['UserId'],
       });
@@ -61,12 +68,64 @@ module.exports = {
         { where: { id: user.dataValues.UserId } },
         { transaction: t }
       );
+      const userInfo = await User.findOne({
+        where: {
+          id: user.dataValues.UserId,
+          active: 'Y',
+        },
+      });
+      await user_log.create(
+        {
+          user_id: userInfo.id,
+          name: userInfo.name,
+          email: userInfo.email,
+          password: userInfo.password,
+          salt: userInfo.salt,
+          nickname: userInfo.nickname,
+          phone: userInfo.phone,
+          sex: userInfo.sex,
+          birth: userInfo.birth,
+          profile_image_url: userInfo.profile_image_url,
+          postpone_count: userInfo.postpone_count,
+          fcm_token: userInfo.fcm_token,
+          active: userInfo.active,
+          status: 'UPDATE',
+          service_name: 'postponeWaterDate',
+        },
+        { transaction: t }
+      );
 
       // 성장률이 0이 아니고 is_limit_postpone_number가 true일 때 성장률 -1 감소
       if (cherish.growth != 0 && is_limit_postpone_number) {
-        await Cherish.increment({ growth: -1 }, { where: { id: id } }, { transaction: t });
-        return res.status(sc.OK).send(ut.success(rm.DOWN_GROWTH));
+        await Cherish.increment(
+          { growth: -1 },
+          { where: { id: id, active: 'Y' } },
+          { transaction: t }
+        );
       }
+      // cherish_log 테이블
+      await cherish_log.create(
+        {
+          cherish_id: id,
+          name: cherish.name,
+          nickname: cherish.nickname,
+          phone: cherish.phone,
+          sex: cherish.sex,
+          birth: cherish.birth,
+          growth: cherish.growth,
+          notice_time: cherish.notice_time,
+          start_date: cherish.start_date,
+          water_date: cherish.water_date,
+          postpone_number: cherish.postpone_number,
+          cycle_date: cherish.cycle_date,
+          active: cherish.active,
+          status: 'UPDATE',
+          service_name: 'postponeWaterDate',
+        },
+        { transaction: t }
+      );
+      await pushService.updatePushCom({ CherishId: id, push_date: cherish.water_date });
+
       t.commit();
       return res.status(sc.OK).send(ut.success(rm.POSTPONE_SUCCESS));
     } catch (err) {
