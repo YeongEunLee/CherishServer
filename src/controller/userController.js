@@ -26,6 +26,7 @@ module.exports = {
         attributes: ['nickname', 'postpone_count', 'email'], // postpone_count
         where: {
           id: id,
+          active: 'Y',
         },
       });
 
@@ -35,7 +36,7 @@ module.exports = {
       const cherishes = await Cherish.findAll({
         where: {
           UserId: id,
-          status_code: 1,
+          active: 'Y',
         },
         include: [
           {
@@ -90,6 +91,7 @@ module.exports = {
       const waterCount = await Water.count({
         where: {
           CherishId: cherishIdList,
+          active: 'Y',
         },
       });
       const completeCount = cherishCompleteList.length;
@@ -130,6 +132,7 @@ module.exports = {
         {
           where: {
             id,
+            active: 'Y',
           },
         }
       );
@@ -140,6 +143,8 @@ module.exports = {
         {
           where: {
             UserId: id,
+            send_yn: 'N',
+            active: 'Y',
           },
         }
       );

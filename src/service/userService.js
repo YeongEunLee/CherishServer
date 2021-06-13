@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const request = require('request');
 
-const { User } = require('../models');
+const { User, user_log } = require('../models');
 
 const secretKey = require('../config');
 
@@ -148,10 +148,39 @@ module.exports = {
   },
   deleteUser: async ({ id }) => {
     try {
-      await User.destroy({
+      await User.update(
+        {
+          active: 'N',
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      const user = await User.findOne({
         where: {
           id,
+          active: 'N',
         },
+      });
+      await user_log.create({
+        user_id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        salt: user.salt,
+        nickname: user.nickname,
+        phone: user.phone,
+        sex: user.sex,
+        birth: user.birth,
+        profile_image_url: user.profile_image_url,
+        postpone_count: user.postpone_count,
+        fcm_token: user.fcm_token,
+        active: user.active,
+        status: 'DELETE',
+        service_name: 'deleteUser',
       });
     } catch (err) {
       console.log(err);
