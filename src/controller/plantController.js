@@ -204,12 +204,15 @@ module.exports = {
           },
         }
       );
+      // 푸시 알람 시간 재조정
+      await pushService.updatePushCom({ CherishId, push_date: water_date });
       const cherish = await Cherish.findOne({
         where: {
           id: CherishId,
           active: 'Y',
         },
       });
+      // cherish_log 테이블
       await cherish_log.create({
         name: cherish.name,
         nickname: cherish.nickname,
