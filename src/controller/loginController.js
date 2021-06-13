@@ -151,7 +151,6 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NO_USER));
       }
       const phone = alreadyEmail.phone.replace(/\-/g, '');
-      console.log('phone', phone);
       const verifyCode = await userService.sendNumber({ phone });
       if (verifyCode === 0) {
         logger.error(`POST /login/findPassword - sendNumber Error`);
