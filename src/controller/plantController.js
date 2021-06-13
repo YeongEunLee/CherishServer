@@ -1,7 +1,15 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Plant, Water, Plant_level, Status_message } = require('../models');
+const {
+  Cherish,
+  Plant,
+  Water,
+  Plant_level,
+  Status_message,
+  sequelize,
+  cherish_log,
+} = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -29,16 +37,8 @@ module.exports = {
       });
     }
     */
-    const {
-      name,
-      nickname,
-      birth,
-      phone,
-      cycle_date,
-      notice_time,
-      UserId,
-      water_notice,
-    } = req.body;
+    const { name, nickname, birth, phone, cycle_date, notice_time, UserId, water_notice } =
+      req.body;
     try {
       const isCheckPhoneDuplicate = await Cherish.findOne({
         where: {
@@ -195,13 +195,37 @@ module.exports = {
           water_notice: water_notice,
           PlantId: newPlantId,
           water_date: water_date,
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
             id: CherishId,
+            active: 'Y',
           },
         }
       );
+      const cherish = await Cherish.findOne({
+        where: {
+          id: CherishId,
+          active: 'Y',
+        },
+      });
+      await cherish_log.create({
+        name: cherish.name,
+        nickname: cherish.nickname,
+        phone: cherish.phone,
+        sex: cherish.sex,
+        birth: cherish.birth,
+        growth: cherish.growth,
+        notice_time: cherish.notice_time,
+        start_date: cherish.start_date,
+        water_date: cherish.water_date,
+        postpone_number: cherish.postpone_number,
+        cycle_date: cherish.cycle_date,
+        active: cherish.active,
+        status: 'UPDATE',
+        service_name: 'modifyCherish',
+      });
       return res.status(sc.OK).send(ut.success(rm.OK));
     } catch (err) {
       console.log(err);
@@ -370,8 +394,7 @@ module.exports = {
         const grow = parseInt((parseFloat(item.growth) / 12.0) * 100);
         if (grow >= 100) {
           obj.growth = 100;
-        } 
-        else {
+        } else {
           obj.growth = grow;
         }
         //obj.growth = parseInt((parseFloat(item.growth) / 12.0) * 100);

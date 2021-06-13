@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'Cherish',
+    'cherish_log',
     {
       name: {
         type: DataTypes.STRING(8),
@@ -58,10 +58,18 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 'Y',
         allowNull: false,
       },
+      status: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      service_name: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
     },
     {
       timestamps: true,
-      tableName: 'cherish',
+      tableName: 'cherish_log',
     }
   );
 };
