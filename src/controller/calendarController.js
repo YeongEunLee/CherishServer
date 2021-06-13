@@ -84,9 +84,16 @@ module.exports = {
           },
         }
       );
+      const water = await Water.findOne({
+        attributes: ['id'],
+        where: {
+          CherishId: CherishId,
+          water_date: newWaterDate,
+        },
+      });
       // Water 테이블에 대한 Log
       await water_log.create({
-        CherishId,
+        water_id: water.id,
         water_date: newWaterDate,
         review,
         keyword1,
@@ -119,7 +126,7 @@ module.exports = {
     const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00');
     try {
       const water = await Water.findOne({
-        attributes: ['review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
+        attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
           water_date: newWaterDate,
@@ -140,6 +147,7 @@ module.exports = {
       );
       // Water 테이블에 대한 Log
       await water_log.create({
+        water_id: water.id,
         CherishId,
         water_date: newWaterDate,
         review: water.review,

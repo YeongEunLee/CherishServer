@@ -95,6 +95,7 @@ module.exports = {
       });
       // cherish_log 테이블
       await cherish_log.create({
+        cherish_id: cherish.id,
         name: cherish.name,
         nickname: cherish.nickname,
         phone: cherish.phone,
@@ -107,8 +108,8 @@ module.exports = {
         postpone_number: cherish.postpone_number,
         cycle_date: cherish.cycle_date,
         active: cherish.active,
-        status: 'UPDATE',
-        service_name: 'modifyCherish',
+        status: 'CREATE',
+        service_name: 'createPlant',
       });
 
       return res.status(sc.OK).send(
@@ -223,6 +224,7 @@ module.exports = {
       });
       // cherish_log 테이블
       await cherish_log.create({
+        cherish_id: CherishId,
         name: cherish.name,
         nickname: cherish.nickname,
         phone: cherish.phone,

@@ -45,6 +45,7 @@ module.exports = {
         },
       });
       await user_log.create({
+        user_id: userId,
         name: user.name,
         email: user.email,
         password: user.password,
