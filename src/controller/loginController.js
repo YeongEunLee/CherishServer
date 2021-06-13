@@ -1,13 +1,12 @@
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
 const userService = require('../service/userService');
 const logger = require('../config/winston');
-const jwt = require('jsonwebtoken');
 const secretKey = require('../config');
-
 module.exports = {
   /* 회원조회 */
   signin: async (req, res) => {
@@ -32,17 +31,16 @@ module.exports = {
         logger.error(`POST /login/signin - emailCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NO_USER));
       }
-      //3. password(=alreadyPassword)와 일치하면 true, 일치하지 않으면 Miss Match password 반환
-      if (password !== alreadyEmail.password) {
-        logger.error(`POST /login/signin - password Error`);
-        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.MISS_MATCH_PW, password));
-      }
 
       const user = await userService.signin({
         email,
         password,
       });
-
+      if (!user) {
+        // 널이면 비밀번호가 틀림
+        logger.error(`POST /login/signin - password Error`);
+        return res.status(sc.BAD_REQUEST).send(ut.fail(rm.MISS_MATCH_PW, password));
+      }
       const UserId = user.id;
       const user_nickname = user.nickname;
 
@@ -153,7 +151,6 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NO_USER));
       }
       const phone = alreadyEmail.phone.replace(/\-/g, '');
-      console.log('phone', phone);
       const verifyCode = await userService.sendNumber({ phone });
       if (verifyCode === 0) {
         logger.error(`POST /login/findPassword - sendNumber Error`);

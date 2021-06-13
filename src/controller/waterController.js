@@ -54,6 +54,7 @@ module.exports = {
         attributes: ['water_date'],
         where: {
           CherishId: CherishId,
+          active: 'Y',
         },
       });
 
@@ -62,6 +63,7 @@ module.exports = {
         attributes: ['UserId', 'growth', 'cycle_date'],
         where: {
           id: CherishId,
+          active: 'Y',
         },
       });
       let growth = cherishGrowth.dataValues.growth;
@@ -106,16 +108,18 @@ module.exports = {
       });
     }
 
-    const { CherishId } = req.query;
+    const CherishId = req.params.id;
 
     try {
       // Water 리뷰 가져오기
-      await Water.findAll({
+      const water = await Water.findAll({
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
+          active: 'Y',
         },
       });
+      return res.status(sc.OK).send(ut.success(rm.OK, water));
     } catch (err) {
       console.log(err);
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));

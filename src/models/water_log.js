@@ -1,7 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'Water',
+    'water_log',
     {
+      water_id: {
+        type: DataTypes.INTEGER,
+      },
       water_date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -30,10 +33,18 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 'Y',
         allowNull: false,
       },
+      status: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      service_name: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
     },
     {
       timestamps: true,
-      tableName: 'water',
+      tableName: 'water_log',
     }
   );
 };

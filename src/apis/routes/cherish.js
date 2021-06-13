@@ -44,7 +44,7 @@ router.post(
 );
 
 /**
- * @api {delete} /cherish
+ * @api {delete} /cherish/:id
  * @apiName deleteCherish
  * @apiGroup Cherish
  */
@@ -55,7 +55,7 @@ router.delete(
 );
 
 /**
- * @api {get} /cherish
+ * @api {get} /cherish?CherishId=?
  * @apiName getCherishInfo
  * @apiGroup Cherish
  */

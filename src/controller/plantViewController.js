@@ -10,10 +10,10 @@ const logger = require('../config/winston');
 
 module.exports = {
   getPlantDetail: async (req, res) => {
-    logger.error(`GET /plantView/:id`);
+    logger.error(`GET /plantDetail/:id`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      logger.error(`GET /plantView - Paramaters Error`);
+      logger.error(`GET /plantDetail/:id - Paramaters Error`);
       return res.status(400).json({
         success: false,
         message: errors.array(),
@@ -26,6 +26,7 @@ module.exports = {
         attributes: ['modifier', 'flower_meaning', 'explanation', 'image'],
         where: {
           id: id,
+          active: 'Y',
         },
       });
       const plantRes = {};

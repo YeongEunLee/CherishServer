@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 const addViewController = require('../../controller/addViewController');
 
 /**
- * @api {put}/:id
+ * @api {PUT} /addView
  * @apiName modifyUserNickname
  * @apiGroup modifyUserNickname
  */

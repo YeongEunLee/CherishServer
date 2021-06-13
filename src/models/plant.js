@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(300),
         allowNull: false,
       },
+      active: {
+        type: DataTypes.STRING(3),
+        defaultValue: 'Y',
+        allowNull: false,
+      },
     },
     {
       timestamps: true,

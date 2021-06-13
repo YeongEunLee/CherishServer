@@ -1,7 +1,7 @@
-const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 const request = require('request');
 
-const { User } = require('../models');
+const { User, user_log } = require('../models');
 
 const secretKey = require('../config');
 
@@ -11,6 +11,7 @@ module.exports = {
       const alreadyEmail = await User.findOne({
         where: {
           email,
+          active: 'Y',
         },
       });
       return alreadyEmail;
@@ -25,9 +26,13 @@ module.exports = {
       const user = await User.findOne({
         where: {
           email,
-          password,
+          active: 'Y',
         },
       });
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return null;
+      }
       return user;
     } catch (err) {
       console.log(err);
@@ -44,6 +49,7 @@ module.exports = {
         {
           where: {
             email,
+            active: 'Y',
           },
         }
       );
@@ -56,14 +62,14 @@ module.exports = {
 
   signup: async (email, password, sex, nickname, phone, birth) => {
     try {
-      //const salt = crypto.randomBytes(64).toString('base64');
-      //const saltPassword = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('base64');
+      const salt = await bcrypt.genSalt(10);
+      const passwordSalt = await bcrypt.hash(password, salt);
       const user = await User.create({
         email,
-        password,
+        password: passwordSalt,
         sex,
         nickname,
-        salt: '4321234',
+        salt,
         phone,
         birth,
       });
@@ -142,10 +148,39 @@ module.exports = {
   },
   deleteUser: async ({ id }) => {
     try {
-      await User.destroy({
+      await User.update(
+        {
+          active: 'N',
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      const user = await User.findOne({
         where: {
           id,
+          active: 'N',
         },
+      });
+      await user_log.create({
+        user_id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        salt: user.salt,
+        nickname: user.nickname,
+        phone: user.phone,
+        sex: user.sex,
+        birth: user.birth,
+        profile_image_url: user.profile_image_url,
+        postpone_count: user.postpone_count,
+        fcm_token: user.fcm_token,
+        active: user.active,
+        status: 'DELETE',
+        service_name: 'deleteUser',
       });
     } catch (err) {
       console.log(err);
