@@ -26,6 +26,11 @@ router.put(
   calendarController.modifyCalendar
 );
 
+/**
+ * @api {DELELE} /calendar
+ * @apiName deleteCalendar
+ * @apiGroup Calendar
+ */
 router.delete(
   '/',
   [

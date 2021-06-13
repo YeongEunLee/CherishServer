@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const dayjs = require('dayjs');
 
-const { Cherish, Water } = require('../models');
+const { Cherish, Water, water_log, sequelize } = require('../models');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -25,6 +25,7 @@ module.exports = {
         attributes: ['review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
+          active: 'Y',
         },
       });
       const cherish_water_date = await Cherish.findOne({
@@ -83,7 +84,19 @@ module.exports = {
           },
         }
       );
-
+      // Water 테이블에 대한 Log
+      await water_log.create({
+        CherishId,
+        water_date: newWaterDate,
+        review,
+        keyword1,
+        keyword2,
+        keyword3,
+        active: 'Y',
+        status: 'UPDATE',
+        service_name: 'modifyCalendar',
+        updatedAt: sequelize.fn('NOW'),
+      });
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_MODIFY_SUCCESS));
     } catch (error) {
       logger.error(`PUT /calendar - Server Error`);
@@ -105,12 +118,40 @@ module.exports = {
 
     const newWaterDate = dayjs(water_date).format('YYYY-MM-DD 09:00:00');
     try {
-      await Water.destroy({
+      const water = await Water.findOne({
+        attributes: ['review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
           water_date: newWaterDate,
+          active: 'Y',
         },
       });
+      await Water.update(
+        {
+          active: 'N',
+        },
+        {
+          where: {
+            CherishId: CherishId,
+            water_date: newWaterDate,
+            active: 'Y',
+          },
+        }
+      );
+      // Water 테이블에 대한 Log
+      await water_log.create({
+        CherishId,
+        water_date: newWaterDate,
+        review: water.review,
+        keyword1: water.keyword1,
+        keyword2: water.keyword2,
+        keyword3: water.keyword3,
+        active: 'N',
+        service_name: 'deleteCalendar',
+        status: 'DELETE',
+        updatedAt: sequelize.fn('NOW'),
+      });
+
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_DELETE_SUCCESS));
     } catch (error) {
       logger.error(`DELETE /calendar - Server Error`);
