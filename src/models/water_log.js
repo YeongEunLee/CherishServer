@@ -2,6 +2,9 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'water_log',
     {
+      water_id: {
+        type: DataTypes.INTEGER,
+      },
       water_date: {
         type: DataTypes.DATE,
         allowNull: false,

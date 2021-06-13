@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'cherish_log',
     {
+      cherish_id: {
+        type: DataTypes.INTEGER,
+      },
       name: {
         type: DataTypes.STRING(8),
         allowNull: false,

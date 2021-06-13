@@ -2,6 +2,9 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     'user_log',
     {
+      user_id: {
+        type: DataTypes.INTEGER,
+      },
       name: {
         type: DataTypes.STRING(45),
         allowNull: true,
