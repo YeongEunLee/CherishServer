@@ -98,6 +98,7 @@ module.exports = {
         {
           where: {
             UserId,
+            active: 'Y',
           },
         }
       );

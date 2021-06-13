@@ -20,7 +20,6 @@ module.exports = {
     }
 
     const { send_code, notice_time } = req.params;
-    console.log(send_code, notice_time);
     const query = `SELECT APU.mobile_device_token,
                           C.nickname,
                           DATE_FORMAT(APU.push_date,'%Y-%m-%d') AS push_date,
@@ -31,6 +30,8 @@ module.exports = {
                    WHERE APU.send_yn='N'
                      AND APU.send_code='${send_code}'
                      AND C.notice_time='${notice_time}'
+                     AND APU.active='Y'
+                     AND C.active='Y'
                      AND C.water_notice='1'`;
     try {
       const [results] = await sequelize.query(query);
@@ -63,7 +64,7 @@ module.exports = {
     const now_date = dayjs();
     const cherish = await Cherish.findOne({
       attributes: ['UserId', 'cycle_date'],
-      where: { id: CherishId },
+      where: { id: CherishId, active: 'Y' },
     });
     const water_date = dayjs(now_date)
       .add(cherish.dataValues.cycle_date, 'day')
@@ -96,9 +97,8 @@ module.exports = {
     const push_date = dayjs().format('YYYY-MM-DD');
     const cherish = await Cherish.findOne({
       attributes: ['UserId'],
-      where: { id: CherishId },
+      where: { id: CherishId, active: 'Y' },
     });
-    console.log(push_date);
 
     try {
       await pushService.createPushREV({
@@ -136,6 +136,7 @@ module.exports = {
             CherishId: CherishId,
             send_yn: 'N',
             send_code: 'COM',
+            active: 'Y',
           },
         }
       );
@@ -170,6 +171,7 @@ module.exports = {
             CherishId: CherishId,
             send_yn: 'N',
             send_code: 'REV',
+            active: 'Y',
           },
         }
       );
