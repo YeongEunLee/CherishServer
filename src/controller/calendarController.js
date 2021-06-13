@@ -102,7 +102,6 @@ module.exports = {
         active: 'Y',
         status: 'UPDATE',
         service_name: 'modifyCalendar',
-        updatedAt: sequelize.fn('NOW'),
       });
       return res.status(sc.OK).send(ut.success(rm.CALENDAR_MODIFY_SUCCESS));
     } catch (error) {

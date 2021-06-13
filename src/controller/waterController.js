@@ -54,6 +54,7 @@ module.exports = {
         attributes: ['water_date'],
         where: {
           CherishId: CherishId,
+          active: 'Y',
         },
       });
 
@@ -62,6 +63,7 @@ module.exports = {
         attributes: ['UserId', 'growth', 'cycle_date'],
         where: {
           id: CherishId,
+          active: 'Y',
         },
       });
       let growth = cherishGrowth.dataValues.growth;
@@ -114,6 +116,7 @@ module.exports = {
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
+          active: 'Y',
         },
       });
     } catch (err) {
