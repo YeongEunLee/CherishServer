@@ -17,7 +17,7 @@ module.exports = {
     logger.info('GET /contact/:id - getNewKeyword');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      logger.error(`DELETE /contact - Paramaters Error`);
+      logger.error(`GET /contact/:id - Paramaters Error`);
       return res.status(400).json({
         success: false,
         message: errors.array(),
@@ -32,6 +32,7 @@ module.exports = {
         attributes: ['nickname'],
         where: {
           id: CherishId,
+          active: 'Y',
         },
       });
 
@@ -42,6 +43,7 @@ module.exports = {
         attributes: ['id', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
+          active: 'Y',
         },
         order: [['water_date', 'DESC']],
       });
