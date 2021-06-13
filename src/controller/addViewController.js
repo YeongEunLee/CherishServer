@@ -8,7 +8,9 @@ const logger = require('../config/winston');
 
 module.exports = {
   /*
+   * /addView
    * user 정보 수정 (더보기 뷰)
+   *
    **/
   modifyUserNickname: async (req, res) => {
     logger.info('PUT /addview - modifyUserNickname');
