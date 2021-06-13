@@ -152,6 +152,7 @@ module.exports = {
         attributes: ['water_date', 'postpone_number'],
         where: {
           id: CherishId,
+          active: 'Y',
         },
       });
       const is_limit_postpone_number = cherish && cherish.postpone_number >= 3 ? true : false;
