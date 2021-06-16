@@ -103,6 +103,7 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_UP_FAIL));
     }
   },
+  
   phoneAuth: async (req, res) => {
     logger.info(`POST /phoneAuth - phoneAuth`);
     const errors = validationResult(req);
