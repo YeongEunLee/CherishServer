@@ -34,4 +34,10 @@ router.put(
   pushController.updateToken
 );
 
+router.post(
+  '/insert',
+  [check('CherishId', 'CherishId is required').not().isEmpty()],
+  pushController.insertAppPushUserByCherishIdAndUserId
+);
+
 module.exports = router;
