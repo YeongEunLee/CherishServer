@@ -209,7 +209,7 @@ module.exports = {
     logger.info(`POST /push/insert - insertAppPushUserByCherishIdAndUserId`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      logger.error(`POST /push - Parameters Error - insertAppPushUserByCherishIdAndUserId`);
+      logger.error(`POST /push/insert - Parameters Error - insertAppPushUserByCherishIdAndUserId`);
       return res.status(400).json({
         success: false,
         message: errors.array(),
