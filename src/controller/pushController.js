@@ -205,4 +205,41 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_PUSH_TOKEN_FAIL));
     }
   },
+  insertAppPushUserByCherishIdAndUserId: async (req, res) => {
+    logger.info(`POST /push/insert - insertAppPushUserByCherishIdAndUserId`);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.error(`POST /push/insert - Parameters Error - insertAppPushUserByCherishIdAndUserId`);
+      return res.status(400).json({
+        success: false,
+        message: errors.array(),
+      });
+    }
+    const { CherishId } = req.body;
+    const now_date = dayjs();
+    const cherish = await Cherish.findOne({
+      attributes: ['UserId', 'cycle_date'],
+      where: { id: CherishId, active: 'Y' },
+    });
+    const water_date = dayjs(now_date)
+      .add(cherish.dataValues.cycle_date, 'day')
+      .format('YYYY-MM-DD');
+
+    try {
+      await pushService.createPushCOM({
+        UserId: cherish.dataValues.UserId,
+        CherishId: CherishId,
+        water_date,
+      });
+      await pushService.createPushREV({
+        UserId: cherish.dataValues.UserId,
+        CherishId: CherishId,
+        water_date,
+      });
+      return res.status(sc.OK).send(ut.success(rm.UPDATE_PUSH_USER_SUCCESS));
+    } catch (err) {
+      console.log(err);
+      return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.UPDATE_PUSH_USER_FAIL));
+    }
+  },
 };
