@@ -130,6 +130,7 @@ module.exports = {
       await App_push_user.update(
         {
           send_yn: 'Y',
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
@@ -165,6 +166,7 @@ module.exports = {
       await App_push_user.update(
         {
           send_yn: 'Y',
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
