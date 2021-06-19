@@ -234,7 +234,7 @@ module.exports = {
       await pushService.createPushREV({
         UserId: cherish.dataValues.UserId,
         CherishId: CherishId,
-        water_date,
+        push_wate: water_date,
       });
       return res.status(sc.OK).send(ut.success(rm.UPDATE_PUSH_USER_SUCCESS));
     } catch (err) {
