@@ -36,6 +36,7 @@ module.exports = {
         email,
         password,
       });
+      console.log(user)
       if (!user) {
         // 널이면 비밀번호가 틀림
         logger.error(`POST /login/signin - password Error`);
@@ -72,11 +73,11 @@ module.exports = {
 
   /* 회원가입 */
   signup: async (req, res) => {
-    const { email, password, sex, nickname, phone, birth } = req.body;
+    const { email, password, nickname, phone} = req.body;
 
     // 전 API에서 입력한 email 가져오기
 
-    if (!email || !password || !sex || !nickname || !phone || !birth) {
+    if (!email || !password || !nickname || !phone ) {
       console.log('필요한 값이 없습니다!');
       return res.status(sc.BAD_REQUEST).send(ut.fail(rm.NULL_VALUE));
     }
@@ -90,7 +91,7 @@ module.exports = {
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.ALREADY_EMAIL));
       }
       //여까지(일단 살려둘래)
-      const user = await userService.signup(email, password, sex, nickname, phone, birth);
+      const user = await userService.signup(email, password, nickname, phone);
 
       return res.status(sc.OK).send(
         ut.success(rm.SIGN_UP_SUCCESS, {
@@ -102,6 +103,7 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.SIGN_UP_FAIL));
     }
   },
+  
   phoneAuth: async (req, res) => {
     logger.info(`POST /phoneAuth - phoneAuth`);
     const errors = validationResult(req);

@@ -32,6 +32,7 @@
     "sequelize-cli": "^6.2.0"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.10.1",
     "dotenv": "^8.2.0",

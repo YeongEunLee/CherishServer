@@ -60,18 +60,16 @@ module.exports = {
     }
   },
 
-  signup: async (email, password, sex, nickname, phone, birth) => {
+  signup: async (email, password, nickname, phone) => {
     try {
       const salt = await bcrypt.genSalt(10);
       const passwordSalt = await bcrypt.hash(password, salt);
       const user = await User.create({
         email,
         password: passwordSalt,
-        sex,
         nickname,
         salt,
         phone,
-        birth,
       });
       return user;
     } catch (err) {
