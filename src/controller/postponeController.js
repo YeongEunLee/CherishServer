@@ -83,8 +83,6 @@ module.exports = {
           salt: userInfo.salt,
           nickname: userInfo.nickname,
           phone: userInfo.phone,
-          sex: userInfo.sex,
-          birth: userInfo.birth,
           profile_image_url: userInfo.profile_image_url,
           postpone_count: userInfo.postpone_count,
           fcm_token: userInfo.fcm_token,
