@@ -35,8 +35,16 @@ module.exports = {
         message: errors.array(),
       });
     }
-    const { name, nickname, birth, phone, cycle_date, notice_time, UserId, water_notice } =
-      req.body;
+    const {
+      name,
+      nickname,
+      birth,
+      phone,
+      cycle_date,
+      notice_time,
+      UserId,
+      water_notice,
+    } = req.body;
     try {
       const isCheckPhoneDuplicate = await Cherish.findOne({
         where: {
@@ -92,6 +100,11 @@ module.exports = {
         UserId,
         CherishId: cherish.id,
         water_date,
+      });
+      await pushService.createPushREV({
+        UserId,
+        CherishId: cherish.id,
+        push_date: water_date,
       });
       // cherish_log 테이블
       await cherish_log.create({
