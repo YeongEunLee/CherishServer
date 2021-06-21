@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 const request = require('request');
-const crypto = require('crypto');
 const { User, user_log } = require('../models');
 const secretKey = require('../config');
+const crypto = require('crypto');
 
 module.exports = {
   emailCheck: async ({ email }) => {
