@@ -35,8 +35,16 @@ module.exports = {
         message: errors.array(),
       });
     }
-    const { name, nickname, birth, phone, cycle_date, notice_time, UserId, water_notice } =
-      req.body;
+    const {
+      name,
+      nickname,
+      birth,
+      phone,
+      cycle_date,
+      notice_time,
+      UserId,
+      water_notice,
+    } = req.body;
     try {
       const isCheckPhoneDuplicate = await Cherish.findOne({
         where: {
@@ -93,6 +101,11 @@ module.exports = {
         CherishId: cherish.id,
         water_date,
       });
+      await pushService.createPushREV({
+        UserId,
+        CherishId: cherish.id,
+        push_date: water_date,
+      });
       // cherish_log 테이블
       await cherish_log.create({
         cherish_id: cherish.id,
@@ -123,6 +136,7 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+
   /*
    * cherish 삭제
    **/
@@ -146,24 +160,20 @@ module.exports = {
         logger.error(`DELETE /cherish/:id - cherishCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
-
-      await Cherish.update(
-        {
-          active: 'N',
-          updatedAt: sequelize.fn('NOW'),
+      const cherish = await Cherish.findOne({
+        where: {
+          id: CherishId,
         },
+      });
+
+      await Cherish.destroy(
         {
           where: {
             id: CherishId,
           },
         }
       );
-      const cherish = await Cherish.findOne({
-        where: {
-          id: CherishId,
-          active: 'N',
-        },
-      });
+      
       // 삭제한 식물에 대한 푸시 알림 삭제
       await pushService.deletePushByCherishId({
         CherishId,

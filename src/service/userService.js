@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const request = require('request');
-const { User, user_log } = require('../models');
+const { User, user_log, sequelize } = require('../models');
 const secretKey = require('../config');
 const crypto = require('crypto');
 
@@ -68,7 +68,7 @@ module.exports = {
         password: passwordSalt,
         nickname,
         salt,
-        phone
+        phone,
       });
       return user;
     } catch (err) {
@@ -148,6 +148,7 @@ module.exports = {
       await User.update(
         {
           active: 'N',
+          updatedAt: sequelize.fn('NOW'),
         },
         {
           where: {
@@ -170,8 +171,6 @@ module.exports = {
         salt: user.salt,
         nickname: user.nickname,
         phone: user.phone,
-        sex: user.sex,
-        birth: user.birth,
         profile_image_url: user.profile_image_url,
         postpone_count: user.postpone_count,
         fcm_token: user.fcm_token,
