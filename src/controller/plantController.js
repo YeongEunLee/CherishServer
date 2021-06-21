@@ -136,6 +136,7 @@ module.exports = {
       return res.status(sc.INTERNAL_SERVER_ERROR).send(ut.fail(rm.INTERNAL_SERVER_ERROR));
     }
   },
+
   /*
    * cherish 삭제
    **/
@@ -159,24 +160,20 @@ module.exports = {
         logger.error(`DELETE /cherish/:id - cherishCheck Error`);
         return res.status(sc.BAD_REQUEST).send(ut.fail(rm.OUT_OF_VALUE));
       }
-
-      await Cherish.update(
-        {
-          active: 'N',
-          updatedAt: sequelize.fn('NOW'),
+      const cherish = await Cherish.findOne({
+        where: {
+          id: CherishId,
         },
+      });
+
+      await Cherish.destroy(
         {
           where: {
             id: CherishId,
           },
         }
       );
-      const cherish = await Cherish.findOne({
-        where: {
-          id: CherishId,
-          active: 'N',
-        },
-      });
+      
       // 삭제한 식물에 대한 푸시 알림 삭제
       await pushService.deletePushByCherishId({
         CherishId,
