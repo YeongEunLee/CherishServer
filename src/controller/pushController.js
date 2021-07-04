@@ -32,7 +32,10 @@ module.exports = {
                      AND C.notice_time='${notice_time}'
                      AND APU.active='Y'
                      AND C.active='Y'
-                     AND C.water_notice='1'`;
+                     AND C.water_notice='1'
+                     AND U.active='Y' # 회원탈퇴한 유저는 푸시 안가게
+                     AND (U.fcm_token != '' AND U.fcm_token is not null) # 로그아웃한 유저는 푸시 안가게
+                     `;
     try {
       const [results] = await sequelize.query(query);
       let date = new Date();
