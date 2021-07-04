@@ -368,6 +368,7 @@ module.exports = {
         attributes: ['id', 'review', 'water_date', 'keyword1', 'keyword2', 'keyword3'],
         where: {
           CherishId: CherishId,
+          active : 'Y'
         },
         order: [['id', 'DESC']],
       });
