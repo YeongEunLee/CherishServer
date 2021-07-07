@@ -41,9 +41,12 @@ module.exports = {
 
   updatePassword: async ({ email, password1 }) => {
     try {
+      const salt = await bcrypt.genSalt(10);
+      const passwordSalt = await bcrypt.hash(password1, salt);
       await User.update(
         {
-          password: password1,
+          password: passwordSalt,
+          salt: salt,
         },
         {
           where: {
