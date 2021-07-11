@@ -1,5 +1,6 @@
 const dayjs = require('dayjs');
 const { App_push_user, Cherish, sequelize } = require('../models');
+const { Op } = require('sequelize');
 const ut = require('../modules/util');
 const sc = require('../modules/statusCode');
 const rm = require('../modules/responseMessage');
@@ -166,6 +167,10 @@ module.exports = {
     const { CherishId } = req.body;
 
     try {
+      let date = new Date();
+      const today = dayjs(date.toLocaleString('en', { timeZone: 'Asia/Seoul' })).format(
+        'YYYY-MM-DD 09:00:00'
+      );
       await App_push_user.update(
         {
           send_yn: 'Y',
@@ -173,6 +178,9 @@ module.exports = {
         },
         {
           where: {
+            push_date: {
+              [Op.lte]: today,
+            },
             CherishId: CherishId,
             send_yn: 'N',
             send_code: 'REV',
