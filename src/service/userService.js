@@ -1,9 +1,8 @@
 const bcrypt = require('bcryptjs');
 const request = require('request');
-
 const { User, user_log, sequelize } = require('../models');
-
 const secretKey = require('../config');
+const crypto = require('crypto');
 
 module.exports = {
   emailCheck: async ({ email }) => {
@@ -42,9 +41,12 @@ module.exports = {
 
   updatePassword: async ({ email, password1 }) => {
     try {
+      const salt = await bcrypt.genSalt(10);
+      const passwordSalt = await bcrypt.hash(password1, salt);
       await User.update(
         {
-          password: password1,
+          password: passwordSalt,
+          salt: salt,
         },
         {
           where: {
