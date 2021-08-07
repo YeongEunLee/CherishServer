@@ -84,7 +84,7 @@ module.exports = {
 
       const cherishIdList = cherishes.map((cherish) => cherish.id);
       const cherishCompleteList = cherishes.filter((cherish) => {
-        return cherish.growth === 12;
+        return cherish.growth > 7;
       });
 
       const totalCherish = cherishes.length;
